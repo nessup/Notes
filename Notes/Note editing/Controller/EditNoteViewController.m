@@ -76,7 +76,7 @@
     [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
              MIMEType:@"text/html"
      textEncodingName:@"utf-8"
-              baseURL:nil];
+              baseURL:[[NSBundle mainBundle] bundleURL]];
     [self.view addSubview:webView];
     _webView = webView;
     
