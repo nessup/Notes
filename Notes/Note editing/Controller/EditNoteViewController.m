@@ -1,19 +1,22 @@
 //
-//  DetailViewController.m
+//  EditNoteViewController.m
 //  Notes
 //
 //  Created by Dany on 5/21/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "DetailViewController.h"
+#import "EditNoteViewController.h"
 
-@interface DetailViewController ()
+@interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
+@property (nonatomic, weak) UIWebView *webView;
+
 - (void)configureView;
 @end
 
-@implementation DetailViewController
+@implementation EditNoteViewController
 
 #pragma mark - Managing the detail item
 
@@ -60,6 +63,31 @@
         self.title = NSLocalizedString(@"Detail", @"Detail");
     }
     return self;
+}
+
+#pragma mark - Properties
+
+- (UIWebView *)webView
+{
+    if( _webView )
+        return _webView;
+    
+    UIWebView *webView = [UIWebView new];
+    [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
+             MIMEType:@"text/html"
+     textEncodingName:@"utf-8"
+              baseURL:nil];
+    [self.view addSubview:webView];
+    _webView = webView;
+    
+    return _webView;
+}
+
+#pragma mark - Layout
+
+- (void)viewDidLayoutSubviews
+{
+    self.webView.frame = self.view.bounds;
 }
 							
 #pragma mark - Split view

@@ -1,20 +1,20 @@
 //
-//  MasterViewController.m
+//  NoteListViewController.m
 //  Notes
 //
 //  Created by Dany on 5/21/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "MasterViewController.h"
+#import "NoteListViewController.h"
 
-#import "DetailViewController.h"
+#import "EditNoteViewController.h"
 
-@interface MasterViewController ()
+@interface NoteListViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@implementation MasterViewController
+@implementation NoteListViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -121,7 +121,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    self.detailViewController.detailItem = object;
+    self.editNoteViewController.detailItem = object;
 }
 
 #pragma mark - Fetched results controller

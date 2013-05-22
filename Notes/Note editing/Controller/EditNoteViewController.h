@@ -1,5 +1,5 @@
 //
-//  DetailViewController.h
+//  EditNoteViewController.h
 //  Notes
 //
 //  Created by Dany on 5/21/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface EditNoteViewController : UIViewController <UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) id detailItem;
 

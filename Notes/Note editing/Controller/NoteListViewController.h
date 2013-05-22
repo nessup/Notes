@@ -1,5 +1,5 @@
 //
-//  MasterViewController.h
+//  NoteListViewController.h
 //  Notes
 //
 //  Created by Dany on 5/21/13.
@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class DetailViewController;
+@class EditNoteViewController;
 
 #import <CoreData/CoreData.h>
 
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface NoteListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) DetailViewController *detailViewController;
+@property (strong, nonatomic) EditNoteViewController *editNoteViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

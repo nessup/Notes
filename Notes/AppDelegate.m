@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 
-#import "MasterViewController.h"
+#import "NoteListViewController.h"
 
-#import "DetailViewController.h"
+#import "EditNoteViewController.h"
 
 @implementation AppDelegate
 
@@ -23,18 +23,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
-    UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    NoteListViewController *noteListViewController = [[NoteListViewController alloc] initWithNibName:@"NoteListViewController" bundle:nil];
+    UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:noteListViewController];
 
-    DetailViewController *detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
-    UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    EditNoteViewController *editNoteViewController = [EditNoteViewController new];
+    UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:editNoteViewController];
 
-    masterViewController.detailViewController = detailViewController;
+    noteListViewController.editNoteViewController = editNoteViewController;
 
     self.splitViewController = [[UISplitViewController alloc] init];
-    self.splitViewController.delegate = detailViewController;
+    self.splitViewController.delegate = editNoteViewController;
     self.splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
-    masterViewController.managedObjectContext = self.managedObjectContext;
+    noteListViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     return YES;
