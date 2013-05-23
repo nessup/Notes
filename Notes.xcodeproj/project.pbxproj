@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRichTextViewController.h; sourceTree = "<group>"; };
+		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -135,6 +138,8 @@
 			children = (
 				3BF3F66D174D226C00AAD591 /* EditNoteViewController.h */,
 				3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */,
+				3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */,
+				3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */,
 				3BF3F66F174D226C00AAD591 /* NoteListViewController.h */,
 				3BF3F670174D226C00AAD591 /* NoteListViewController.m */,
 			);
@@ -243,6 +248,7 @@
 				3BF3F672174D226C00AAD591 /* EditNoteViewController.m in Sources */,
 				3BF3F673174D226C00AAD591 /* NoteListViewController.m in Sources */,
 				3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */,
+				3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +365,7 @@
 				3BF3F66A174C892400AAD591 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
