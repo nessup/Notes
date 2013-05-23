@@ -8,8 +8,6 @@
 
 #import "EditRichTextViewController.h"
 
-#import "UIViewController+KeyboardNotifications.h"
-
 @interface EditRichTextViewController ()
 @property (nonatomic, weak) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;

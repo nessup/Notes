@@ -8,7 +8,6 @@
 
 #import "EditNoteViewController.h"
 
-#import "UIViewController+KeyboardNotifications.h"
 #import "EditRichTextViewController.h"
 
 @interface EditNoteViewController ()
