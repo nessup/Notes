@@ -24,6 +24,7 @@
 		3BF3F677174D230700AAD591 /* NoteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F676174D230700AAD591 /* NoteListViewController.xib */; };
 		3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */; };
 		3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */; };
+		3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F681174D37C400AAD591 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = NoteTemplate.css; sourceTree = "<group>"; };
 		3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardNotifications.h"; sourceTree = "<group>"; };
 		3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardNotifications.m"; sourceTree = "<group>"; };
+		3BF3F681174D37C400AAD591 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */,
 				3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */,
 				3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */,
 				3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */,
@@ -93,6 +96,7 @@
 		3BF3F63C174C892400AAD591 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3BF3F681174D37C400AAD591 /* QuartzCore.framework */,
 				3BF3F63D174C892400AAD591 /* UIKit.framework */,
 				3BF3F63F174C892400AAD591 /* Foundation.framework */,
 				3BF3F641174C892400AAD591 /* CoreGraphics.framework */,
