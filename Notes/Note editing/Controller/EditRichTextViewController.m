@@ -8,24 +8,30 @@
 
 #import "EditRichTextViewController.h"
 
-@interface EditRichTextViewController ()
+@interface EditRichTextViewController () <UIActionSheetDelegate>
 @property (nonatomic, weak) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
 @property (nonatomic, weak) UIWindow *keyboardWindow;
 @end
 
 @implementation EditRichTextViewController {
-    BOOL currentBoldStatus, currentItalicStatus, currentUnderlineStatus;
+    BOOL currentBoldStatus, currentItalicStatus, currentUnderlineStatus, currentUndoStatus, currentRedoStatus;
+    NSString *currentFontName;
+    NSString *currentForeColor;
+    NSTimer *_selectionTimer;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-        self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor redColor];
     
     [self registerForKeyboardNotifications];
-    [self checkSelection:self];
+    
+    _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
+        [self checkSelection:self];
+    }];
 }
 
 #pragma mark - Properties
@@ -140,15 +146,19 @@
     }
 }
 
+
 - (void)checkSelection:(id)sender {
+    
     BOOL boldEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Bold')"] boolValue];
     BOOL italicEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Italic')"] boolValue];
     BOOL underlineEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Underline')"] boolValue];
     
-    NSArray *segItemsArray = [NSArray arrayWithObjects:
-                              (boldEnabled) ? @"[B]" : @"B",
-                              italicEnabled ? @"[I]" : @"I",
-                              underlineEnabled ? @"[U]" : @"U", nil];
+    NSMutableArray *items = [NSMutableArray new];
+    
+     NSArray *segItemsArray = [NSArray arrayWithObjects:
+    (boldEnabled) ? @"[B]" : @"B",
+    italicEnabled ? @"[I]" : @"I",
+    underlineEnabled ? @"[U]" : @"U", nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segItemsArray];
     [segmentedControl addTarget:self action:@selector(textStyleSelected:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(0, 0, 150.f, 30);
@@ -157,13 +167,58 @@
     segmentedControl.momentary = YES;
     UIBarButtonItem *segmentedControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)segmentedControl];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    NSArray *barArray = [NSArray arrayWithObjects: flexibleSpace, segmentedControlButtonItem, nil];
+    
+    [items addObject:flexibleSpace];
+    [items addObject:segmentedControlButtonItem];
     
     if (currentBoldStatus != boldEnabled || currentItalicStatus != italicEnabled || currentUnderlineStatus != underlineEnabled || sender == self) {
-        self.editingToolbar.items = barArray;
+        self.navigationItem.rightBarButtonItems = items;
         currentBoldStatus = boldEnabled;
         currentItalicStatus = italicEnabled;
         currentUnderlineStatus = underlineEnabled;
+    }
+    
+    // Font Color Picker
+    UIBarButtonItem *fontColorPicker = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontColorPicker:)];
+    
+    NSString *foreColor = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('foreColor')"];
+    UIColor *color = [self colorFromRGBValue:foreColor];
+    if (color)
+        [fontColorPicker setTintColor:color];
+    
+    [items addObject:fontColorPicker];
+    
+    // Font Picker
+    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
+    
+    NSString *fontName = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('fontName')"];
+    UIFont *font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
+    if (font)
+        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
+    
+    [items addObject:fontPicker];
+    
+//    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
+//    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
+//    
+//    BOOL undoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('undo')"] boolValue];
+//    BOOL redoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('redo')"] boolValue];
+//    
+//    if (!undoAvailable)
+//        [undo setEnabled:NO];
+//    
+//    if (!redoAvailable)
+//        [redo setEnabled:NO];
+//    
+//    [items addObject:undo];
+//    [items addObject:redo];
+    
+    if (![currentForeColor isEqualToString:foreColor] || ![currentFontName isEqualToString:fontName] /*|| currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self) {
+        self.editingToolbar.items = items;
+        currentForeColor = foreColor;
+        currentFontName = fontName;
+//        currentUndoStatus = undoAvailable;
+//        currentRedoStatus = redoAvailable;
     }
 }
 
@@ -199,6 +254,55 @@
 
 - (void)underline {
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand(\"Underline\")"];
+}
+
+//- (void)undo {
+//    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('undo')"];
+//}
+//
+//- (void)redo {
+//    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('redo')"];
+//}
+
+- (void)displayFontColorPicker:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font color" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Blue", @"Yellow", @"Green", @"Red", @"Orange", nil];
+    [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
+}
+
+- (void)displayFontPicker:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Helvetica", @"Courier", @"Arial", @"Zapfino", @"Verdana", nil];
+    [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
+}
+
+#pragma mark - Action sheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *selectedButtonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    selectedButtonTitle = [selectedButtonTitle lowercaseString];
+    
+    if ([actionSheet.title isEqualToString:@"Select a font"])
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('fontName', false, '%@')", selectedButtonTitle]];
+    else
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('foreColor', false, '%@')", selectedButtonTitle]];
+}
+
+#pragma mark - Utility
+
+- (UIColor *)colorFromRGBValue:(NSString *)rgb { // General format is 'rgb(red, green, blue)'
+    if ([rgb rangeOfString:@"rgb"].location == NSNotFound)
+        return nil;
+    
+    NSMutableString *mutableCopy = [rgb mutableCopy];
+    [mutableCopy replaceCharactersInRange:NSMakeRange(0, 4) withString:@""];
+    [mutableCopy replaceCharactersInRange:NSMakeRange(mutableCopy.length-1, 1) withString:@""];
+    
+    NSArray *components = [mutableCopy componentsSeparatedByString:@","];
+    int red = [[components objectAtIndex:0] intValue];
+    int green = [[components objectAtIndex:1] intValue];
+    int blue = [[components objectAtIndex:2] intValue];
+    
+    UIColor *retVal = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0];
+    return retVal;
 }
 
 @end

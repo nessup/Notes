@@ -14,5 +14,7 @@
     #import <CoreData/CoreData.h>
     #import <QuartzCore/QuartzCore.h>
 
-    #import "Categories.h"
+#import "NSTimer+Blocks.h"
+#import "UIViewController+KeyboardNotifications.h"
+
 #endif

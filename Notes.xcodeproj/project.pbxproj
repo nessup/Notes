@@ -34,7 +34,6 @@
 		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
-		3BCB7E45174ECC29006B393D /* Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -172,7 +171,6 @@
 		3BF3F67D174D2BE200AAD591 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				3BCB7E45174ECC29006B393D /* Categories.h */,
 				3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */,
 				3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */,
 				3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */,
