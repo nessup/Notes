@@ -12,6 +12,11 @@
 @property (nonatomic, weak) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
 @property (nonatomic, weak) UIWindow *keyboardWindow;
+
+@property (nonatomic, strong) UISegmentedControl *textStyleControl;
+@property (nonatomic, strong) UIBarButtonItem *textColorButton;
+@property (nonatomic, strong) UISegmentedControl *alignmentControl;
+
 @end
 
 @implementation EditRichTextViewController {
@@ -29,8 +34,10 @@
     
     [self registerForKeyboardNotifications];
     
+    [self checkSelection:self];
+    
     _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
-        [self checkSelection:self];
+        [self checkSelection:nil];
     }];
 }
 
@@ -206,6 +213,9 @@
     
     [items addObject:alignmentButtonItem];
     
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    [items addObject:saveButton];
+    
 //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
 //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
 //    
@@ -271,6 +281,11 @@
 //- (void)redo {
 //    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('redo')"];
 //}
+
+- (void)save {
+    NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
+    NSLog(@"%@", content);
+}
 
 - (void)displayFontColorPicker:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font color" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Blue", @"Yellow", @"Green", @"Red", @"Orange", nil];

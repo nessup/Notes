@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */; };
-		3BCB7E47174ED799006B393D /* Common.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
-		3BCB7E49174ED7DE006B393D /* jquery.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E48174ED7DE006B393D /* jquery.js */; };
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
+		3BCB7E56174F28A7006B393D /* Common.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
+		3BCB7E57174F28A7006B393D /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E48174ED7DE006B393D /* jquery.js */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -239,6 +239,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BCB7E56174F28A7006B393D /* Common.js in Resources */,
+				3BCB7E57174F28A7006B393D /* jquery.js in Resources */,
 				3BF3F64A174C892400AAD591 /* InfoPlist.strings in Resources */,
 				3BF3F652174C892400AAD591 /* Default.png in Resources */,
 				3BF3F654174C892400AAD591 /* Default@2x.png in Resources */,
@@ -265,8 +267,6 @@
 				3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */,
 				3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */,
 				3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */,
-				3BCB7E47174ED799006B393D /* Common.js in Sources */,
-				3BCB7E49174ED7DE006B393D /* jquery.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

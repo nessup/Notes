@@ -24,7 +24,8 @@ body {
     background-position: 6px 6px, 6px 5px, 50% 18px;
     background-repeat: repeat-y, repeat-y, repeat;
     background-size: 48px 48px, 48px 48px, 24px 24px;
-    padding: 48px 24px 24px 84px;
+    padding: 24px 24px 24px 84px;
+    min-height: 636px;
 }
 .notepad:after {
     border-left: 1px solid hsla(0,75%,50%,.2);
