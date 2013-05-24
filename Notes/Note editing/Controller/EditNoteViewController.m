@@ -37,10 +37,7 @@
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save)];
     self.navigationItem.rightBarButtonItem = saveButton;
     
-    [self.editTextController.webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
-             MIMEType:@"text/html"
-     textEncodingName:@"utf-8"
-              baseURL:[[NSBundle mainBundle] bundleURL]];
+    [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 }
 
 - (void)configureView
@@ -65,12 +62,11 @@
     if( _editTextController )
         return _editTextController;
     
-    EditRichTextViewController *editTextController = [EditRichTextViewController new];
-    editTextController.wantsFullScreenLayout = YES;
-    [self addChildViewController:editTextController];
-    [self.view addSubview:editTextController.view];
-    [editTextController didMoveToParentViewController:self];
-    _editTextController = editTextController;
+    _editTextController = [EditRichTextViewController new];
+    _editTextController.wantsFullScreenLayout = YES;
+    [self addChildViewController:_editTextController];
+    [self.view addSubview:_editTextController.view];
+    [_editTextController didMoveToParentViewController:self];
     
     return _editTextController;
 }

@@ -1,3 +1,9 @@
 [submodule "Notes/External/ColorPopover"]
 	path = Notes/External/ColorPopover
 	url = https://github.com/nessup/ColorPopover.git
+[submodule "Notes/External/Rangy"]
+	path = Notes/External/Rangy
+	url = https://github.com/nessup/Rangy.git
+[submodule "Notes/External/WebViewJavascriptBridge"]
+	path = Notes/External/WebViewJavascriptBridge
+	url = https://github.com/nessup/WebViewJavascriptBridge.git

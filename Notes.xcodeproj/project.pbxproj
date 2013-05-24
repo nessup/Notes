@@ -32,6 +32,9 @@
 		3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */; };
 		3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */; };
 		3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F681174D37C400AAD591 /* QuartzCore.framework */; };
+		3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */; };
+		3BFD4B641750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */; };
+		3BFD4B651750023D00E3A46F /* WebViewJavascriptBridge_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,11 @@
 		3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardNotifications.h"; sourceTree = "<group>"; };
 		3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardNotifications.m"; sourceTree = "<group>"; };
 		3BF3F681174D37C400AAD591 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		3BFD4B5F1750023D00E3A46F /* WebViewJavascriptBridgeAbstract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeAbstract.h; sourceTree = "<group>"; };
+		3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeAbstract.m; sourceTree = "<group>"; };
+		3BFD4B611750023D00E3A46F /* WebViewJavascriptBridge_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge_iOS.h; sourceTree = "<group>"; };
+		3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_iOS.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +116,7 @@
 			children = (
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
+				3BFD4B50174FF93600E3A46F /* External */,
 				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
 				3BCB7E58174F31D3006B393D /* Model */,
 				3BF3F67C174D2BE200AAD591 /* Shared */,
@@ -209,6 +218,35 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		3BFD4B50174FF93600E3A46F /* External */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD4B5C1750023D00E3A46F /* WebViewJavascriptBridge_iOS */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		3BFD4B5C1750023D00E3A46F /* WebViewJavascriptBridge_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD4B5D1750023D00E3A46F /* WebViewJavascriptAbstract */,
+				3BFD4B611750023D00E3A46F /* WebViewJavascriptBridge_iOS.h */,
+				3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */,
+			);
+			name = WebViewJavascriptBridge_iOS;
+			path = Notes/External/WebViewJavascriptBridge/WebViewJavascriptBridge_iOS;
+			sourceTree = "<group>";
+		};
+		3BFD4B5D1750023D00E3A46F /* WebViewJavascriptAbstract */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */,
+				3BFD4B5F1750023D00E3A46F /* WebViewJavascriptBridgeAbstract.h */,
+				3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */,
+			);
+			path = WebViewJavascriptAbstract;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -270,6 +308,7 @@
 				3BF3F677174D230700AAD591 /* NoteListViewController.xib in Resources */,
 				3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */,
 				3BCB7E4B174EDB0F006B393D /* Common.css in Resources */,
+				3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +329,8 @@
 				3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */,
 				3BCB7E5B174F31E8006B393D /* Course.m in Sources */,
 				3BCB7E5E174F31E8006B393D /* Note.m in Sources */,
+				3BFD4B641750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m in Sources */,
+				3BFD4B651750023D00E3A46F /* WebViewJavascriptBridge_iOS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

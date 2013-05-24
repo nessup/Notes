@@ -9,6 +9,7 @@
 #import "EditRichTextViewController.h"
 
 #import "Model.h"
+#import "WebViewJavascriptBridge_iOS.h"
 
 @interface EditRichTextViewController () <UIActionSheetDelegate>
 @property (nonatomic, weak) UIWebView *webView;
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) UISegmentedControl *textStyleControl;
 @property (nonatomic, strong) UIBarButtonItem *textColorButton;
 @property (nonatomic, strong) UISegmentedControl *alignmentControl;
+@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 
 @end
 
@@ -26,6 +28,17 @@
 //    NSString *currentFontName;
     NSString *currentForeColor;
     NSTimer *_selectionTimer;
+    NSMutableArray *_afterDOMLoadsBlocks;
+    BOOL _DOMLoaded;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if( self ) {
+        _afterDOMLoadsBlocks = [NSMutableArray array];
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -43,6 +56,28 @@
         
         [self save];
     }];
+    
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
+        if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
+            _DOMLoaded = YES;
+            NSLog(@"count = %d", _afterDOMLoadsBlocks.count );
+            for( void (^block)() in _afterDOMLoadsBlocks ) {
+                block();
+            }
+            [_afterDOMLoadsBlocks removeAllObjects];
+        }
+    }];
+}
+
+- (void)loadLocalPageNamed:(NSString *)pageName
+{
+    _DOMLoaded = NO;
+    [_afterDOMLoadsBlocks removeAllObjects];
+    
+    [self.webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName ofType:@"html"]]
+                                     MIMEType:@"text/html"
+                             textEncodingName:@"utf-8"
+                                      baseURL:[[NSBundle mainBundle] bundleURL]];
 }
 
 #pragma mark - Properties
@@ -53,6 +88,7 @@
         return _webView;
     
     UIWebView *webView = [UIWebView new];
+    webView.keyboardDisplayRequiresUserAction = NO;
     [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
              MIMEType:@"text/html"
      textEncodingName:@"utf-8"
@@ -94,8 +130,19 @@
 {
     _note = note;
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setTitle(\"%@\");", note.title]];
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent(\"%@\");", note.content]];
+    [self doAfterDOMLoads:^{
+        if( note.title.length ) {
+            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setTitle(\"%@\");", note.title]];
+        }
+        else {
+            NSDateFormatter *formatter = [NSDateFormatter new];
+            formatter.dateStyle = NSDateFormatterMediumStyle;
+            NSString *placeholder = [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:note.dateCreated]];
+            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setPlaceholderString(\"%@\");", placeholder]];
+        }
+        
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent(\"%@\");", note.content]];
+    }];
 }
 
 #pragma mark - Layout
@@ -341,6 +388,18 @@
     
     UIColor *retVal = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0];
     return retVal;
+}
+
+- (void)doAfterDOMLoads:(void (^)())completion
+{
+    if( _DOMLoaded ) {
+        if( completion ) {
+            completion();
+        }
+    }
+    else {
+        [_afterDOMLoadsBlocks addObject:[completion copy]];
+    }
 }
 
 @end
