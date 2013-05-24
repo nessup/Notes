@@ -9,6 +9,7 @@
 #import "NoteListViewController.h"
 
 #import "EditNoteViewController.h"
+#import "Model.h"
 
 @interface NoteListViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -35,6 +36,30 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
+    void (^insertNewNoteForToday)() = ^ {
+        Note *newNote = [self insertNewObject:self];
+
+        self.editNoteViewController.detailItem = newNote;
+    };
+    if( [sectionInfo numberOfObjects] ) {
+        Note *latestNote = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:latestNote.dateCreated];
+        NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+        if([today day] == [otherDay day] &&
+           [today month] == [otherDay month] &&
+           [today year] == [otherDay year] &&
+           [today era] == [otherDay era]) {
+            self.editNoteViewController.detailItem = latestNote;
+        }
+        else {
+            insertNewNoteForToday();
+        }
+    }
+    else {
+        insertNewNoteForToday();
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,16 +68,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (Note *)insertNewObject:(id)sender
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Note *newManagedObject = (Note *)[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
+    [newManagedObject setValue:[NSDate date] forKey:@"dateCreated"];
+        
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
@@ -61,6 +86,8 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    
+    return newManagedObject;
 }
 
 #pragma mark - Table View
@@ -120,7 +147,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    Note *object = (Note *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
     self.editNoteViewController.detailItem = object;
 }
 
@@ -134,14 +161,14 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -226,7 +253,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    cell.textLabel.text = [[object valueForKey:@"dateCreated"] description];
 }
 
 @end

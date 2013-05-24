@@ -20,8 +20,11 @@ enum {
     TextAlignmentRight
 };
 
+@class Note;
+
 @interface EditRichTextViewController : UIViewController
 
 @property (nonatomic, weak, readonly) UIWebView *webView;
+@property (nonatomic, strong) Note *note;
 
 @end

@@ -12,6 +12,8 @@
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
 		3BCB7E56174F28A7006B393D /* Common.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
 		3BCB7E57174F28A7006B393D /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E48174ED7DE006B393D /* jquery.js */; };
+		3BCB7E5B174F31E8006B393D /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5A174F31E8006B393D /* Course.m */; };
+		3BCB7E5E174F31E8006B393D /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5D174F31E8006B393D /* Note.m */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -40,6 +42,11 @@
 		3BCB7E46174ED799006B393D /* Common.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Common.js; sourceTree = "<group>"; };
 		3BCB7E48174ED7DE006B393D /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		3BCB7E4A174EDB0F006B393D /* Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Common.css; sourceTree = "<group>"; };
+		3BCB7E59174F31E8006B393D /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
+		3BCB7E5A174F31E8006B393D /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		3BCB7E5C174F31E8006B393D /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		3BCB7E5D174F31E8006B393D /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		3BCB7E5F174F34A5006B393D /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -83,12 +90,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BCB7E58174F31D3006B393D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3BCB7E5F174F34A5006B393D /* Model.h */,
+				3BCB7E5C174F31E8006B393D /* Note.h */,
+				3BCB7E5D174F31E8006B393D /* Note.m */,
+				3BCB7E59174F31E8006B393D /* Course.h */,
+				3BCB7E5A174F31E8006B393D /* Course.m */,
+			);
+			name = Model;
+			path = Notes/Model;
+			sourceTree = "<group>";
+		};
 		3BF3F631174C892400AAD591 = {
 			isa = PBXGroup;
 			children = (
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
 				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
+				3BCB7E58174F31D3006B393D /* Model */,
 				3BF3F67C174D2BE200AAD591 /* Shared */,
 				3BF3F66B174D226C00AAD591 /* Note editing */,
 				3BF3F646174C892400AAD591 /* Supporting Files */,
@@ -267,6 +288,8 @@
 				3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */,
 				3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */,
 				3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */,
+				3BCB7E5B174F31E8006B393D /* Course.m in Sources */,
+				3BCB7E5E174F31E8006B393D /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

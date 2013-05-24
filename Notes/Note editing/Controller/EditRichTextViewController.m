@@ -8,6 +8,8 @@
 
 #import "EditRichTextViewController.h"
 
+#import "Model.h"
+
 @interface EditRichTextViewController () <UIActionSheetDelegate>
 @property (nonatomic, weak) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
@@ -38,6 +40,8 @@
     
     _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
         [self checkSelection:nil];
+        
+        [self save];
     }];
 }
 
@@ -84,6 +88,14 @@
     }
     
     return _keyboardWindow;
+}
+
+- (void)setNote:(Note *)note
+{
+    _note = note;
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setTitle(\"%@\");", note.title]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent(\"%@\");", note.content]];
 }
 
 #pragma mark - Layout
@@ -283,8 +295,11 @@
 //}
 
 - (void)save {
+    NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"getTitle()"];
     NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
-    NSLog(@"%@", content);
+    
+    self.note.title = title;
+    self.note.content = content;
 }
 
 - (void)displayFontColorPicker:(id)sender {

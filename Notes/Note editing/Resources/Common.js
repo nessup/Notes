@@ -14,8 +14,16 @@ function getTitle() {
 	return $('h1').html();
 }
 
+function setTitle(title) {
+	$('h1').html(title);
+}
+
 function getContent() {
 	return $('#content').html();
+}
+
+function setContent(content) {
+	$('#content').html(content);
 }
 
 $(function() {

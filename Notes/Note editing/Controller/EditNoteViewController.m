@@ -33,8 +33,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor greenColor];
+
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save)];
+    self.navigationItem.rightBarButtonItem = saveButton;
     
     [self.editTextController.webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
              MIMEType:@"text/html"
@@ -45,8 +46,16 @@
 - (void)configureView
 {
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+//        self.detailDescriptionLabel.text =
+        self.editTextController.note = self.detailItem;
     }
+}
+
+#pragma mark - Actions
+
+- (void)save
+{
+    
 }
 
 #pragma mark - Properties
@@ -66,7 +75,7 @@
     return _editTextController;
 }
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setDetailItem:(Note *)newDetailItem
 {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
