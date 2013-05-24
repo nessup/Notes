@@ -16,7 +16,7 @@
 
 @implementation EditRichTextViewController {
     BOOL currentBoldStatus, currentItalicStatus, currentUnderlineStatus, currentUndoStatus, currentRedoStatus;
-    NSString *currentFontName;
+//    NSString *currentFontName;
     NSString *currentForeColor;
     NSTimer *_selectionTimer;
 }
@@ -163,7 +163,6 @@
     [segmentedControl addTarget:self action:@selector(textStyleSelected:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(0, 0, 150.f, 30);
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    segmentedControl.selectedSegmentIndex = 2;
     segmentedControl.momentary = YES;
     UIBarButtonItem *segmentedControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)segmentedControl];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -188,15 +187,24 @@
     
     [items addObject:fontColorPicker];
     
-    // Font Picker
-    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
+//    // Font Picker
+//    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
+//    
+//    NSString *fontName = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('fontName')"];
+//    UIFont *font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
+//    if (font)
+//        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
+//    
+//    [items addObject:fontPicker];
+
+    UISegmentedControl *alignmentControl = [[UISegmentedControl alloc] initWithItems:@[@"L", @"C", @"R"]];
+    [alignmentControl addTarget:self action:@selector(textAlignmentSelected:) forControlEvents:UIControlEventValueChanged];
+    alignmentControl.frame = CGRectMake(0, 0, 150.f, 30);
+    alignmentControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    alignmentControl.momentary = YES;
+    UIBarButtonItem *alignmentButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)alignmentControl];
     
-    NSString *fontName = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('fontName')"];
-    UIFont *font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
-    if (font)
-        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
-    
-    [items addObject:fontPicker];
+    [items addObject:alignmentButtonItem];
     
 //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
 //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
@@ -213,10 +221,10 @@
 //    [items addObject:undo];
 //    [items addObject:redo];
     
-    if (![currentForeColor isEqualToString:foreColor] || ![currentFontName isEqualToString:fontName] /*|| currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self) {
+    if (![currentForeColor isEqualToString:foreColor] /*|| ![currentFontName isEqualToString:fontName] || currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self) {
         self.editingToolbar.items = items;
         currentForeColor = foreColor;
-        currentFontName = fontName;
+//        currentFontName = fontName;
 //        currentUndoStatus = undoAvailable;
 //        currentRedoStatus = redoAvailable;
     }
@@ -269,10 +277,10 @@
     [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
-- (void)displayFontPicker:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Helvetica", @"Courier", @"Arial", @"Zapfino", @"Verdana", nil];
-    [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
-}
+//- (void)displayFontPicker:(id)sender {
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Helvetica", @"Courier", @"Arial", @"Zapfino", @"Verdana", nil];
+//    [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
+//}
 
 #pragma mark - Action sheet delegate
 

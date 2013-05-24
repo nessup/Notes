@@ -14,6 +14,12 @@ enum {
     TextStyleUnderline
 };
 
+enum {
+    TextAlignmentLeft,
+    TextAlignmentCenter,
+    TextAlignmentRight
+};
+
 @interface EditRichTextViewController : UIViewController
 
 @property (nonatomic, weak, readonly) UIWebView *webView;

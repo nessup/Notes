@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */; };
+		3BCB7E47174ED799006B393D /* Common.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
+		3BCB7E49174ED7DE006B393D /* jquery.js in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E48174ED7DE006B393D /* jquery.js */; };
+		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -34,6 +37,9 @@
 		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
+		3BCB7E46174ED799006B393D /* Common.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Common.js; sourceTree = "<group>"; };
+		3BCB7E48174ED7DE006B393D /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
+		3BCB7E4A174EDB0F006B393D /* Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Common.css; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -154,6 +160,9 @@
 			children = (
 				3BF3F674174D22AE00AAD591 /* NoteTemplate.html */,
 				3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */,
+				3BCB7E46174ED799006B393D /* Common.js */,
+				3BCB7E4A174EDB0F006B393D /* Common.css */,
+				3BCB7E48174ED7DE006B393D /* jquery.js */,
 				3BF3F676174D230700AAD591 /* NoteListViewController.xib */,
 			);
 			path = Resources;
@@ -237,6 +246,7 @@
 				3BF3F675174D22AE00AAD591 /* NoteTemplate.html in Resources */,
 				3BF3F677174D230700AAD591 /* NoteListViewController.xib in Resources */,
 				3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */,
+				3BCB7E4B174EDB0F006B393D /* Common.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +265,8 @@
 				3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */,
 				3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */,
 				3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */,
+				3BCB7E47174ED799006B393D /* Common.js in Sources */,
+				3BCB7E49174ED7DE006B393D /* jquery.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
