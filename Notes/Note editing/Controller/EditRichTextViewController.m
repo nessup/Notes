@@ -10,9 +10,15 @@
 
 #import "Model.h"
 #import "WebViewJavascriptBridge_iOS.h"
+#import "AppDelegate.h"
+
+NSString * const WebViewEventName = @"eventName";
+NSString * const WebViewEventCategoryChanged = @"categoryChanged";
+
+NSString * const WebViewEventValue = @"value";
 
 @interface EditRichTextViewController () <UIActionSheetDelegate>
-@property (nonatomic, weak) UIWebView *webView;
+@property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
 @property (nonatomic, weak) UIWindow *keyboardWindow;
 
@@ -25,7 +31,7 @@
 
 @implementation EditRichTextViewController {
     BOOL currentBoldStatus, currentItalicStatus, currentUnderlineStatus, currentUndoStatus, currentRedoStatus;
-//    NSString *currentFontName;
+    //    NSString *currentFontName;
     NSString *currentForeColor;
     NSTimer *_selectionTimer;
     NSMutableArray *_afterDOMLoadsBlocks;
@@ -44,27 +50,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.view.backgroundColor = [UIColor redColor];
-    
+        
     [self registerForKeyboardNotifications];
     
     [self checkSelection:self];
     
-    _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
-        [self checkSelection:nil];
-        
-        [self save];
-    }];
-    
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
         if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
             _DOMLoaded = YES;
-            NSLog(@"count = %d", _afterDOMLoadsBlocks.count );
             for( void (^block)() in _afterDOMLoadsBlocks ) {
                 block();
             }
             [_afterDOMLoadsBlocks removeAllObjects];
+            
+            _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
+                static int count = 0;
+                
+                [self checkSelection:nil];
+                
+                if( count % 50 == 0 ) {
+                    [self save];
+                }
+                
+                count++;
+            }];
+        }
+        else if( [data isKindOfClass:[NSDictionary class]] ) {
+            NSDictionary *dictionary = (NSDictionary *)data;
+            
+            if( [dictionary[WebViewEventName] isEqualToString:WebViewEventCategoryChanged] ) {
+                [self categoryChanged:dictionary];
+            }
         }
     }];
 }
@@ -75,9 +91,15 @@
     [_afterDOMLoadsBlocks removeAllObjects];
     
     [self.webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName ofType:@"html"]]
-                                     MIMEType:@"text/html"
-                             textEncodingName:@"utf-8"
-                                      baseURL:[[NSBundle mainBundle] bundleURL]];
+                  MIMEType:@"text/html"
+          textEncodingName:@"utf-8"
+                   baseURL:[[NSBundle mainBundle] bundleURL]];
+}
+
+#pragma mark - Web view callbacks
+
+- (void)categoryChanged:(NSDictionary *)event {
+    self.note.category = event[WebViewEventValue];
 }
 
 #pragma mark - Properties
@@ -87,14 +109,13 @@
     if( _webView )
         return _webView;
     
-    UIWebView *webView = [UIWebView new];
-    webView.keyboardDisplayRequiresUserAction = NO;
-    [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
+    _webView = [UIWebView new];
+    _webView.keyboardDisplayRequiresUserAction = NO;
+    [_webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
              MIMEType:@"text/html"
      textEncodingName:@"utf-8"
               baseURL:[[NSBundle mainBundle] bundleURL]];
-    [self.view addSubview:webView];
-    _webView = webView;
+    [self.view addSubview:_webView];
     
     return _webView;
 }
@@ -131,18 +152,24 @@
     _note = note;
     
     [self doAfterDOMLoads:^{
-        if( note.title.length ) {
-            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setTitle(\"%@\");", note.title]];
-        }
-        else {
-            NSDateFormatter *formatter = [NSDateFormatter new];
-            formatter.dateStyle = NSDateFormatterMediumStyle;
-            NSString *placeholder = [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:note.dateCreated]];
-            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setPlaceholderString(\"%@\");", placeholder]];
-        }
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
         
-        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent(\"%@\");", note.content]];
-    }];
+        dictionary[@"title"] = note.title ? note.title : @"";
+        
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        formatter.dateStyle = NSDateFormatterMediumStyle;
+        dictionary[@"placeholderString"] = [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:note.dateCreated]];
+        
+        dictionary[@"content"] = note.content ? note.content : @"";
+     
+        dictionary[@"categories"] = @[NoteCategoryClassNotes, NoteCategoryAssignment];
+
+        dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
+        
+        dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
+     
+        [self.bridge send:dictionary];
+     }];
 }
 
 #pragma mark - Layout
@@ -212,7 +239,6 @@
     }
 }
 
-
 - (void)checkSelection:(id)sender {
     
     BOOL boldEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Bold')"] boolValue];
@@ -221,10 +247,10 @@
     
     NSMutableArray *items = [NSMutableArray new];
     
-     NSArray *segItemsArray = [NSArray arrayWithObjects:
-    (boldEnabled) ? @"[B]" : @"B",
-    italicEnabled ? @"[I]" : @"I",
-    underlineEnabled ? @"[U]" : @"U", nil];
+    NSArray *segItemsArray = [NSArray arrayWithObjects:
+                              (boldEnabled) ? @"[B]" : @"B",
+                              italicEnabled ? @"[I]" : @"I",
+                              underlineEnabled ? @"[U]" : @"U", nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segItemsArray];
     [segmentedControl addTarget:self action:@selector(textStyleSelected:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(0, 0, 150.f, 30);
@@ -253,16 +279,16 @@
     
     [items addObject:fontColorPicker];
     
-//    // Font Picker
-//    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
-//    
-//    NSString *fontName = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('fontName')"];
-//    UIFont *font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
-//    if (font)
-//        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
-//    
-//    [items addObject:fontPicker];
-
+    //    // Font Picker
+    //    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
+    //
+    //    NSString *fontName = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('fontName')"];
+    //    UIFont *font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
+    //    if (font)
+    //        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
+    //
+    //    [items addObject:fontPicker];
+    
     UISegmentedControl *alignmentControl = [[UISegmentedControl alloc] initWithItems:@[@"L", @"C", @"R"]];
     [alignmentControl addTarget:self action:@selector(textAlignmentSelected:) forControlEvents:UIControlEventValueChanged];
     alignmentControl.frame = CGRectMake(0, 0, 150.f, 30);
@@ -272,30 +298,27 @@
     
     [items addObject:alignmentButtonItem];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
-    [items addObject:saveButton];
-    
-//    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
-//    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
-//    
-//    BOOL undoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('undo')"] boolValue];
-//    BOOL redoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('redo')"] boolValue];
-//    
-//    if (!undoAvailable)
-//        [undo setEnabled:NO];
-//    
-//    if (!redoAvailable)
-//        [redo setEnabled:NO];
-//    
-//    [items addObject:undo];
-//    [items addObject:redo];
+    //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
+    //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
+    //
+    //    BOOL undoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('undo')"] boolValue];
+    //    BOOL redoAvailable = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandEnabled('redo')"] boolValue];
+    //
+    //    if (!undoAvailable)
+    //        [undo setEnabled:NO];
+    //
+    //    if (!redoAvailable)
+    //        [redo setEnabled:NO];
+    //
+    //    [items addObject:undo];
+    //    [items addObject:redo];
     
     if (![currentForeColor isEqualToString:foreColor] /*|| ![currentFontName isEqualToString:fontName] || currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self) {
         self.editingToolbar.items = items;
         currentForeColor = foreColor;
-//        currentFontName = fontName;
-//        currentUndoStatus = undoAvailable;
-//        currentRedoStatus = redoAvailable;
+        //        currentFontName = fontName;
+        //        currentUndoStatus = undoAvailable;
+        //        currentRedoStatus = redoAvailable;
     }
 }
 
@@ -314,6 +337,26 @@
             
         case TextStyleUnderline:
             [self underline];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)textAlignmentSelected:(UISegmentedControl *)control
+{
+    switch (control.selectedSegmentIndex) {
+        case TextAlignmentLeft:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
+            break;
+            
+        case TextAlignmentCenter:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
+            break;
+            
+        case TextAlignmentRight:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
             break;
             
         default:
@@ -344,9 +387,16 @@
 - (void)save {
     NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"getTitle()"];
     NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
+    NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"getTopRightLines();"];
+    NSString *category = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedCategory();"];
     
     self.note.title = title;
     self.note.content = content;
+    self.note.topRightLines = topRightLines;
+    self.note.category = category;
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate saveContext];
 }
 
 - (void)displayFontColorPicker:(id)sender {

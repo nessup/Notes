@@ -5,16 +5,18 @@
         <relationship name="notes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="course" inverseEntity="Note" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName="Note">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <attribute name="topRightLines" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="course" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="notes" inverseEntity="Course" syncable="YES"/>
         <userInfo/>
     </entity>
     <elements>
-        <element name="Note" positionX="261" positionY="189" width="128" height="105"/>
         <element name="Course" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="Note" positionX="261" positionY="189" width="128" height="135"/>
     </elements>
 </model>

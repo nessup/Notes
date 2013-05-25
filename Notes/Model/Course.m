@@ -8,7 +8,6 @@
 
 #import "Course.h"
 
-
 @implementation Course
 
 @dynamic name;

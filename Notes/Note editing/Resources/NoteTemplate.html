@@ -8,13 +8,27 @@
         <link rel="stylesheet" type="text/css" href="NoteTemplate.css" />
     </head>
     <body>
-        <article class="notepad">
-            <h1 id="titlePlaceholder">lololol</h1>
-            <h1 id="title" contenteditable="true"></h1>
-            <p />
-            <p id="content" contenteditable="true">
-                
-            </p>
-        </article>
+        <div id="container">
+            <ul id="optionsContainer">
+                <li>
+                    Filed under <select id="categories"></select>
+                </li>
+                <li>
+                    <select id="paperType"></select>
+                </li>
+            </ul>
+            <article class="notepad">
+                <div id="topRightLines" class="alignRight" contenteditable="true">
+                    
+                </div>
+                <div id="titleContainer">
+                    <h1 id="titlePlaceholder" class="h1"></h1>
+                    <h1 id="title" class="h1" contenteditable="true" autofocus="autofocus"></h1>
+                </div>
+                <p id="content" contenteditable="true">
+                    
+                </p>
+            </article>
+        </div>
     </body>
 </html>

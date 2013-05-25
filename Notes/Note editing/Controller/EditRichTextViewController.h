@@ -24,7 +24,7 @@ enum {
 
 @interface EditRichTextViewController : UIViewController
 
-@property (nonatomic, weak, readonly) UIWebView *webView;
+@property (nonatomic, strong, readonly) UIWebView *webView;
 @property (nonatomic, strong) Note *note;
 
 - (void)loadLocalPageNamed:(NSString *)pageName;

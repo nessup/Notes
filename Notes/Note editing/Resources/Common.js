@@ -3,15 +3,15 @@ var bridge;
 var domLoaded = false;
 
 function alignLeft() {
-    $(':focus').attr('alignleft');
+    $(getElementContainingCaret()).attr('class','alignLeft');
 }
 
 function alignRight() {
-    $(':focus').attr('alignright');
+    $(getElementContainingCaret()).attr('class','alignRight');
 }
 
 function alignCenter() {
-    $(':focus').attr('aligncenter');
+    $(getElementContainingCaret()).attr('class','alignCenter');
 }
 
 function getTitle() {
@@ -44,10 +44,57 @@ function setPlaceholding(shouldPlacehold) {
     
     if( placeholding ) {
         $('#titlePlaceholder').show();
+        $('title').attr('class','alignLeft');
     }
     else {
         $('#titlePlaceholder').hide();
     }
+}
+
+function setCategories(categories) {
+    $('#categories').empty();
+    categories.forEach(function(category, index) {
+        $('#categories').append('<option value="' + category + '">' + category + '</option>');
+    });
+}
+
+function selectCategory(category) {
+    $('#categories').val(category);
+}
+
+function getSelectedCategory() {
+    return $('#categories').val();
+}
+
+function getTopRightLines(lines) {
+    return $('#topRightLines').html();
+}
+
+function setTopRightLines(lines) {
+    $('#topRightLines').html(lines);
+}
+
+function configureWithInfo(info) {
+    if( info.title !== undefined ) {
+        setTitle(info.title);
+    }
+    if( info.placeholderString !== undefined ) {
+        setPlaceholderString(info.placeholderString);    
+    }
+    if( info.content !== undefined ) {
+        setContent(info.content);
+    }
+    if( info.categories !== undefined ) {
+        setCategories(info.categories);
+    }
+    if( info.selectedCategory !== undefined ) {
+        selectCategory(info.selectedCategory);    
+    }
+    if( info.topRightLines !== undefined ) {
+        setTopRightLines(info.topRightLines);
+    }
+
+    updateUI();
 }
 
 function updateUI() {
@@ -57,6 +104,20 @@ function updateUI() {
     else {
         setPlaceholding(true);
     }
+
+    var category = getSelectedCategory();
+    if( category == 'Class Notes' ) {
+        $('#topRightLines').hide();
+    }
+    else if( category == 'Assignments' ) {
+        $('#topRightLines').show();
+    }
+}
+
+function getElementContainingCaret() {
+    var node = document.getSelection().anchorNode;
+    var startNode = (node.nodeType == 3 ? node.parentNode : node);
+    return startNode;
 }
 
 function getCaretCharacterOffsetWithin(element) {
@@ -90,16 +151,24 @@ document.addEventListener('WebViewJavascriptBridgeReady', function onBridgeReady
     bridge = event.bridge;
 
     bridge.init(function(message, responseCallback) {
-        alert('Received message: ' + message)   ;
+        configureWithInfo(message);
+
+        $('#title').focus();
     });
     if( domLoaded ) {
         bridge.send('DOMDidLoad');
     }
-
 }, false);
 
 $(function() {
-    $('#title').focus();
+    $('#categories').change(function() {
+        bridge.send({
+            eventName:'postCategoryChanged',
+            value:$(this).val()
+        });
+
+        updateUI();
+    });
 
     $('#titlePlaceholder').click(function() {
         $('#title').focus();

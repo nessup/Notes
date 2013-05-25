@@ -9,6 +9,8 @@
 #import "Note.h"
 #import "Course.h"
 
+NSString * const NoteCategoryClassNotes = @"Class Notes";
+NSString * const NoteCategoryAssignment = @"Assignments";
 
 @implementation Note
 
@@ -16,5 +18,7 @@
 @dynamic dateCreated;
 @dynamic content;
 @dynamic course;
+@dynamic category;
+@dynamic topRightLines;
 
 @end

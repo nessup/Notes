@@ -72,11 +72,17 @@
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    Note *newManagedObject = (Note *)[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Note *note = (Note *)[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"dateCreated"];
+    
+    note.dateCreated = [NSDate date];
+    note.category = NoteCategoryClassNotes;
+    
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    note.topRightLines = [NSString stringWithFormat:@"Your Name<br />%@<br />Chemistry", [formatter stringFromDate:note.dateCreated]];
         
     // Save the context.
     NSError *error = nil;
@@ -87,7 +93,7 @@
         abort();
     }
     
-    return newManagedObject;
+    return note;
 }
 
 #pragma mark - Table View

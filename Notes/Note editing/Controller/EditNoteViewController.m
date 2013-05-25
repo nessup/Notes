@@ -33,9 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save)];
-    self.navigationItem.rightBarButtonItem = saveButton;
     
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 }
@@ -46,13 +43,6 @@
 //        self.detailDescriptionLabel.text =
         self.editTextController.note = self.detailItem;
     }
-}
-
-#pragma mark - Actions
-
-- (void)save
-{
-    
 }
 
 #pragma mark - Properties

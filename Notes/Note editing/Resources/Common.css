@@ -1,13 +1,11 @@
-p.alignleft {
+.alignLeft {
     text-align: left;
 }
 
-p.alignright {
+.alignRight {
     text-align: right;
 }
 
-p.aligncenter {
+.alignCenter {
     text-align: center;
-    
 }
-

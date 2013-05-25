@@ -50,6 +50,14 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    UIBackgroundTaskIdentifier backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+    }];
+    
+    [self saveContext];
+    
+    [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -148,11 +156,15 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
 
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
+    }
     
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+//    abort();
+
     return _persistentStoreCoordinator;
 }
 
