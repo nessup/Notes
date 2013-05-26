@@ -7,4 +7,4 @@
 //
 
 #import "Note.h"
-#import "Course.h"
+#import "Notebook.h"

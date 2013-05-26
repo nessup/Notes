@@ -16,5 +16,7 @@
 
 #import "NSTimer+Blocks.h"
 #import "UIViewController+KeyboardNotifications.h"
+#import "FontManager.h"
+#import "UIColor+HexString.h"
 
 #endif

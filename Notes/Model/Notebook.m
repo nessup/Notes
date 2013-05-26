@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "Course.h"
+#import "Notebook.h"
 
-@implementation Course
+@implementation Notebook
 
 @dynamic name;
 @dynamic notes;

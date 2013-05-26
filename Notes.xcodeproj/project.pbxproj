@@ -12,7 +12,7 @@
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
 		3BCB7E56174F28A7006B393D /* Common.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
 		3BCB7E57174F28A7006B393D /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E48174ED7DE006B393D /* jquery.js */; };
-		3BCB7E5B174F31E8006B393D /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5A174F31E8006B393D /* Course.m */; };
+		3BCB7E5B174F31E8006B393D /* Notebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5A174F31E8006B393D /* Notebook.m */; };
 		3BCB7E5E174F31E8006B393D /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5D174F31E8006B393D /* Note.m */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
@@ -35,6 +35,10 @@
 		3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */; };
 		3BFD4B641750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */; };
 		3BFD4B651750023D00E3A46F /* WebViewJavascriptBridge_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */; };
+		3BFD4B751750C49400E3A46F /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B741750C49400E3A46F /* FontManager.m */; };
+		3BFD4B781750C63600E3A46F /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B771750C63600E3A46F /* UIColor+HexString.m */; };
+		3BFD4B841751899300E3A46F /* NoteNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B831751899300E3A46F /* NoteNavigationController.m */; };
+		3BFD4B8717518A4B00E3A46F /* NotebookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B8617518A4B00E3A46F /* NotebookListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +49,8 @@
 		3BCB7E46174ED799006B393D /* Common.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Common.js; sourceTree = "<group>"; };
 		3BCB7E48174ED7DE006B393D /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		3BCB7E4A174EDB0F006B393D /* Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Common.css; sourceTree = "<group>"; };
-		3BCB7E59174F31E8006B393D /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
-		3BCB7E5A174F31E8006B393D /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		3BCB7E59174F31E8006B393D /* Notebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notebook.h; sourceTree = "<group>"; };
+		3BCB7E5A174F31E8006B393D /* Notebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notebook.m; sourceTree = "<group>"; };
 		3BCB7E5C174F31E8006B393D /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		3BCB7E5D174F31E8006B393D /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		3BCB7E5F174F34A5006B393D /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
@@ -80,6 +84,14 @@
 		3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeAbstract.m; sourceTree = "<group>"; };
 		3BFD4B611750023D00E3A46F /* WebViewJavascriptBridge_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge_iOS.h; sourceTree = "<group>"; };
 		3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_iOS.m; sourceTree = "<group>"; };
+		3BFD4B731750C49400E3A46F /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		3BFD4B741750C49400E3A46F /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		3BFD4B761750C63600E3A46F /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
+		3BFD4B771750C63600E3A46F /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
+		3BFD4B821751899300E3A46F /* NoteNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteNavigationController.h; sourceTree = "<group>"; };
+		3BFD4B831751899300E3A46F /* NoteNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteNavigationController.m; sourceTree = "<group>"; };
+		3BFD4B8517518A4B00E3A46F /* NotebookListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookListViewController.h; sourceTree = "<group>"; };
+		3BFD4B8617518A4B00E3A46F /* NotebookListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +116,8 @@
 				3BCB7E5F174F34A5006B393D /* Model.h */,
 				3BCB7E5C174F31E8006B393D /* Note.h */,
 				3BCB7E5D174F31E8006B393D /* Note.m */,
-				3BCB7E59174F31E8006B393D /* Course.h */,
-				3BCB7E5A174F31E8006B393D /* Course.m */,
+				3BCB7E59174F31E8006B393D /* Notebook.h */,
+				3BCB7E5A174F31E8006B393D /* Notebook.m */,
 			);
 			name = Model;
 			path = Notes/Model;
@@ -181,6 +193,10 @@
 				3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */,
 				3BF3F66F174D226C00AAD591 /* NoteListViewController.h */,
 				3BF3F670174D226C00AAD591 /* NoteListViewController.m */,
+				3BFD4B821751899300E3A46F /* NoteNavigationController.h */,
+				3BFD4B831751899300E3A46F /* NoteNavigationController.m */,
+				3BFD4B8517518A4B00E3A46F /* NotebookListViewController.h */,
+				3BFD4B8617518A4B00E3A46F /* NotebookListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,6 +217,7 @@
 		3BF3F67C174D2BE200AAD591 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3BFD4B721750C48900E3A46F /* Fonts */,
 				3BF3F67D174D2BE200AAD591 /* Categories */,
 			);
 			name = Shared;
@@ -210,6 +227,8 @@
 		3BF3F67D174D2BE200AAD591 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				3BFD4B761750C63600E3A46F /* UIColor+HexString.h */,
+				3BFD4B771750C63600E3A46F /* UIColor+HexString.m */,
 				3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */,
 				3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */,
 				3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */,
@@ -245,6 +264,15 @@
 				3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */,
 			);
 			path = WebViewJavascriptAbstract;
+			sourceTree = "<group>";
+		};
+		3BFD4B721750C48900E3A46F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD4B731750C49400E3A46F /* FontManager.h */,
+				3BFD4B741750C49400E3A46F /* FontManager.m */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,10 +355,14 @@
 				3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */,
 				3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */,
 				3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */,
-				3BCB7E5B174F31E8006B393D /* Course.m in Sources */,
+				3BCB7E5B174F31E8006B393D /* Notebook.m in Sources */,
 				3BCB7E5E174F31E8006B393D /* Note.m in Sources */,
 				3BFD4B641750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m in Sources */,
 				3BFD4B651750023D00E3A46F /* WebViewJavascriptBridge_iOS.m in Sources */,
+				3BFD4B751750C49400E3A46F /* FontManager.m in Sources */,
+				3BFD4B781750C63600E3A46F /* UIColor+HexString.m in Sources */,
+				3BFD4B841751899300E3A46F /* NoteNavigationController.m in Sources */,
+				3BFD4B8717518A4B00E3A46F /* NotebookListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

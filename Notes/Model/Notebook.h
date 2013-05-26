@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Course : NSManagedObject
+@interface Notebook : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSManagedObject *notes;

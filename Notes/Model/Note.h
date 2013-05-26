@@ -12,7 +12,7 @@
 extern NSString * const NoteCategoryClassNotes;
 extern NSString * const NoteCategoryAssignment;
 
-@class Course;
+@class Notebook;
 
 @interface Note : NSManagedObject
 
@@ -20,7 +20,7 @@ extern NSString * const NoteCategoryAssignment;
 @property (nonatomic, retain) NSDate * dateCreated;
 @property (nonatomic, retain) NSString * category;
 @property (nonatomic, retain) NSString * content;
-@property (nonatomic, retain) Course *course;
+@property (nonatomic, retain) Notebook *notebook;
 @property (nonatomic, retain) NSString * topRightLines;
 
 @end
