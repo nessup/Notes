@@ -7,3 +7,6 @@
 [submodule "Notes/External/WebViewJavascriptBridge"]
 	path = Notes/External/WebViewJavascriptBridge
 	url = https://github.com/nessup/WebViewJavascriptBridge.git
+[submodule "Notes/External/jquery-ui-touch-punch"]
+	path = Notes/External/jquery-ui-touch-punch
+	url = https://github.com/nessup/jquery-ui-touch-punch.git

@@ -19,6 +19,16 @@
 
 @implementation EditNoteViewController
 
++ (EditNoteViewController *)sharedInstance
+{
+    static EditNoteViewController *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,9 +49,9 @@
 
 - (void)configureView
 {
-    if (self.detailItem) {
+    if (self.note) {
 //        self.detailDescriptionLabel.text =
-        self.editTextController.note = self.detailItem;
+        self.editTextController.note = self.note;
     }
 }
 
@@ -61,17 +71,15 @@
     return _editTextController;
 }
 
-- (void)setDetailItem:(Note *)newDetailItem
+- (void)setNote:(Note *)note
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+    if (_note != note) {
+        _note = note;
         
         [self configureView];
     }
     
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }
+    [self.masterPopoverController dismissPopoverAnimated:YES];
 }
 
 #pragma mark - Split view
@@ -84,10 +92,15 @@
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
+{    
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
+{
+    [self.editTextController commitChangesToNote];
 }
 
 @end

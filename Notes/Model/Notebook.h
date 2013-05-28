@@ -13,6 +13,7 @@
 @interface Notebook : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSManagedObject *notes;
+@property (nonatomic, retain) NSArray *notes;
+@property (nonatomic, retain) NSString *defaultUserName;
 
 @end

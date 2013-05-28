@@ -12,7 +12,10 @@
 
 @interface EditNoteViewController : UIViewController <UISplitViewControllerDelegate>
 
-@property (strong, nonatomic) Note *detailItem;
++ (EditNoteViewController *)sharedInstance;
+
+@property (strong, nonatomic) Note *note;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+
 @end

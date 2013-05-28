@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotebookListViewController : UIViewController
+@class EditNoteViewController;
+
+@interface NotebookListViewController : UITableViewController
+
+@property (nonatomic, strong) EditNoteViewController *editNoteViewController;
 
 @end

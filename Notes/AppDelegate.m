@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 
-#import "NoteListViewController.h"
-#import "NoteNavigationController.h"
+#import "NotebookListViewController.h"
 #import "EditNoteViewController.h"
+#import "NoteManager.h"
 
 @implementation AppDelegate
 
@@ -21,20 +21,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
 
-    NoteListViewController *noteListViewController = [[NoteListViewController alloc] initWithNibName:@"NoteListViewController" bundle:nil];
-    UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:noteListViewController];
-
-    EditNoteViewController *editNoteViewController = [EditNoteViewController new];
+    [[NoteManager sharedInstance] setContext:self.managedObjectContext];
+    
+    EditNoteViewController *editNoteViewController = [EditNoteViewController sharedInstance];
     UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:editNoteViewController];
-
-    noteListViewController.editNoteViewController = editNoteViewController;
+    
+    NotebookListViewController *notebookListViewController = [NotebookListViewController new];
+    UINavigationController *noteNavigationController = [[UINavigationController alloc] initWithRootViewController:notebookListViewController];
 
     self.splitViewController = [[UISplitViewController alloc] init];
     self.splitViewController.delegate = editNoteViewController;
-    self.splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
-    noteListViewController.managedObjectContext = self.managedObjectContext;
+    self.splitViewController.viewControllers = @[noteNavigationController, detailNavigationController];
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     return YES;
@@ -105,6 +103,7 @@
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
+    
     return _managedObjectContext;
 }
 

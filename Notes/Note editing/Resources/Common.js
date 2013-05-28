@@ -74,6 +74,30 @@ function setTopRightLines(lines) {
     $('#topRightLines').html(lines);
 }
 
+function insertImageWithBase64(base,width,height) {
+    var img = document.createElement('div');
+
+    var selection = document.getSelection();
+    var range = selection.getRangeAt(0);
+    range.insertNode(img);
+
+    var imgObject = $(img);
+    imgObject.append(['<div class="ui-resizable-handle ui-resizable-nw" id="nwgrip"></div>',
+                     '<div class="ui-resizable-handle ui-resizable-ne" id="negrip"></div>',
+                     '<div class="ui-resizable-handle ui-resizable-sw" id="swgrip"></div>',
+                     '<div class="ui-resizable-handle ui-resizable-se" id="segrip"></div>'].join('\n'));
+    imgObject.attr('style','display: inline-block; background-size: 100% 100% !important; background: no-repeat url("' + base + '"); width:'+width+'px; height:'+height+'px; overflow:hidden;');
+    imgObject.resizable({
+        handles: {
+        'ne': '#negrip',
+        'se': '#segrip',
+        'sw': '#swgrip',
+        'nw': '#nwgrip'
+        }
+    });
+    imgObject.draggable();
+}
+
 function configureWithInfo(info) {
     if( info.title !== undefined ) {
         setTitle(info.title);

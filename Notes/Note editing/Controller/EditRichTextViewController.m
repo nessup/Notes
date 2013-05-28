@@ -10,14 +10,14 @@
 
 #import "Model.h"
 #import "WebViewJavascriptBridge_iOS.h"
-#import "AppDelegate.h"
+#import "NoteManager.h"
 
 NSString * const WebViewEventName = @"eventName";
 NSString * const WebViewEventCategoryChanged = @"categoryChanged";
 
 NSString * const WebViewEventValue = @"value";
 
-@interface EditRichTextViewController () <UIActionSheetDelegate>
+@interface EditRichTextViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
 @property (nonatomic, weak) UIWindow *keyboardWindow;
@@ -36,6 +36,7 @@ NSString * const WebViewEventValue = @"value";
     NSTimer *_selectionTimer;
     NSMutableArray *_afterDOMLoadsBlocks;
     BOOL _DOMLoaded;
+    UIPopoverController *_imagePickerPopover;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -69,7 +70,7 @@ NSString * const WebViewEventValue = @"value";
                 [self checkSelection:nil];
                 
                 if( count % 50 == 0 ) {
-                    [self save];
+                    [self commitChangesToNote];
                 }
                 
                 count++;
@@ -298,6 +299,9 @@ NSString * const WebViewEventValue = @"value";
     
     [items addObject:alignmentButtonItem];
     
+    UIBarButtonItem *insertPhoto = [[UIBarButtonItem alloc] initWithTitle:@"Photo+" style:UIBarButtonItemStyleBordered target:self action:@selector(insertPhoto:)];
+    [items addObject:insertPhoto];
+    
     //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
     //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
     //
@@ -384,7 +388,7 @@ NSString * const WebViewEventValue = @"value";
 //    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('redo')"];
 //}
 
-- (void)save {
+- (void)commitChangesToNote {
     NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"getTitle()"];
     NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
     NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"getTopRightLines();"];
@@ -395,8 +399,9 @@ NSString * const WebViewEventValue = @"value";
     self.note.topRightLines = topRightLines;
     self.note.category = category;
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate saveContext];
+//    [[NoteManager sharedInstance] saveToDisk];
+    
+    [[[NoteManager sharedInstance] context] refreshObject:self.note mergeChanges:YES];
 }
 
 - (void)displayFontColorPicker:(id)sender {
@@ -419,6 +424,43 @@ NSString * const WebViewEventValue = @"value";
         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('fontName', false, '%@')", selectedButtonTitle]];
     else
         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('foreColor', false, '%@')", selectedButtonTitle]];
+}
+
+#pragma mark Inserting photos
+
+- (void)insertPhoto:(id)sender {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.delegate = self;
+    
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+    [popover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    _imagePickerPopover = popover;
+}
+
+static int i = 0;
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    // Obtain the path to save to
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"photo%i.png", i]];
+    
+    // Extract image from the picker and save it
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    UIImage *image = nil;
+    if ([mediaType isEqualToString:@"public.image"]){
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSData *data = UIImagePNGRepresentation(image);
+        [data writeToFile:imagePath atomically:YES];
+    }
+    
+    NSLog(@"lol = %@",[NSString stringWithFormat:@"insertImageWithBase64('%@')", imagePath]);
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"insertImageWithBase64('%@',%f,%f)", imagePath, image.size.width,image.size.height]];
+    
+    [_imagePickerPopover dismissPopoverAnimated:YES];
+    i++;
 }
 
 #pragma mark - Utility

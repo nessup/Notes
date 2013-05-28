@@ -8,15 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class EditNoteViewController;
-
 #import <CoreData/CoreData.h>
+
+@class EditNoteViewController, Notebook;
 
 @interface NoteListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) EditNoteViewController *editNoteViewController;
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) Notebook *notebook;
 
 @end

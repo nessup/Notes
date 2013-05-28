@@ -12,5 +12,6 @@
 
 @dynamic name;
 @dynamic notes;
+@dynamic defaultUserName;
 
 @end

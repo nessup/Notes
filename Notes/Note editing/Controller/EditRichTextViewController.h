@@ -28,5 +28,6 @@ enum {
 @property (nonatomic, strong) Note *note;
 
 - (void)loadLocalPageNamed:(NSString *)pageName;
+- (void)commitChangesToNote;
 
 @end
