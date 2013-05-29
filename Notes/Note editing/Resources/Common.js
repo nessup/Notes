@@ -101,7 +101,10 @@ function createResizableDraggableImageElement(src,width,height) {
         'nw': '#nwgrip'
         }
     });
-    imgObject.draggable();
+    imgObject.draggable({
+        snap:"#contentContainer",
+        scroll: true
+    });
 
     return imgObject;
 }
