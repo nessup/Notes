@@ -20,6 +20,11 @@ enum {
     TextAlignmentRight
 };
 
+enum {
+    EditingModeWriting,
+    EditingModeDrawing
+};
+
 @class Note;
 
 @interface EditRichTextViewController : UIViewController

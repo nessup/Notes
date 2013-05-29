@@ -11,6 +11,7 @@
 #import "Model.h"
 #import "WebViewJavascriptBridge_iOS.h"
 #import "NoteManager.h"
+#import "RTEGestureRecognizer.h"
 
 NSString * const WebViewEventName = @"eventName";
 NSString * const WebViewEventCategoryChanged = @"categoryChanged";
@@ -84,6 +85,34 @@ NSString * const WebViewEventValue = @"value";
             }
         }
     }];
+
+    RTEGestureRecognizer *tapInterceptor = [[RTEGestureRecognizer alloc] init];
+    tapInterceptor.touchesBeganCallback = ^(NSSet *touches, UIEvent *event) {
+        UITouch *touch = [[event allTouches] anyObject];
+        CGPoint touchPoint = [touch locationInView:self.view];
+        
+        NSString *javascript = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).toString()", touchPoint.x, touchPoint.y];
+        NSString *elementAtPoint = [self.webView stringByEvaluatingJavaScriptFromString:javascript];
+        
+        if ([elementAtPoint rangeOfString:@"canvas"].location != NSNotFound) {
+//            initialPointOfImage = touchPoint;
+            self.webView.scrollView.scrollEnabled = NO;
+        } else {
+//            initialPointOfImage = CGPointZero;
+        }
+    };
+    tapInterceptor.touchesEndedCallback = ^(NSSet *touches, UIEvent *event) {
+        UITouch *touch = [[event allTouches] anyObject];
+        CGPoint touchPoint = [touch locationInView:self.view];
+        
+        // And move that image!
+//        NSString *javascript = [NSString stringWithFormat:@"moveImageAtTo(%f, %f, %f, %f)", initialPointOfImage.x, initialPointOfImage.y, touchPoint.x, touchPoint.y];
+//        [self.webView stringByEvaluatingJavaScriptFromString:javascript];
+        
+        // All done, lets re-enable scrolling
+        self.webView.scrollView.scrollEnabled = YES;
+    };
+    [self.webView.scrollView addGestureRecognizer:tapInterceptor];
 }
 
 - (void)loadLocalPageNamed:(NSString *)pageName
@@ -168,6 +197,8 @@ NSString * const WebViewEventValue = @"value";
         dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
         
         dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
+        
+        dictionary[@"editingMode"] = @(EditingModeWriting);
      
         [self.bridge send:dictionary];
      }];
@@ -302,6 +333,15 @@ NSString * const WebViewEventValue = @"value";
     UIBarButtonItem *insertPhoto = [[UIBarButtonItem alloc] initWithTitle:@"Photo+" style:UIBarButtonItemStyleBordered target:self action:@selector(insertPhoto:)];
     [items addObject:insertPhoto];
     
+    segItemsArray = @[@"Write", @"Draw"];
+    segmentedControl = [[UISegmentedControl alloc] initWithItems:segItemsArray];
+    [segmentedControl addTarget:self action:@selector(modeSelected:) forControlEvents:UIControlEventValueChanged];
+    segmentedControl.frame = CGRectMake(0, 0, 150.f, 30);
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    segmentedControl.momentary = YES;
+    segmentedControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)segmentedControl];
+    [items addObject:segmentedControlButtonItem];
+    
     //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
     //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
     //
@@ -327,6 +367,11 @@ NSString * const WebViewEventValue = @"value";
 }
 
 #pragma mark - Actions
+
+- (void)modeSelected:(UISegmentedControl *)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setEditingMode(%d)", sender.selectedSegmentIndex]];
+}
 
 - (void)textStyleSelected:(UISegmentedControl *)control
 {

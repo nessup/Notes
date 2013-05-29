@@ -10,3 +10,9 @@
 [submodule "Notes/External/jquery-ui-touch-punch"]
 	path = Notes/External/jquery-ui-touch-punch
 	url = https://github.com/nessup/jquery-ui-touch-punch.git
+[submodule "Notes/External/sketch.js"]
+	path = Notes/External/sketch.js
+	url = https://github.com/nessup/sketch.js.git
+[submodule "Notes/External/CanvasQuery"]
+	path = Notes/External/CanvasQuery
+	url = https://github.com/nessup/CanvasQuery.git

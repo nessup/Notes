@@ -7,9 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B00BFE117555F05007B64C0 /* jquery-ui-1.10.3.custom.css in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFDB17555F05007B64C0 /* jquery-ui-1.10.3.custom.css */; };
+		3B00BFE317555F05007B64C0 /* jquery-1.9.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFDE17555F05007B64C0 /* jquery-1.9.1.js */; };
+		3B00BFE417555F05007B64C0 /* jquery-ui-1.10.3.custom.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFDF17555F05007B64C0 /* jquery-ui-1.10.3.custom.js */; };
+		3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00BFE81755919D007B64C0 /* RTEGestureRecognizer.m */; };
+		3B00BFF217559E25007B64C0 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEB17559E25007B64C0 /* .gitignore */; };
+		3B00BFF317559E25007B64C0 /* canvasquery.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEC17559E25007B64C0 /* canvasquery.js */; };
+		3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFED17559E25007B64C0 /* canvasquery.min.js */; };
+		3B00BFF517559E25007B64C0 /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEE17559E25007B64C0 /* changelog.txt */; };
+		3B00BFF617559E25007B64C0 /* example.html in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEF17559E25007B64C0 /* example.html */; };
+		3B00BFF717559E25007B64C0 /* package.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF017559E25007B64C0 /* package.json */; };
+		3B00BFF817559E25007B64C0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF117559E25007B64C0 /* README.md */; };
+		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
 		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
-		3B1FF1A117540899004B2CFE /* css in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF19F17540899004B2CFE /* css */; };
-		3B1FF1A217540899004B2CFE /* js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A017540899004B2CFE /* js */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
@@ -47,10 +57,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B00BFDB17555F05007B64C0 /* jquery-ui-1.10.3.custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "jquery-ui-1.10.3.custom.css"; sourceTree = "<group>"; };
+		3B00BFDC17555F05007B64C0 /* jquery-ui-1.10.3.custom.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "jquery-ui-1.10.3.custom.min.css"; sourceTree = "<group>"; };
+		3B00BFDE17555F05007B64C0 /* jquery-1.9.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.1.js"; sourceTree = "<group>"; };
+		3B00BFDF17555F05007B64C0 /* jquery-ui-1.10.3.custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-ui-1.10.3.custom.js"; sourceTree = "<group>"; };
+		3B00BFE017555F05007B64C0 /* jquery-ui-1.10.3.custom.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-ui-1.10.3.custom.min.js"; sourceTree = "<group>"; };
+		3B00BFE71755919D007B64C0 /* RTEGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTEGestureRecognizer.h; sourceTree = "<group>"; };
+		3B00BFE81755919D007B64C0 /* RTEGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTEGestureRecognizer.m; sourceTree = "<group>"; };
+		3B00BFEB17559E25007B64C0 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		3B00BFEC17559E25007B64C0 /* canvasquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = canvasquery.js; sourceTree = "<group>"; };
+		3B00BFED17559E25007B64C0 /* canvasquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = canvasquery.min.js; sourceTree = "<group>"; };
+		3B00BFEE17559E25007B64C0 /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		3B00BFEF17559E25007B64C0 /* example.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = example.html; sourceTree = "<group>"; };
+		3B00BFF017559E25007B64C0 /* package.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		3B00BFF117559E25007B64C0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		3B00BFFA1755E349007B64C0 /* sketch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sketch.js; sourceTree = "<group>"; };
 		3B105C0B1751E00D00C4FF93 /* CreateNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNotebookViewController.h; sourceTree = "<group>"; };
 		3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNotebookViewController.m; sourceTree = "<group>"; };
-		3B1FF19F17540899004B2CFE /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
-		3B1FF1A017540899004B2CFE /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
 		3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.min.js"; sourceTree = "<group>"; };
 		3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRichTextViewController.h; sourceTree = "<group>"; };
@@ -122,11 +145,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B00BFD917555F05007B64C0 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFDA17555F05007B64C0 /* no-theme */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		3B00BFDA17555F05007B64C0 /* no-theme */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFDB17555F05007B64C0 /* jquery-ui-1.10.3.custom.css */,
+				3B00BFDC17555F05007B64C0 /* jquery-ui-1.10.3.custom.min.css */,
+			);
+			path = "no-theme";
+			sourceTree = "<group>";
+		};
+		3B00BFDD17555F05007B64C0 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFDE17555F05007B64C0 /* jquery-1.9.1.js */,
+				3B00BFDF17555F05007B64C0 /* jquery-ui-1.10.3.custom.js */,
+				3B00BFE017555F05007B64C0 /* jquery-ui-1.10.3.custom.min.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		3B00BFE61755910E007B64C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFE71755919D007B64C0 /* RTEGestureRecognizer.h */,
+				3B00BFE81755919D007B64C0 /* RTEGestureRecognizer.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B00BFEA17559E25007B64C0 /* CanvasQuery */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFEB17559E25007B64C0 /* .gitignore */,
+				3B00BFEC17559E25007B64C0 /* canvasquery.js */,
+				3B00BFED17559E25007B64C0 /* canvasquery.min.js */,
+				3B00BFEE17559E25007B64C0 /* changelog.txt */,
+				3B00BFEF17559E25007B64C0 /* example.html */,
+				3B00BFF017559E25007B64C0 /* package.json */,
+				3B00BFF117559E25007B64C0 /* README.md */,
+			);
+			name = CanvasQuery;
+			path = Notes/External/CanvasQuery;
+			sourceTree = "<group>";
+		};
+		3B00BFF91755E349007B64C0 /* sketch.js */ = {
+			isa = PBXGroup;
+			children = (
+				3B00BFFA1755E349007B64C0 /* sketch.js */,
+			);
+			name = sketch.js;
+			path = Notes/External/sketch.js;
+			sourceTree = "<group>";
+		};
 		3B1FF19E1754086D004B2CFE /* jquery */ = {
 			isa = PBXGroup;
 			children = (
-				3B1FF19F17540899004B2CFE /* css */,
-				3B1FF1A017540899004B2CFE /* js */,
+				3B00BFD917555F05007B64C0 /* css */,
+				3B00BFDD17555F05007B64C0 /* js */,
 			);
 			name = jquery;
 			path = Notes/External/jquery;
@@ -209,6 +292,7 @@
 		3BF3F66B174D226C00AAD591 /* Note editing */ = {
 			isa = PBXGroup;
 			children = (
+				3B00BFE61755910E007B64C0 /* View */,
 				3BF3F66C174D226C00AAD591 /* Controller */,
 				3BF3F671174D226C00AAD591 /* Resources */,
 			);
@@ -274,6 +358,8 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3B00BFF91755E349007B64C0 /* sketch.js */,
+				3B00BFEA17559E25007B64C0 /* CanvasQuery */,
 				3B1FF1A317540C48004B2CFE /* jquery-ui-touch-punch */,
 				3B1FF19E1754086D004B2CFE /* jquery */,
 				3BFD4B5C1750023D00E3A46F /* WebViewJavascriptBridge_iOS */,
@@ -383,8 +469,17 @@
 				3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */,
 				3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */,
 				3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */,
-				3B1FF1A117540899004B2CFE /* css in Resources */,
-				3B1FF1A217540899004B2CFE /* js in Resources */,
+				3B00BFE117555F05007B64C0 /* jquery-ui-1.10.3.custom.css in Resources */,
+				3B00BFE317555F05007B64C0 /* jquery-1.9.1.js in Resources */,
+				3B00BFE417555F05007B64C0 /* jquery-ui-1.10.3.custom.js in Resources */,
+				3B00BFF217559E25007B64C0 /* .gitignore in Resources */,
+				3B00BFF517559E25007B64C0 /* changelog.txt in Resources */,
+				3B00BFF617559E25007B64C0 /* example.html in Resources */,
+				3B00BFF717559E25007B64C0 /* package.json in Resources */,
+				3B00BFF817559E25007B64C0 /* README.md in Resources */,
+				3B00BFF317559E25007B64C0 /* canvasquery.js in Resources */,
+				3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */,
+				3B00BFFB1755E349007B64C0 /* sketch.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +508,7 @@
 				3BFD4B8F1751BE5100E3A46F /* NoteManager.m in Sources */,
 				3BFD4B951751D3C600E3A46F /* NSFetchedResultsController+UITableView.m in Sources */,
 				3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */,
+				3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
