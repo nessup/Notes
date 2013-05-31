@@ -19,9 +19,19 @@
 		3B00BFF717559E25007B64C0 /* package.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF017559E25007B64C0 /* package.json */; };
 		3B00BFF817559E25007B64C0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF117559E25007B64C0 /* README.md */; };
 		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
+		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
 		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
+		3B2CC8AF175710BD001483EA /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8AE175710BD001483EA /* FLAC.framework */; };
+		3B2CC8B2175711E1001483EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8B0175711C4001483EA /* AVFoundation.framework */; };
+		3B2CC8DD17590219001483EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8DC17590218001483EA /* CFNetwork.framework */; };
+		3B2CC8DF1759021F001483EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8DE1759021F001483EA /* SystemConfiguration.framework */; };
+		3B2CC8E117590229001483EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8E017590229001483EA /* Security.framework */; };
+		3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8E21759022F001483EA /* ImageIO.framework */; };
+		3B2CC8E6175907ED001483EA /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E5175907ED001483EA /* test.wav */; };
+		3B2CC8EA17591423001483EA /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E917591423001483EA /* Utility.m */; };
+		3BA577B2175926060052757D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577AF175926060052757D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */; };
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
@@ -72,10 +82,24 @@
 		3B00BFF017559E25007B64C0 /* package.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		3B00BFF117559E25007B64C0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		3B00BFFA1755E349007B64C0 /* sketch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sketch.js; sourceTree = "<group>"; };
+		3B00C00717560F54007B64C0 /* SpeechToTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechToTextManager.h; sourceTree = "<group>"; };
+		3B00C00817560F54007B64C0 /* SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextManager.m; sourceTree = "<group>"; };
 		3B105C0B1751E00D00C4FF93 /* CreateNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNotebookViewController.h; sourceTree = "<group>"; };
 		3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNotebookViewController.m; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
 		3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.min.js"; sourceTree = "<group>"; };
+		3B2CC8AE175710BD001483EA /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = "Notes/External/Audio-Frameworks/bin/flac/FLAC.framework"; sourceTree = "<group>"; };
+		3B2CC8B0175711C4001483EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3B2CC8DC17590218001483EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3B2CC8DE1759021F001483EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3B2CC8E017590229001483EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3B2CC8E21759022F001483EA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		3B2CC8E4175905A5001483EA /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
+		3B2CC8E5175907ED001483EA /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
+		3B2CC8E817591423001483EA /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		3B2CC8E917591423001483EA /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		3BA577AE175926060052757D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		3BA577AF175926060052757D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRichTextViewController.h; sourceTree = "<group>"; };
 		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
@@ -134,11 +158,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */,
+				3B2CC8E117590229001483EA /* Security.framework in Frameworks */,
+				3B2CC8DF1759021F001483EA /* SystemConfiguration.framework in Frameworks */,
+				3B2CC8DD17590219001483EA /* CFNetwork.framework in Frameworks */,
+				3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */,
 				3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */,
 				3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */,
 				3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */,
-				3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */,
 				3BF3F644174C892400AAD591 /* CoreData.framework in Frameworks */,
+				3B2CC8AF175710BD001483EA /* FLAC.framework in Frameworks */,
+				3B2CC8B2175711E1001483EA /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +235,25 @@
 			path = Notes/External/sketch.js;
 			sourceTree = "<group>";
 		};
+		3B00C00517560EED007B64C0 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				3B00C00617560F43007B64C0 /* Controller */,
+			);
+			name = Recording;
+			path = Notes/Recording;
+			sourceTree = "<group>";
+		};
+		3B00C00617560F43007B64C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3B00C00717560F54007B64C0 /* SpeechToTextManager.h */,
+				3B00C00817560F54007B64C0 /* SpeechToTextManager.m */,
+				3B2CC8E4175905A5001483EA /* wav.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		3B1FF19E1754086D004B2CFE /* jquery */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +274,25 @@
 			path = "Notes/External/jquery-ui-touch-punch";
 			sourceTree = "<group>";
 		};
+		3B2CC8E71759140E001483EA /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3B2CC8E817591423001483EA /* Utility.h */,
+				3B2CC8E917591423001483EA /* Utility.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		3BA577AC175926060052757D /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				3BA577AE175926060052757D /* JSONKit.h */,
+				3BA577AF175926060052757D /* JSONKit.m */,
+			);
+			name = JSONKit;
+			path = Notes/External/JSONKit;
+			sourceTree = "<group>";
+		};
 		3BCB7E58174F31D3006B393D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,8 +309,10 @@
 		3BF3F631174C892400AAD591 = {
 			isa = PBXGroup;
 			children = (
+				3B2CC8E5175907ED001483EA /* test.wav */,
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
+				3B00C00517560EED007B64C0 /* Recording */,
 				3BFD4B50174FF93600E3A46F /* External */,
 				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
 				3BCB7E58174F31D3006B393D /* Model */,
@@ -265,6 +335,12 @@
 		3BF3F63C174C892400AAD591 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B2CC8E21759022F001483EA /* ImageIO.framework */,
+				3B2CC8E017590229001483EA /* Security.framework */,
+				3B2CC8DE1759021F001483EA /* SystemConfiguration.framework */,
+				3B2CC8DC17590218001483EA /* CFNetwork.framework */,
+				3B2CC8B0175711C4001483EA /* AVFoundation.framework */,
+				3B2CC8AE175710BD001483EA /* FLAC.framework */,
 				3BF3F681174D37C400AAD591 /* QuartzCore.framework */,
 				3BF3F63D174C892400AAD591 /* UIKit.framework */,
 				3BF3F63F174C892400AAD591 /* Foundation.framework */,
@@ -332,6 +408,7 @@
 		3BF3F67C174D2BE200AAD591 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3B2CC8E71759140E001483EA /* Utility */,
 				3BFD4B8C1751BE3A00E3A46F /* Model */,
 				3BFD4B721750C48900E3A46F /* Fonts */,
 				3BF3F67D174D2BE200AAD591 /* Categories */,
@@ -358,6 +435,7 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3BA577AC175926060052757D /* JSONKit */,
 				3B00BFF91755E349007B64C0 /* sketch.js */,
 				3B00BFEA17559E25007B64C0 /* CanvasQuery */,
 				3B1FF1A317540C48004B2CFE /* jquery-ui-touch-punch */,
@@ -480,6 +558,7 @@
 				3B00BFF317559E25007B64C0 /* canvasquery.js in Resources */,
 				3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */,
 				3B00BFFB1755E349007B64C0 /* sketch.js in Resources */,
+				3B2CC8E6175907ED001483EA /* test.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +588,9 @@
 				3BFD4B951751D3C600E3A46F /* NSFetchedResultsController+UITableView.m in Sources */,
 				3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */,
 				3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */,
+				3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */,
+				3B2CC8EA17591423001483EA /* Utility.m in Sources */,
+				3BA577B2175926060052757D /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,9 +669,18 @@
 		3BF3F669174C892400AAD591 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Notes/External/Audio-Frameworks/bin/flac\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notes/Notes-Prefix.pch";
 				INFOPLIST_FILE = "Notes/Notes-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Notes/External/libsprec\"",
+					"\"$(SRCROOT)/Notes/External/libsprec/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -598,9 +689,18 @@
 		3BF3F66A174C892400AAD591 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Notes/External/Audio-Frameworks/bin/flac\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notes/Notes-Prefix.pch";
 				INFOPLIST_FILE = "Notes/Notes-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Notes/External/libsprec\"",
+					"\"$(SRCROOT)/Notes/External/libsprec/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

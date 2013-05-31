@@ -11,6 +11,9 @@
 #import "NotebookListViewController.h"
 #import "EditNoteViewController.h"
 #import "NoteManager.h"
+#import "Utility.h"
+
+#import "SpeechToTextManager.h"
 
 @implementation AppDelegate
 
@@ -35,6 +38,18 @@
     self.splitViewController.viewControllers = @[noteNavigationController, detailNavigationController];
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
+//    
+//    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"wav"];
+//    NSString *flacPath = [[[[self applicationDocumentsDirectory] absoluteURL] path] stringByAppendingPathComponent:@"out.flac"];
+//    BOOL ret = [[SpeechToTextManager sharedInstance] convertWAV:wavPath toFLAC:flacPath];
+//    if( !ret ) {
+//        NSLog(@"failed to convert");
+//    }
+    
+    [[SpeechToTextManager sharedInstance] getText:^(NSString *text) {
+        
+    }];
+    
     return YES;
 }
 
@@ -127,7 +142,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Notes.sqlite"];
+    NSURL *storeURL = [ApplicationDocumentsDirectory() URLByAppendingPathComponent:@"Notes.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -165,14 +180,6 @@
 //    abort();
 
     return _persistentStoreCoordinator;
-}
-
-#pragma mark - Application's Documents directory
-
-// Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 @end

@@ -16,3 +16,15 @@
 [submodule "Notes/External/CanvasQuery"]
 	path = Notes/External/CanvasQuery
 	url = https://github.com/nessup/CanvasQuery.git
+[submodule "Notes/External/Audio-Frameworks"]
+	path = Notes/External/Audio-Frameworks
+	url = https://github.com/ap4y/Audio-Frameworks.git
+[submodule "Notes/External/MKNetworkKit"]
+	path = Notes/External/MKNetworkKit
+	url = https://github.com/nessup/MKNetworkKit.git
+[submodule "Notes/External/json-framework"]
+	path = Notes/External/json-framework
+	url = https://github.com/nessup/json-framework.git
+[submodule "Notes/External/JSONKit"]
+	path = Notes/External/JSONKit
+	url = https://github.com/nessup/JSONKit.git
