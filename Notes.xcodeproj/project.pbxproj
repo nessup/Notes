@@ -329,13 +329,6 @@
 			name = MGSplitViewController;
 			sourceTree = "<group>";
 		};
-		3BA577CC175A4AF40052757D /* Rangy */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Rangy;
-			sourceTree = "<group>";
-		};
 		3BA57811175DDDF50052757D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,7 +482,6 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
-				3BA577CC175A4AF40052757D /* Rangy */,
 				3BA577B8175937110052757D /* MGSplitViewController */,
 				3BA577AC175926060052757D /* JSONKit */,
 				3B00BFF91755E349007B64C0 /* sketch.js */,
