@@ -12,6 +12,8 @@
 #import "EditNoteViewController.h"
 #import "NoteManager.h"
 #import "Utility.h"
+#import "MGSplitViewController.h"
+#import "TranscriptViewController.h"
 
 #import "SpeechToTextManager.h"
 
@@ -28,27 +30,40 @@
     [[NoteManager sharedInstance] setContext:self.managedObjectContext];
     
     EditNoteViewController *editNoteViewController = [EditNoteViewController sharedInstance];
-    UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:editNoteViewController];
+    UINavigationController *editNoteNavigationController = [[UINavigationController alloc] initWithRootViewController:editNoteViewController];
+    
+    TranscriptViewController *transcriptViewController = [TranscriptViewController sharedInstance];
+    UINavigationController *transcriptNavigationController = [[UINavigationController alloc] initWithRootViewController:transcriptViewController];
+    
+    MGSplitViewController *subSplit = [MGSplitViewController new];
+    subSplit.masterBeforeDetail = NO;
+    subSplit.viewControllers = @[
+                                 transcriptNavigationController,
+                                 editNoteNavigationController
+                                 ];
+    subSplit.allowsDraggingDivider = YES;
+    subSplit.dividerStyle = MGSplitViewDividerStylePaneSplitter;
+    subSplit.delegate = editNoteViewController;
     
     NotebookListViewController *notebookListViewController = [NotebookListViewController new];
     UINavigationController *noteNavigationController = [[UINavigationController alloc] initWithRootViewController:notebookListViewController];
 
     self.splitViewController = [[UISplitViewController alloc] init];
     self.splitViewController.delegate = editNoteViewController;
-    self.splitViewController.viewControllers = @[noteNavigationController, detailNavigationController];
+    self.splitViewController.viewControllers = @[noteNavigationController, subSplit];
+    
+    if ([self.splitViewController respondsToSelector:@selector(setPresentsWithGesture:)]) {
+        [self.splitViewController setPresentsWithGesture:YES];
+    }
+    
     self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
-//    
-//    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"wav"];
-//    NSString *flacPath = [[[[self applicationDocumentsDirectory] absoluteURL] path] stringByAppendingPathComponent:@"out.flac"];
-//    BOOL ret = [[SpeechToTextManager sharedInstance] convertWAV:wavPath toFLAC:flacPath];
-//    if( !ret ) {
-//        NSLog(@"failed to convert");
-//    }
     
-    [[SpeechToTextManager sharedInstance] getText:^(NSString *text) {
-        
-    }];
+//    double delayInSeconds = 2.0;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [subSplit showMasterPopover:nil];
+//    });
     
     return YES;
 }

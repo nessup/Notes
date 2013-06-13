@@ -34,5 +34,6 @@ enum {
 
 - (void)loadLocalPageNamed:(NSString *)pageName;
 - (void)commitChangesToNote;
+- (void)doAfterDOMLoads:(void (^)())completion;
 
 @end

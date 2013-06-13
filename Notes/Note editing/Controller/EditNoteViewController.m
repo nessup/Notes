@@ -9,9 +9,11 @@
 #import "EditNoteViewController.h"
 
 #import "EditRichTextViewController.h"
+#import "MGSplitViewController.h"
 
 @interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (nonatomic, strong) UIPopoverController *transcriptPopoverController;
 @property (nonatomic, strong) EditRichTextViewController *editTextController;
 
 - (void)configureView;
@@ -86,21 +88,46 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
+    if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
+        barButtonItem.title = NSLocalizedString(@"Right", @"Right");
+        [self.navigationItem setRightBarButtonItem:barButtonItem animated:YES];
+        self.transcriptPopoverController = popoverController;
+    }
+    else {
+        barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+        [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+        self.masterPopoverController = popoverController;
+    }
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{    
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
+{
+    if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+        self.transcriptPopoverController = nil;
+    }
+    else {
+        // Called when the view is shown again in the split view, invalidating the button and popover controller.
+        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+        self.masterPopoverController = nil;
+    }
 }
 
 - (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
 {
-    [self.editTextController commitChangesToNote];
+    if( [svc isKindOfClass:[MGSplitViewController class]] ) {
+        
+    }
+    else {
+        [self.editTextController commitChangesToNote];
+    }
+}
+
+#pragma mark - Actions
+
+- (void)toggleTranscript:(id)sender
+{
+    
 }
 
 @end

@@ -32,6 +32,13 @@
 		3B2CC8E6175907ED001483EA /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E5175907ED001483EA /* test.wav */; };
 		3B2CC8EA17591423001483EA /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E917591423001483EA /* Utility.m */; };
 		3BA577B2175926060052757D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577AF175926060052757D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3BA577BD175937250052757D /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577BA175937250052757D /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3BA577BE175937250052757D /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577BC175937250052757D /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3BA577C1175937F20052757D /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C0175937F20052757D /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3BA577C4175938410052757D /* TranscriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C3175938410052757D /* TranscriptViewController.m */; };
+		3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */; };
+		3BA57810175DA9E20052757D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA5780F175DA9E20052757D /* AudioToolbox.framework */; };
+		3BA57813175DDE050052757D /* TranscriptTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BA57812175DDE050052757D /* TranscriptTemplate.html */; };
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */; };
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
@@ -100,6 +107,18 @@
 		3B2CC8E917591423001483EA /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		3BA577AE175926060052757D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BA577AF175926060052757D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		3BA577B9175937250052757D /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitDividerView.h; path = Notes/External/MGSplitViewController/Classes/MGSplitDividerView.h; sourceTree = "<group>"; };
+		3BA577BA175937250052757D /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitDividerView.m; path = Notes/External/MGSplitViewController/Classes/MGSplitDividerView.m; sourceTree = "<group>"; };
+		3BA577BB175937250052757D /* MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitViewController.h; path = Notes/External/MGSplitViewController/Classes/MGSplitViewController.h; sourceTree = "<group>"; };
+		3BA577BC175937250052757D /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitViewController.m; path = Notes/External/MGSplitViewController/Classes/MGSplitViewController.m; sourceTree = "<group>"; };
+		3BA577BF175937F20052757D /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = Notes/External/MGSplitViewController/Classes/MGSplitCornersView.h; sourceTree = "<group>"; };
+		3BA577C0175937F20052757D /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitCornersView.m; path = Notes/External/MGSplitViewController/Classes/MGSplitCornersView.m; sourceTree = "<group>"; };
+		3BA577C2175938410052757D /* TranscriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptViewController.h; sourceTree = "<group>"; };
+		3BA577C3175938410052757D /* TranscriptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptViewController.m; sourceTree = "<group>"; };
+		3BA577C5175942E70052757D /* UIViewController+MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MGSplitViewController.h"; sourceTree = "<group>"; };
+		3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MGSplitViewController.m"; sourceTree = "<group>"; };
+		3BA5780F175DA9E20052757D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		3BA57812175DDE050052757D /* TranscriptTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TranscriptTemplate.html; sourceTree = "<group>"; };
 		3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditRichTextViewController.h; sourceTree = "<group>"; };
 		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
@@ -158,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BA57810175DA9E20052757D /* AudioToolbox.framework in Frameworks */,
 				3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */,
 				3B2CC8E117590229001483EA /* Security.framework in Frameworks */,
 				3B2CC8DF1759021F001483EA /* SystemConfiguration.framework in Frameworks */,
@@ -238,6 +258,7 @@
 		3B00C00517560EED007B64C0 /* Recording */ = {
 			isa = PBXGroup;
 			children = (
+				3BA57811175DDDF50052757D /* Resources */,
 				3B00C00617560F43007B64C0 /* Controller */,
 			);
 			name = Recording;
@@ -249,6 +270,8 @@
 			children = (
 				3B00C00717560F54007B64C0 /* SpeechToTextManager.h */,
 				3B00C00817560F54007B64C0 /* SpeechToTextManager.m */,
+				3BA577C2175938410052757D /* TranscriptViewController.h */,
+				3BA577C3175938410052757D /* TranscriptViewController.m */,
 				3B2CC8E4175905A5001483EA /* wav.h */,
 			);
 			path = Controller;
@@ -293,9 +316,38 @@
 			path = Notes/External/JSONKit;
 			sourceTree = "<group>";
 		};
+		3BA577B8175937110052757D /* MGSplitViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3BA577B9175937250052757D /* MGSplitDividerView.h */,
+				3BA577BA175937250052757D /* MGSplitDividerView.m */,
+				3BA577BB175937250052757D /* MGSplitViewController.h */,
+				3BA577BC175937250052757D /* MGSplitViewController.m */,
+				3BA577BF175937F20052757D /* MGSplitCornersView.h */,
+				3BA577C0175937F20052757D /* MGSplitCornersView.m */,
+			);
+			name = MGSplitViewController;
+			sourceTree = "<group>";
+		};
+		3BA577CC175A4AF40052757D /* Rangy */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Rangy;
+			sourceTree = "<group>";
+		};
+		3BA57811175DDDF50052757D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3BA57812175DDE050052757D /* TranscriptTemplate.html */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		3BCB7E58174F31D3006B393D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
 				3BCB7E5F174F34A5006B393D /* Model.h */,
 				3BCB7E5C174F31E8006B393D /* Note.h */,
 				3BCB7E5D174F31E8006B393D /* Note.m */,
@@ -314,7 +366,6 @@
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
 				3B00C00517560EED007B64C0 /* Recording */,
 				3BFD4B50174FF93600E3A46F /* External */,
-				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
 				3BCB7E58174F31D3006B393D /* Model */,
 				3BF3F67C174D2BE200AAD591 /* Shared */,
 				3BF3F66B174D226C00AAD591 /* Note editing */,
@@ -335,6 +386,7 @@
 		3BF3F63C174C892400AAD591 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3BA5780F175DA9E20052757D /* AudioToolbox.framework */,
 				3B2CC8E21759022F001483EA /* ImageIO.framework */,
 				3B2CC8E017590229001483EA /* Security.framework */,
 				3B2CC8DE1759021F001483EA /* SystemConfiguration.framework */,
@@ -428,6 +480,8 @@
 				3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */,
 				3BFD4B931751D3C600E3A46F /* NSFetchedResultsController+UITableView.h */,
 				3BFD4B941751D3C600E3A46F /* NSFetchedResultsController+UITableView.m */,
+				3BA577C5175942E70052757D /* UIViewController+MGSplitViewController.h */,
+				3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -435,6 +489,8 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3BA577CC175A4AF40052757D /* Rangy */,
+				3BA577B8175937110052757D /* MGSplitViewController */,
 				3BA577AC175926060052757D /* JSONKit */,
 				3B00BFF91755E349007B64C0 /* sketch.js */,
 				3B00BFEA17559E25007B64C0 /* CanvasQuery */,
@@ -559,6 +615,7 @@
 				3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */,
 				3B00BFFB1755E349007B64C0 /* sketch.js in Resources */,
 				3B2CC8E6175907ED001483EA /* test.wav in Resources */,
+				3BA57813175DDE050052757D /* TranscriptTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +648,11 @@
 				3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */,
 				3B2CC8EA17591423001483EA /* Utility.m in Sources */,
 				3BA577B2175926060052757D /* JSONKit.m in Sources */,
+				3BA577BD175937250052757D /* MGSplitDividerView.m in Sources */,
+				3BA577BE175937250052757D /* MGSplitViewController.m in Sources */,
+				3BA577C1175937F20052757D /* MGSplitCornersView.m in Sources */,
+				3BA577C4175938410052757D /* TranscriptViewController.m in Sources */,
+				3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,7 +799,7 @@
 			);
 			currentVersion = 3BF3F658174C892400AAD591 /* Notes.xcdatamodel */;
 			name = Notes.xcdatamodeld;
-			path = Notes/Notes.xcdatamodeld;
+			path = ../Notes.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

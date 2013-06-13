@@ -22,5 +22,7 @@ extern NSString * const NoteCategoryAssignment;
 @property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) Notebook *notebook;
 @property (nonatomic, retain) NSString * topRightLines;
+@property (nonatomic, retain) NSString * transcription;
+@property (nonatomic, retain) NSData * transcriptionAudio;
 
 @end

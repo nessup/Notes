@@ -28,3 +28,9 @@
 [submodule "Notes/External/JSONKit"]
 	path = Notes/External/JSONKit
 	url = https://github.com/nessup/JSONKit.git
+[submodule "Notes/External/MGSplitViewController"]
+	path = Notes/External/MGSplitViewController
+	url = https://github.com/nessup/MGSplitViewController.git
+[submodule "Notes/External/TPAACAudioConverter"]
+	path = Notes/External/TPAACAudioConverter
+	url = https://github.com/nessup/TPAACAudioConverter.git

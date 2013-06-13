@@ -8,6 +8,8 @@
             <userInfo/>
         </attribute>
         <attribute name="topRightLines" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transcriptionAudio" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="notebook" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Notebook" inverseName="notes" inverseEntity="Notebook" syncable="YES"/>
         <userInfo/>
     </entity>
@@ -18,7 +20,7 @@
         <relationship name="notes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="notebook" inverseEntity="Note" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Note" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Note" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Notebook" positionX="0" positionY="0" width="128" height="105"/>
     </elements>
 </model>

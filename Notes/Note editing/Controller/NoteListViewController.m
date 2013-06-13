@@ -10,6 +10,7 @@
 
 #import "EditNoteViewController.h"
 #import "NoteManager.h"
+#import "TranscriptViewController.h"
 
 @interface NoteListViewController ()
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -165,6 +166,7 @@
 {
     Note *object = (Note *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
     [[EditNoteViewController sharedInstance] setNote:object];
+    [[TranscriptViewController sharedInstance] setNote:object];
 }
 
 #pragma mark - Fetched results controller

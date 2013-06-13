@@ -120,6 +120,7 @@ NSString * const WebViewEventValue = @"value";
     _DOMLoaded = NO;
     [_afterDOMLoadsBlocks removeAllObjects];
     
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName ofType:@"html"]];
     [self.webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName ofType:@"html"]]
                   MIMEType:@"text/html"
           textEncodingName:@"utf-8"
@@ -141,10 +142,6 @@ NSString * const WebViewEventValue = @"value";
     
     _webView = [UIWebView new];
     _webView.keyboardDisplayRequiresUserAction = NO;
-    [_webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NoteTemplate" ofType:@"html"]]
-             MIMEType:@"text/html"
-     textEncodingName:@"utf-8"
-              baseURL:[[NSBundle mainBundle] bundleURL]];
     [self.view addSubview:_webView];
     
     return _webView;

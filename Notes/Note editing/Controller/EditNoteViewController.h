@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MGSplitViewController.h"
+
 @class Note;
 
-@interface EditNoteViewController : UIViewController <UISplitViewControllerDelegate>
+@interface EditNoteViewController : UIViewController <UISplitViewControllerDelegate, MGSplitViewControllerDelegate>
 
 + (EditNoteViewController *)sharedInstance;
 

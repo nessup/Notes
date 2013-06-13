@@ -20,5 +20,6 @@
 #import "FontManager.h"
 #import "UIColor+HexString.h"
 #import "NSFetchedResultsController+UITableView.h"
+#import "UIViewController+MGSplitViewController.h"
 
 #endif

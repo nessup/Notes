@@ -20,5 +20,7 @@ NSString * const NoteCategoryAssignment = @"Assignments";
 @dynamic notebook;
 @dynamic category;
 @dynamic topRightLines;
+@dynamic transcription;
+@dynamic transcriptionAudio;
 
 @end
