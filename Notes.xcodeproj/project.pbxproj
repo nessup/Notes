@@ -23,6 +23,13 @@
 		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
+		3B284960176BF5600030CF03 /* rangy-core.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495D176BF5600030CF03 /* rangy-core.js */; };
+		3B284961176BF5600030CF03 /* rangy-cssclassapplier.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495E176BF5600030CF03 /* rangy-cssclassapplier.js */; };
+		3B284962176BF5600030CF03 /* rangy-textrange.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495F176BF5600030CF03 /* rangy-textrange.js */; };
+		3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284963176C52460030CF03 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B28496A176C52460030CF03 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284965176C52460030CF03 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B28496B176C52460030CF03 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284967176C52460030CF03 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3B284970176C5ACA0030CF03 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28496F176C5ACA0030CF03 /* SearchViewController.m */; };
 		3B2CC8AF175710BD001483EA /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8AE175710BD001483EA /* FLAC.framework */; };
 		3B2CC8B2175711E1001483EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8B0175711C4001483EA /* AVFoundation.framework */; };
 		3B2CC8DD17590219001483EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8DC17590218001483EA /* CFNetwork.framework */; };
@@ -32,9 +39,6 @@
 		3B2CC8E6175907ED001483EA /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E5175907ED001483EA /* test.wav */; };
 		3B2CC8EA17591423001483EA /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E917591423001483EA /* Utility.m */; };
 		3BA577B2175926060052757D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577AF175926060052757D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3BA577BD175937250052757D /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577BA175937250052757D /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3BA577BE175937250052757D /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577BC175937250052757D /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3BA577C1175937F20052757D /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C0175937F20052757D /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BA577C4175938410052757D /* TranscriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C3175938410052757D /* TranscriptViewController.m */; };
 		3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */; };
 		3BA57810175DA9E20052757D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA5780F175DA9E20052757D /* AudioToolbox.framework */; };
@@ -95,6 +99,17 @@
 		3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNotebookViewController.m; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
 		3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.min.js"; sourceTree = "<group>"; };
+		3B28495D176BF5600030CF03 /* rangy-core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "rangy-core.js"; path = "Rangy/dev/rangy-core.js"; sourceTree = "<group>"; };
+		3B28495E176BF5600030CF03 /* rangy-cssclassapplier.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "rangy-cssclassapplier.js"; path = "Rangy/dev/rangy-cssclassapplier.js"; sourceTree = "<group>"; };
+		3B28495F176BF5600030CF03 /* rangy-textrange.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "rangy-textrange.js"; path = "Rangy/dev/rangy-textrange.js"; sourceTree = "<group>"; };
+		3B284963176C52460030CF03 /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitViewController.m; path = MGSplitViewController/Classes/MGSplitViewController.m; sourceTree = "<group>"; };
+		3B284964176C52460030CF03 /* MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitViewController.h; path = MGSplitViewController/Classes/MGSplitViewController.h; sourceTree = "<group>"; };
+		3B284965176C52460030CF03 /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitCornersView.m; path = MGSplitViewController/Classes/MGSplitCornersView.m; sourceTree = "<group>"; };
+		3B284966176C52460030CF03 /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitDividerView.h; path = MGSplitViewController/Classes/MGSplitDividerView.h; sourceTree = "<group>"; };
+		3B284967176C52460030CF03 /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitDividerView.m; path = MGSplitViewController/Classes/MGSplitDividerView.m; sourceTree = "<group>"; };
+		3B284968176C52460030CF03 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = MGSplitViewController/Classes/MGSplitCornersView.h; sourceTree = "<group>"; };
+		3B28496E176C5ACA0030CF03 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		3B28496F176C5ACA0030CF03 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		3B2CC8AE175710BD001483EA /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = "Notes/External/Audio-Frameworks/bin/flac/FLAC.framework"; sourceTree = "<group>"; };
 		3B2CC8B0175711C4001483EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3B2CC8DC17590218001483EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -107,12 +122,6 @@
 		3B2CC8E917591423001483EA /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		3BA577AE175926060052757D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BA577AF175926060052757D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		3BA577B9175937250052757D /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitDividerView.h; path = Notes/External/MGSplitViewController/Classes/MGSplitDividerView.h; sourceTree = "<group>"; };
-		3BA577BA175937250052757D /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitDividerView.m; path = Notes/External/MGSplitViewController/Classes/MGSplitDividerView.m; sourceTree = "<group>"; };
-		3BA577BB175937250052757D /* MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitViewController.h; path = Notes/External/MGSplitViewController/Classes/MGSplitViewController.h; sourceTree = "<group>"; };
-		3BA577BC175937250052757D /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitViewController.m; path = Notes/External/MGSplitViewController/Classes/MGSplitViewController.m; sourceTree = "<group>"; };
-		3BA577BF175937F20052757D /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = Notes/External/MGSplitViewController/Classes/MGSplitCornersView.h; sourceTree = "<group>"; };
-		3BA577C0175937F20052757D /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitCornersView.m; path = Notes/External/MGSplitViewController/Classes/MGSplitCornersView.m; sourceTree = "<group>"; };
 		3BA577C2175938410052757D /* TranscriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptViewController.h; sourceTree = "<group>"; };
 		3BA577C3175938410052757D /* TranscriptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptViewController.m; sourceTree = "<group>"; };
 		3BA577C5175942E70052757D /* UIViewController+MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MGSplitViewController.h"; sourceTree = "<group>"; };
@@ -242,8 +251,7 @@
 				3B00BFF017559E25007B64C0 /* package.json */,
 				3B00BFF117559E25007B64C0 /* README.md */,
 			);
-			name = CanvasQuery;
-			path = Notes/External/CanvasQuery;
+			path = CanvasQuery;
 			sourceTree = "<group>";
 		};
 		3B00BFF91755E349007B64C0 /* sketch.js */ = {
@@ -251,8 +259,7 @@
 			children = (
 				3B00BFFA1755E349007B64C0 /* sketch.js */,
 			);
-			name = sketch.js;
-			path = Notes/External/sketch.js;
+			path = sketch.js;
 			sourceTree = "<group>";
 		};
 		3B00C00517560EED007B64C0 /* Recording */ = {
@@ -283,8 +290,7 @@
 				3B00BFD917555F05007B64C0 /* css */,
 				3B00BFDD17555F05007B64C0 /* js */,
 			);
-			name = jquery;
-			path = Notes/External/jquery;
+			path = jquery;
 			sourceTree = "<group>";
 		};
 		3B1FF1A317540C48004B2CFE /* jquery-ui-touch-punch */ = {
@@ -293,8 +299,35 @@
 				3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */,
 				3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */,
 			);
-			name = "jquery-ui-touch-punch";
-			path = "Notes/External/jquery-ui-touch-punch";
+			path = "jquery-ui-touch-punch";
+			sourceTree = "<group>";
+		};
+		3B28495C176BF5560030CF03 /* Rangy */ = {
+			isa = PBXGroup;
+			children = (
+				3B28495D176BF5600030CF03 /* rangy-core.js */,
+				3B28495E176BF5600030CF03 /* rangy-cssclassapplier.js */,
+				3B28495F176BF5600030CF03 /* rangy-textrange.js */,
+			);
+			name = Rangy;
+			sourceTree = "<group>";
+		};
+		3B28496C176C5A550030CF03 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				3B28496D176C5A550030CF03 /* Controller */,
+			);
+			name = Search;
+			path = Notes/Search;
+			sourceTree = "<group>";
+		};
+		3B28496D176C5A550030CF03 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3B28496E176C5ACA0030CF03 /* SearchViewController.h */,
+				3B28496F176C5ACA0030CF03 /* SearchViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		3B2CC8E71759140E001483EA /* Utility */ = {
@@ -312,19 +345,18 @@
 				3BA577AE175926060052757D /* JSONKit.h */,
 				3BA577AF175926060052757D /* JSONKit.m */,
 			);
-			name = JSONKit;
-			path = Notes/External/JSONKit;
+			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		3BA577B8175937110052757D /* MGSplitViewController */ = {
 			isa = PBXGroup;
 			children = (
-				3BA577B9175937250052757D /* MGSplitDividerView.h */,
-				3BA577BA175937250052757D /* MGSplitDividerView.m */,
-				3BA577BB175937250052757D /* MGSplitViewController.h */,
-				3BA577BC175937250052757D /* MGSplitViewController.m */,
-				3BA577BF175937F20052757D /* MGSplitCornersView.h */,
-				3BA577C0175937F20052757D /* MGSplitCornersView.m */,
+				3B284963176C52460030CF03 /* MGSplitViewController.m */,
+				3B284964176C52460030CF03 /* MGSplitViewController.h */,
+				3B284968176C52460030CF03 /* MGSplitCornersView.h */,
+				3B284965176C52460030CF03 /* MGSplitCornersView.m */,
+				3B284966176C52460030CF03 /* MGSplitDividerView.h */,
+				3B284967176C52460030CF03 /* MGSplitDividerView.m */,
 			);
 			name = MGSplitViewController;
 			sourceTree = "<group>";
@@ -357,6 +389,7 @@
 				3B2CC8E5175907ED001483EA /* test.wav */,
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
+				3B28496C176C5A550030CF03 /* Search */,
 				3B00C00517560EED007B64C0 /* Recording */,
 				3BFD4B50174FF93600E3A46F /* External */,
 				3BCB7E58174F31D3006B393D /* Model */,
@@ -482,6 +515,7 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3B28495C176BF5560030CF03 /* Rangy */,
 				3BA577B8175937110052757D /* MGSplitViewController */,
 				3BA577AC175926060052757D /* JSONKit */,
 				3B00BFF91755E349007B64C0 /* sketch.js */,
@@ -491,6 +525,7 @@
 				3BFD4B5C1750023D00E3A46F /* WebViewJavascriptBridge_iOS */,
 			);
 			name = External;
+			path = Notes/External;
 			sourceTree = "<group>";
 		};
 		3BFD4B5C1750023D00E3A46F /* WebViewJavascriptBridge_iOS */ = {
@@ -501,7 +536,7 @@
 				3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */,
 			);
 			name = WebViewJavascriptBridge_iOS;
-			path = Notes/External/WebViewJavascriptBridge/WebViewJavascriptBridge_iOS;
+			path = WebViewJavascriptBridge/WebViewJavascriptBridge_iOS;
 			sourceTree = "<group>";
 		};
 		3BFD4B5D1750023D00E3A46F /* WebViewJavascriptAbstract */ = {
@@ -511,7 +546,8 @@
 				3BFD4B5F1750023D00E3A46F /* WebViewJavascriptBridgeAbstract.h */,
 				3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */,
 			);
-			path = WebViewJavascriptAbstract;
+			name = WebViewJavascriptAbstract;
+			path = ../WebViewJavascriptBridgeAbstract;
 			sourceTree = "<group>";
 		};
 		3BFD4B721750C48900E3A46F /* Fonts */ = {
@@ -640,11 +676,15 @@
 				3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */,
 				3B2CC8EA17591423001483EA /* Utility.m in Sources */,
 				3BA577B2175926060052757D /* JSONKit.m in Sources */,
-				3BA577BD175937250052757D /* MGSplitDividerView.m in Sources */,
-				3BA577BE175937250052757D /* MGSplitViewController.m in Sources */,
-				3BA577C1175937F20052757D /* MGSplitCornersView.m in Sources */,
 				3BA577C4175938410052757D /* TranscriptViewController.m in Sources */,
 				3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */,
+				3B284960176BF5600030CF03 /* rangy-core.js in Sources */,
+				3B284961176BF5600030CF03 /* rangy-cssclassapplier.js in Sources */,
+				3B284962176BF5600030CF03 /* rangy-textrange.js in Sources */,
+				3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */,
+				3B28496A176C52460030CF03 /* MGSplitCornersView.m in Sources */,
+				3B28496B176C52460030CF03 /* MGSplitDividerView.m in Sources */,
+				3B284970176C5ACA0030CF03 /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

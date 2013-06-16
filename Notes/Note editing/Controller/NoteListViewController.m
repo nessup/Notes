@@ -12,11 +12,13 @@
 #import "NoteManager.h"
 #import "TranscriptViewController.h"
 
-@interface NoteListViewController ()
+@interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
 
-@implementation NoteListViewController
+@implementation NoteListViewController {
+    BOOL _searching;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,6 +80,11 @@
     
     _fetchedResultsController = nil;
     self.title = notebook.name;
+}
+
+- (UITableView *)currentTableView
+{
+    return _searching ? self.searchDisplayController.searchResultsTableView : self.tableView;
 }
 
 #pragma mark - Actions
@@ -185,25 +192,66 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [controller prepareTableViewForChanges:self.tableView];
+    [controller prepareTableViewForChanges:self.currentTableView];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    [controller applySectionChangesOfType:type atIndex:sectionIndex toTableView:self.tableView];
+    [controller applySectionChangesOfType:type atIndex:sectionIndex toTableView:self.currentTableView];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    [controller applyObjectChangesOfType:type atIndexPath:indexPath newIndexPath:newIndexPath toTableView:self.tableView];
+    [controller applyObjectChangesOfType:type atIndexPath:indexPath newIndexPath:newIndexPath toTableView:self.currentTableView];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [controller endChangesToTableView:self.tableView];
+    [controller endChangesToTableView:self.currentTableView];
 }
+
+#pragma mark - Searching
+
+- (void)filterContentForSearchText:(NSString *)searchString
+{
+    NSPredicate *predicate = nil;
+    if( searchString.length ) {
+        predicate = [NSPredicate predicateWithFormat:@"(title contains[cd] %@) OR (content contains[cd] %@)", searchString, searchString];
+    }
+    
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    NSError *e = nil;
+    [[self fetchedResultsController] performFetch:&e];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
+{
+    _searching = YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
+{
+    _searching = NO;
+}
+
+//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+//{
+////    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+////     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+//    
+//    // Return YES to cause the search result table view to be reloaded.
+//    return YES;
+//}
 
 @end
