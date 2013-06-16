@@ -7,7 +7,7 @@ body {
 }
 #container {
     width: 638px;
-    margin: 20px auto;
+    margin: 50px auto;
 }
 .notepad {
     background: #f6f6f6;
@@ -60,11 +60,11 @@ body {
 }
 p {
     color: #333;
-    font: 20px/24px serif;
+    font: 16px/24px serif;
     margin-bottom: 24px;
 }
 h1 {
-    font: bold 36px/36px  Baskerville, 'Goudy Old Style', Palatino, 'Book Antiqua', serif;
+    font: bold 24px/24px  Baskerville, 'Goudy Old Style', Palatino, 'Book Antiqua', serif;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
 }
@@ -90,6 +90,7 @@ p:first-child:first-letter {
 }
 #titleContainer {
     min-height: 24px;
+    margin-top: 24px;
     margin-bottom: 24px;
     padding: 0;
 }
@@ -106,7 +107,7 @@ p:first-child:first-letter {
     user-select: none;
 }
 #title {
-    margin-top: 12px;
+    margin-top: 16px;
 }
 #optionsContainer {
     text-align: left;
@@ -143,5 +144,6 @@ br {
     opacity: 0.5;*/
 }
 #contentContainer {
-    margin: 24px 24px 24px 84px;
+    margin: 0px 24px 24px 84px;
+    padding-top: 24px;
 }
