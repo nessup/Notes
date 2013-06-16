@@ -50,10 +50,48 @@
 - (void)updateSearchWithText:(NSString *)searchText
 {
     EditRichTextViewController *editTextController = [[EditNoteViewController sharedInstance] editTextController];
-//    NSString *plainTextContent = [editTextController plainTextContent];
-//    [plainTextContent enumer]
-    
     editTextController.searchTerm = searchText;
+    
+//    NSString *plainTextContent = [editTextController plainTextContent];
+//    int occurence = 0;
+//    NSRange range;
+//    while(YES) {
+//        range = [self rangeOfString:searchText inString:plainTextContent atOccurence:occurence];
+//        if( range.location == NSNotFound ) {
+//            return;
+//        }
+//        
+//        
+//        occurence++;
+//    }
+}
+
+- (NSRange)rangeOfString:(NSString *)substring
+                inString:(NSString *)string
+             atOccurence:(int)occurence
+{
+    int currentOccurence = 0;
+    NSRange rangeToSearchWithin = NSMakeRange(0, string.length);
+    
+    while (YES)
+    {
+        currentOccurence++;
+        NSRange searchResult = [string rangeOfString: substring
+                                             options: NULL
+                                               range: rangeToSearchWithin];
+        
+        if (searchResult.location == NSNotFound)
+        {
+            return searchResult;
+        }
+        if (currentOccurence == occurence)
+        {
+            return searchResult;
+        }
+        
+        int newLocationToStartAt = searchResult.location + searchResult.length;
+        rangeToSearchWithin = NSMakeRange(newLocationToStartAt, string.length - newLocationToStartAt);
+    }
 }
 
 @end
