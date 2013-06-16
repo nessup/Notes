@@ -1,9 +1,10 @@
-var placeholding = false;
-var bridge;
-var domLoaded = false;
-var editingMode = 0;
-var previousEditingMode = 0;
-var previousSelection;
+var placeholding = false,
+    bridge,
+    domLoaded = false,
+    editingMode = 0,
+    previousEditingMode = 0,
+    previousSelection,
+    searchResultApplier;
 
 function alignLeft() {
     $(getElementContainingCaret()).attr('class','alignLeft');
@@ -32,6 +33,10 @@ function setTitle(title) {
 
 function getContent() {
 	return $('#content').html();
+}
+
+function getPlainTextContent() {
+    return $('#content').text();
 }
 
 function setContent(content) {
@@ -249,6 +254,21 @@ document.addEventListener('WebViewJavascriptBridgeReady', function onBridgeReady
     }
 }, false);
 
+function doSearch(searchTerm) {
+    var range = rangy.createRange();
+    var options = {
+        caseSensitive: false
+    };
+    range.selectNodeContents($('#content').get(0));
+    searchResultApplier.undoToRange(range);
+    if( searchTerm !== "" ) {
+        while( range.findText(searchTerm, options) ) {
+            searchResultApplier.applyToRange(range);
+            range.collapse(false);
+        }
+    }
+}
+
 $(function() {
 
     $('#categories').change(function() {
@@ -288,6 +308,9 @@ $(function() {
     $('#simple_sketch').sketch();
     cq('#simple_sketch');
 
+    rangy.init();
+    searchResultApplier = rangy.createCssClassApplier("searchResult");
+
     // setEditingMode(1);
 
     updateUI();
@@ -299,4 +322,3 @@ $(function() {
         bridge.send('DOMDidLoad');
     }
 });
-

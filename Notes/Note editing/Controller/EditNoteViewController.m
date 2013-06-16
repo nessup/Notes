@@ -10,11 +10,14 @@
 
 #import "EditRichTextViewController.h"
 #import "MGSplitViewController.h"
+#import "NoteSearchViewController.h"
 
 @interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (nonatomic, strong) UIPopoverController *transcriptPopoverController;
-@property (nonatomic, strong) EditRichTextViewController *editTextController;
+@property (nonatomic, strong) UIBarButtonItem *transcriptButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
+@property (nonatomic, strong) UIPopoverController *searchPopoverController;
 
 - (void)configureView;
 @end
@@ -45,6 +48,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
+    self.searchButtonItem = searchButtonItem;
     
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 }
@@ -84,13 +90,43 @@
     [self.masterPopoverController dismissPopoverAnimated:YES];
 }
 
+#pragma mark - Bar button items
+
+- (void)updateRightButtonItems
+{
+    NSMutableArray *items = [NSMutableArray array];
+    
+    if( self.transcriptButtonItem ) {
+        [items addObject:self.transcriptButtonItem];
+    }
+    if( self.searchButtonItem ) {
+        [items addObject:self.searchButtonItem];
+    }
+    
+    [self.navigationItem setRightBarButtonItems:items animated:YES];
+}
+
+- (void)setTranscriptButtonItem:(UIBarButtonItem *)transcriptButtonItem
+{
+    _transcriptButtonItem = transcriptButtonItem;
+    
+    [self updateRightButtonItems];
+}
+
+- (void)setSearchButtonItem:(UIBarButtonItem *)searchButtonItem
+{
+    _searchButtonItem = searchButtonItem;
+    
+    [self updateRightButtonItems];
+}
+
 #pragma mark - Split view
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
     if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
         barButtonItem.title = NSLocalizedString(@"Right", @"Right");
-        [self.navigationItem setRightBarButtonItem:barButtonItem animated:YES];
+        self.transcriptButtonItem = barButtonItem;
         self.transcriptPopoverController = popoverController;
     }
     else {
@@ -103,7 +139,7 @@
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
-        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+        self.transcriptButtonItem = nil;
         self.transcriptPopoverController = nil;
     }
     else {
@@ -128,6 +164,23 @@
 - (void)toggleTranscript:(id)sender
 {
     
+}
+
+- (void)toggleSearchPopover:(id)sender
+{
+    if( !self.searchPopoverController ) {
+        NoteSearchViewController *controller = [NoteSearchViewController new];
+        self.searchPopoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
+        controller.parentPopoverController = self.searchPopoverController;
+    }
+    
+    if( self.searchPopoverController.popoverVisible ) {
+        [self.searchPopoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        
+        [self.searchPopoverController presentPopoverFromBarButtonItem:self.searchButtonItem permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    }
 }
 
 @end

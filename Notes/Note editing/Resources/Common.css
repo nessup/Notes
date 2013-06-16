@@ -26,3 +26,7 @@
     right: -5px;
     bottom: -5px;
 }
+*.searchResult {
+    font-weight: bold;
+    background-color: yellow;
+}

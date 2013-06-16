@@ -23,13 +23,9 @@
 		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
-		3B284960176BF5600030CF03 /* rangy-core.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495D176BF5600030CF03 /* rangy-core.js */; };
-		3B284961176BF5600030CF03 /* rangy-cssclassapplier.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495E176BF5600030CF03 /* rangy-cssclassapplier.js */; };
-		3B284962176BF5600030CF03 /* rangy-textrange.js in Sources */ = {isa = PBXBuildFile; fileRef = 3B28495F176BF5600030CF03 /* rangy-textrange.js */; };
 		3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284963176C52460030CF03 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B28496A176C52460030CF03 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284965176C52460030CF03 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B28496B176C52460030CF03 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284967176C52460030CF03 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3B284970176C5ACA0030CF03 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28496F176C5ACA0030CF03 /* SearchViewController.m */; };
 		3B2CC8AF175710BD001483EA /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8AE175710BD001483EA /* FLAC.framework */; };
 		3B2CC8B2175711E1001483EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8B0175711C4001483EA /* AVFoundation.framework */; };
 		3B2CC8DD17590219001483EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8DC17590218001483EA /* CFNetwork.framework */; };
@@ -49,6 +45,12 @@
 		3BCB7E56174F28A7006B393D /* Common.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
 		3BCB7E5B174F31E8006B393D /* Notebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5A174F31E8006B393D /* Notebook.m */; };
 		3BCB7E5E174F31E8006B393D /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5D174F31E8006B393D /* Note.m */; };
+		3BECC675176D7CE600BA1A01 /* NoteSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC673176D7CE600BA1A01 /* NoteSearchViewController.m */; };
+		3BECC676176D7CE600BA1A01 /* NoteSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BECC674176D7CE600BA1A01 /* NoteSearchViewController.xib */; };
+		3BECC67A176D844B00BA1A01 /* SearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC679176D844B00BA1A01 /* SearchField.m */; };
+		3BECC67B176D972600BA1A01 /* rangy-core.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B28495D176BF5600030CF03 /* rangy-core.js */; };
+		3BECC67C176D972600BA1A01 /* rangy-cssclassapplier.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B28495E176BF5600030CF03 /* rangy-cssclassapplier.js */; };
+		3BECC67D176D972600BA1A01 /* rangy-textrange.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B28495F176BF5600030CF03 /* rangy-textrange.js */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -108,8 +110,6 @@
 		3B284966176C52460030CF03 /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitDividerView.h; path = MGSplitViewController/Classes/MGSplitDividerView.h; sourceTree = "<group>"; };
 		3B284967176C52460030CF03 /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitDividerView.m; path = MGSplitViewController/Classes/MGSplitDividerView.m; sourceTree = "<group>"; };
 		3B284968176C52460030CF03 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = MGSplitViewController/Classes/MGSplitCornersView.h; sourceTree = "<group>"; };
-		3B28496E176C5ACA0030CF03 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		3B28496F176C5ACA0030CF03 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		3B2CC8AE175710BD001483EA /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = "Notes/External/Audio-Frameworks/bin/flac/FLAC.framework"; sourceTree = "<group>"; };
 		3B2CC8B0175711C4001483EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3B2CC8DC17590218001483EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -139,6 +139,11 @@
 		3BCB7E5C174F31E8006B393D /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		3BCB7E5D174F31E8006B393D /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		3BCB7E5F174F34A5006B393D /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		3BECC672176D7CE600BA1A01 /* NoteSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteSearchViewController.h; sourceTree = "<group>"; };
+		3BECC673176D7CE600BA1A01 /* NoteSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteSearchViewController.m; sourceTree = "<group>"; };
+		3BECC674176D7CE600BA1A01 /* NoteSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteSearchViewController.xib; sourceTree = "<group>"; };
+		3BECC678176D844B00BA1A01 /* SearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchField.h; sourceTree = "<group>"; };
+		3BECC679176D844B00BA1A01 /* SearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchField.m; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -312,24 +317,6 @@
 			name = Rangy;
 			sourceTree = "<group>";
 		};
-		3B28496C176C5A550030CF03 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				3B28496D176C5A550030CF03 /* Controller */,
-			);
-			name = Search;
-			path = Notes/Search;
-			sourceTree = "<group>";
-		};
-		3B28496D176C5A550030CF03 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				3B28496E176C5ACA0030CF03 /* SearchViewController.h */,
-				3B28496F176C5ACA0030CF03 /* SearchViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		3B2CC8E71759140E001483EA /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,13 +370,42 @@
 			path = Notes/Model;
 			sourceTree = "<group>";
 		};
+		3BECC670176D7CCC00BA1A01 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				3BECC677176D843C00BA1A01 /* View */,
+				3BECC671176D7CCC00BA1A01 /* Controller */,
+			);
+			name = Search;
+			path = Notes/Search;
+			sourceTree = "<group>";
+		};
+		3BECC671176D7CCC00BA1A01 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3BECC672176D7CE600BA1A01 /* NoteSearchViewController.h */,
+				3BECC673176D7CE600BA1A01 /* NoteSearchViewController.m */,
+				3BECC674176D7CE600BA1A01 /* NoteSearchViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3BECC677176D843C00BA1A01 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3BECC678176D844B00BA1A01 /* SearchField.h */,
+				3BECC679176D844B00BA1A01 /* SearchField.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		3BF3F631174C892400AAD591 = {
 			isa = PBXGroup;
 			children = (
 				3B2CC8E5175907ED001483EA /* test.wav */,
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
-				3B28496C176C5A550030CF03 /* Search */,
+				3BECC670176D7CCC00BA1A01 /* Search */,
 				3B00C00517560EED007B64C0 /* Recording */,
 				3BFD4B50174FF93600E3A46F /* External */,
 				3BCB7E58174F31D3006B393D /* Model */,
@@ -644,6 +660,10 @@
 				3B00BFFB1755E349007B64C0 /* sketch.js in Resources */,
 				3B2CC8E6175907ED001483EA /* test.wav in Resources */,
 				3BA57813175DDE050052757D /* TranscriptTemplate.html in Resources */,
+				3BECC676176D7CE600BA1A01 /* NoteSearchViewController.xib in Resources */,
+				3BECC67B176D972600BA1A01 /* rangy-core.js in Resources */,
+				3BECC67C176D972600BA1A01 /* rangy-cssclassapplier.js in Resources */,
+				3BECC67D176D972600BA1A01 /* rangy-textrange.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,13 +698,11 @@
 				3BA577B2175926060052757D /* JSONKit.m in Sources */,
 				3BA577C4175938410052757D /* TranscriptViewController.m in Sources */,
 				3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */,
-				3B284960176BF5600030CF03 /* rangy-core.js in Sources */,
-				3B284961176BF5600030CF03 /* rangy-cssclassapplier.js in Sources */,
-				3B284962176BF5600030CF03 /* rangy-textrange.js in Sources */,
 				3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */,
 				3B28496A176C52460030CF03 /* MGSplitCornersView.m in Sources */,
 				3B28496B176C52460030CF03 /* MGSplitDividerView.m in Sources */,
-				3B284970176C5ACA0030CF03 /* SearchViewController.m in Sources */,
+				3BECC675176D7CE600BA1A01 /* NoteSearchViewController.m in Sources */,
+				3BECC67A176D844B00BA1A01 /* SearchField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +788,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notes/Notes-Prefix.pch";
 				INFOPLIST_FILE = "Notes/Notes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Notes/External/libsprec\"",
@@ -790,6 +809,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notes/Notes-Prefix.pch";
 				INFOPLIST_FILE = "Notes/Notes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Notes/External/libsprec\"",

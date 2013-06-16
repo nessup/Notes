@@ -536,4 +536,16 @@ static int i = 0;
     }
 }
 
+- (NSString *)plainTextContent
+{
+    return [self.webView stringByEvaluatingJavaScriptFromString:@"getPlainTextContent()"];
+}
+
+- (void)setSearchTerm:(NSString *)searchTerm
+{
+    _searchTerm = searchTerm;
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"doSearch('%@')", searchTerm]];
+}
+
 @end

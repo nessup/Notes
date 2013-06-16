@@ -245,13 +245,4 @@
     _searching = NO;
 }
 
-//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
-//{
-////    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
-////     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-//    
-//    // Return YES to cause the search result table view to be reloaded.
-//    return YES;
-//}
-
 @end

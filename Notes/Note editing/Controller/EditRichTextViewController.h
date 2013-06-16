@@ -31,9 +31,11 @@ enum {
 
 @property (nonatomic, strong, readonly) UIWebView *webView;
 @property (nonatomic, strong) Note *note;
+@property (nonatomic, copy) NSString *searchTerm;
 
 - (void)loadLocalPageNamed:(NSString *)pageName;
 - (void)commitChangesToNote;
 - (void)doAfterDOMLoads:(void (^)())completion;
+- (NSString *)plainTextContent;
 
 @end

@@ -10,14 +10,14 @@
 
 #import "MGSplitViewController.h"
 
-@class Note;
+@class Note, EditRichTextViewController;
 
 @interface EditNoteViewController : UIViewController <UISplitViewControllerDelegate, MGSplitViewControllerDelegate>
 
 + (EditNoteViewController *)sharedInstance;
 
 @property (strong, nonatomic) Note *note;
-
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (nonatomic, strong) EditRichTextViewController *editTextController;
 
 @end
