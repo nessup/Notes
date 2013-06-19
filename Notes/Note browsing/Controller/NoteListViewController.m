@@ -68,10 +68,10 @@
 //    }
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidDisappear:animated];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Properties
@@ -140,6 +140,8 @@
     
     cell.detailTextLabel.numberOfLines = 1;
     cell.detailTextLabel.text = note.content;
+    Note *currentNote = [[MainSplitViewController sharedInstance] currentNote];
+    cell.textLabel.font = (note == currentNote ? [FontManager boldHelveticaNeueWithSize:16.f] : [FontManager helveticaNeueWithSize:16.f]);
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

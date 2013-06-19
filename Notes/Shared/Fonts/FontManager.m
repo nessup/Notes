@@ -11,12 +11,21 @@
 @implementation FontManager
 
 + (UIFont *)helveticaNeueWithSize:(CGFloat)size {
-    static UIFont *_helveticaNeueFont;
+    static UIFont *font;
     
-    if( !_helveticaNeueFont ) {
-        _helveticaNeueFont = [UIFont fontWithName:@"HelveticaNeue" size:size];
+    if( !font ) {
+        font = [UIFont fontWithName:@"HelveticaNeue" size:size];
     }
-    return [_helveticaNeueFont fontWithSize:size];
+    return [font fontWithSize:size];
+}
+
++ (UIFont *)boldHelveticaNeueWithSize:(CGFloat)size {
+    static UIFont *font;
+    
+    if( !font ) {
+        font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
+    }
+    return [font fontWithSize:size];
 }
 
 @end

@@ -11,5 +11,6 @@
 @interface FontManager : NSObject
 
 + (UIFont *)helveticaNeueWithSize:(CGFloat)size;
++ (UIFont *)boldHelveticaNeueWithSize:(CGFloat)size;
 
 @end

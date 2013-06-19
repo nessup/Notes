@@ -12,6 +12,8 @@
 #import "MGSplitViewController.h"
 #import "NoteSearchViewController.h"
 #import "TranscriptViewController.h"
+#import "MainSplitViewController.h"
+#import "NoteManager.h"
 
 @interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -43,7 +45,7 @@
     
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
     self.searchButtonItem = searchButtonItem;
-    UIBarButtonItem *newNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newNote:)];
+    UIBarButtonItem *newNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
     self.createNewNoteButton = newNoteButton;
     
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
@@ -51,10 +53,7 @@
 
 - (void)configureView
 {
-    if (self.note) {
-//        self.detailDescriptionLabel.text =
-        self.editTextController.note = self.note;
-    }
+    self.editTextController.note = self.note;
 }
 
 #pragma mark - Properties
@@ -167,11 +166,6 @@
 
 #pragma mark - Actions
 
-- (void)toggleTranscript:(id)sender
-{
-    
-}
-
 - (void)toggleSearchPopover:(id)sender
 {
     if( !self.searchPopoverController ) {
@@ -189,9 +183,9 @@
     }
 }
 
-- (void)newNote:(id)sender
+- (void)createNewNote:(id)sender
 {
-    
+    [[MainSplitViewController sharedInstance] setCurrentNote:[[NoteManager sharedInstance] createNewNoteInNotebook:self.note.notebook]];
 }
 
 @end
