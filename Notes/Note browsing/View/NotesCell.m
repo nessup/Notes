@@ -21,6 +21,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
         _colorLayer = [CALayer new];
         [self.layer addSublayer:_colorLayer];
     }
