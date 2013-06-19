@@ -8,14 +8,10 @@
 
 #import "AppDelegate.h"
 
-#import "NotebookListViewController.h"
-#import "EditNoteViewController.h"
+#import "SpeechToTextManager.h"
 #import "NoteManager.h"
 #import "Utility.h"
-#import "MGSplitViewController.h"
-#import "TranscriptViewController.h"
-
-#import "SpeechToTextManager.h"
+#import "MainSplitViewController.h"
 
 @implementation AppDelegate
 
@@ -26,45 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
     [[NoteManager sharedInstance] setContext:self.managedObjectContext];
-    
-    EditNoteViewController *editNoteViewController = [EditNoteViewController sharedInstance];
-    UINavigationController *editNoteNavigationController = [[UINavigationController alloc] initWithRootViewController:editNoteViewController];
-    
-    TranscriptViewController *transcriptViewController = [TranscriptViewController sharedInstance];
-    UINavigationController *transcriptNavigationController = [[UINavigationController alloc] initWithRootViewController:transcriptViewController];
-    
-    MGSplitViewController *subSplit = [MGSplitViewController new];
-    subSplit.masterBeforeDetail = NO;
-    subSplit.viewControllers = @[
-                                 transcriptNavigationController,
-                                 editNoteNavigationController
-                                 ];
-    subSplit.allowsDraggingDivider = YES;
-    subSplit.dividerStyle = MGSplitViewDividerStylePaneSplitter;
-    subSplit.delegate = editNoteViewController;
-    
-    NotebookListViewController *notebookListViewController = [NotebookListViewController new];
-    UINavigationController *noteNavigationController = [[UINavigationController alloc] initWithRootViewController:notebookListViewController];
-
-    self.splitViewController = [[UISplitViewController alloc] init];
-    self.splitViewController.delegate = editNoteViewController;
-    self.splitViewController.viewControllers = @[noteNavigationController, subSplit];
-    
-    if ([self.splitViewController respondsToSelector:@selector(setPresentsWithGesture:)]) {
-        [self.splitViewController setPresentsWithGesture:YES];
-    }
-    
-    self.window.rootViewController = self.splitViewController;
+    self.window.rootViewController = [MainSplitViewController sharedInstance];
     [self.window makeKeyAndVisible];
-    
-//    double delayInSeconds = 2.0;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        [subSplit showMasterPopover:nil];
-//    });
-    
     return YES;
 }
 
@@ -83,7 +43,7 @@
         
     }];
     
-    [self saveContext];
+    [[NoteManager sharedInstance] saveToDisk];
     
     [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
 }
@@ -101,21 +61,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-}
-
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
+    [[NoteManager sharedInstance] saveToDisk];
 }
 
 #pragma mark - Core Data stack

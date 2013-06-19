@@ -32,16 +32,6 @@
     UILabel *_transcriptLabel;
 }
 
-+ (TranscriptViewController *)sharedInstance
-{
-    static TranscriptViewController *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithNibName:nil bundle:nil];
-    });
-    return sharedInstance;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

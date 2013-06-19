@@ -14,6 +14,4 @@
 
 @property (nonatomic, strong) Note *note;
 
-+ (TranscriptViewController *)sharedInstance;
-
 @end

@@ -441,7 +441,7 @@ NSString * const WebViewEventValue = @"value";
     self.note.topRightLines = topRightLines;
     self.note.category = category;
     
-//    [[NoteManager sharedInstance] saveToDisk];
+    [[NoteManager sharedInstance] saveToDisk];
     
     [[[NoteManager sharedInstance] context] refreshObject:self.note mergeChanges:YES];
 }

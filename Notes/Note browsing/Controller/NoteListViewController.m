@@ -8,9 +8,10 @@
 
 #import "NoteListViewController.h"
 
-#import "EditNoteViewController.h"
+#import "MainSplitViewController.h"
 #import "NoteManager.h"
 #import "TranscriptViewController.h"
+#import "EditNoteViewController.h"
 #import "NotesCell.h"
 
 @interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
@@ -172,9 +173,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Note *object = (Note *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
-    [[EditNoteViewController sharedInstance] setNote:object];
-    [[TranscriptViewController sharedInstance] setNote:object];
+    Note *note = (Note *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
+    [[MainSplitViewController sharedInstance] setCurrentNote:note];
 }
 
 #pragma mark - Fetched results controller

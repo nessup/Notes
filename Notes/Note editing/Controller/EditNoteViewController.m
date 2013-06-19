@@ -17,22 +17,13 @@
 @property (nonatomic, strong) UIPopoverController *transcriptPopoverController;
 @property (nonatomic, strong) UIBarButtonItem *transcriptButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *createNewNoteButton;
 @property (nonatomic, strong) UIPopoverController *searchPopoverController;
 
 - (void)configureView;
 @end
 
 @implementation EditNoteViewController
-
-+ (EditNoteViewController *)sharedInstance
-{
-    static EditNoteViewController *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,6 +42,8 @@
     
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
     self.searchButtonItem = searchButtonItem;
+    UIBarButtonItem *newNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newNote:)];
+    self.createNewNoteButton = newNoteButton;
     
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 }
@@ -96,11 +89,14 @@
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    if( self.transcriptButtonItem ) {
-        [items addObject:self.transcriptButtonItem];
+    if( self.createNewNoteButton ) {
+        [items addObject:self.createNewNoteButton];
     }
     if( self.searchButtonItem ) {
         [items addObject:self.searchButtonItem];
+    }
+    if( self.transcriptButtonItem ) {
+        [items addObject:self.transcriptButtonItem];
     }
     
     [self.navigationItem setRightBarButtonItems:items animated:YES];
@@ -120,12 +116,19 @@
     [self updateRightButtonItems];
 }
 
+- (void)setCreateNewNoteButton:(UIBarButtonItem *)createNewNoteButton
+{
+    _createNewNoteButton = createNewNoteButton;
+    
+    [self updateRightButtonItems];
+}
+
 #pragma mark - Split view
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
     if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
-        barButtonItem.title = NSLocalizedString(@"Right", @"Right");
+        barButtonItem.title = NSLocalizedString(@"Transcript", @"Transcript");
         self.transcriptButtonItem = barButtonItem;
         self.transcriptPopoverController = popoverController;
     }
@@ -181,6 +184,11 @@
         
         [self.searchPopoverController presentPopoverFromBarButtonItem:self.searchButtonItem permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
+}
+
+- (void)newNote:(id)sender
+{
+    
 }
 
 @end

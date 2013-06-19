@@ -55,6 +55,7 @@
 		3BECC6C917717B0E00BA1A01 /* NotebookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6C517717B0E00BA1A01 /* NotebookListViewController.m */; };
 		3BECC6CA17717B0E00BA1A01 /* NoteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */; };
 		3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6CD17717B9C00BA1A01 /* NotesCell.m */; };
+		3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -154,6 +155,8 @@
 		3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteListViewController.m; sourceTree = "<group>"; };
 		3BECC6CC17717B9C00BA1A01 /* NotesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesCell.h; sourceTree = "<group>"; };
 		3BECC6CD17717B9C00BA1A01 /* NotesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesCell.m; sourceTree = "<group>"; };
+		3BECC6CF17718C3700BA1A01 /* MainSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSplitViewController.h; sourceTree = "<group>"; };
+		3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainSplitViewController.m; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -425,6 +428,8 @@
 				3BECC6C517717B0E00BA1A01 /* NotebookListViewController.m */,
 				3BECC6C617717B0E00BA1A01 /* NoteListViewController.h */,
 				3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */,
+				3BECC6CF17718C3700BA1A01 /* MainSplitViewController.h */,
+				3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -748,6 +753,7 @@
 				3BECC6C917717B0E00BA1A01 /* NotebookListViewController.m in Sources */,
 				3BECC6CA17717B0E00BA1A01 /* NoteListViewController.m in Sources */,
 				3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */,
+				3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

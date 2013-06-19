@@ -172,10 +172,9 @@ newIndexPath:(NSIndexPath *)newIndexPath
     cell.colorLayer.backgroundColor = (__bridge CGColorRef)((id)notebook.color.CGColor);
 
     NSString *countString = nil;
-    NSUInteger count = notebook.notes.count;
-    if( count ) {
-        if( count > 1 ) {
-            countString = [NSString stringWithFormat:@"%d notes", count];
+    if( notebook.notes.count ) {
+        if( notebook.notes.count > 1 ) {
+            countString = [NSString stringWithFormat:@"%d notes", ((NSArray *)notebook.notes).count];
         }
         else {
             countString = @"1 note";

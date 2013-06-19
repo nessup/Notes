@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MainSplitViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -16,8 +18,6 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)saveContext;
-
-@property (strong, nonatomic) UISplitViewController *splitViewController;
+@property (strong, nonatomic) MainSplitViewController *splitViewController;
 
 @end
