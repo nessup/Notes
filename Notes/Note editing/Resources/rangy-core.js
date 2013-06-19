@@ -1,0 +1,1 @@
+../../External/Rangy/dev/rangy-core.js

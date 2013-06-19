@@ -10,15 +10,19 @@
 
 #import "EditRichTextViewController.h"
 #import "NoteManager.h"
+#import "ColorPickerView.h"
 
-#define ModalWidth      485.f
-#define ModalHeight     485.f
+#define ModalWidth              485.f
+#define ModalHeight             485.f
+#define ColorPickerViewWidth    100.f
+#define TopMargin               10.f
+#define VerticalPadding         10.f
 
 @interface CreateNotebookViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *notebookNameField;
 @property (nonatomic, strong) UITextField *userNameField;
-@property (nonatomic, strong) EditRichTextViewController *editRichTextController;
+@property (nonatomic, strong) ColorPickerView *colorPickerView;
 
 @end
 
@@ -37,6 +41,8 @@
 - (void)loadView
 {
     [super loadView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UILabel *(^createSideLabel)(NSString *) = ^UILabel *(NSString *title) {
         UILabel *label = [UILabel new];
@@ -87,10 +93,8 @@
     _userNameField = createTextField(@"name on assignments:");
     [self.view addSubview:_userNameField];
     
-    self.editRichTextController = [EditRichTextViewController new];
-//    [self addChildViewController:self.editRichTextController];
-//    [self.view addSubview:self.editRichTextController.view];
-//    [self.editRichTextController didMoveToParentViewController:self];
+    _colorPickerView = [ColorPickerView new];
+    [self.view addSubview:_colorPickerView];
 }
 
 - (void)viewDidLoad
@@ -136,6 +140,13 @@
         self.view.frame.size.width,
         45.f
     };
+    
+    [self.colorPickerView sizeToFit];
+    self.colorPickerView.frame = (CGRect) {
+        roundf(self.view.frame.size.width/2.f - self.colorPickerView.frame.size.width/2.f),
+        CGRectGetMaxY(self.userNameField.frame) + TopMargin,
+        self.colorPickerView.frame.size
+    };
 }
 
 - (void)sizeToFitForModalController:(UIViewController *)controller
@@ -155,7 +166,7 @@
     controller.view.superview.bounds = (CGRect) {
         CGPointZero,
         500.f,
-        CGRectGetMaxY(_userNameField.frame) + offset
+        CGRectGetMaxY(self.colorPickerView.frame) + offset + VerticalPadding
     };
 }
 
@@ -177,6 +188,7 @@
 {
     Notebook *notebook = [[NoteManager sharedInstance] createNewNotebookNamed:self.notebookNameField.text];
     notebook.defaultUserName = self.notebookNameField.text;
+    notebook.color = self.colorPickerView.selectedColor;
     [[NoteManager sharedInstance] saveToDisk];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

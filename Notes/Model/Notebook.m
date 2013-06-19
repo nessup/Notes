@@ -13,5 +13,6 @@
 @dynamic name;
 @dynamic notes;
 @dynamic defaultUserName;
+@dynamic color;
 
 @end

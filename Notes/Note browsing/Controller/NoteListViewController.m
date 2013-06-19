@@ -11,6 +11,7 @@
 #import "EditNoteViewController.h"
 #import "NoteManager.h"
 #import "TranscriptViewController.h"
+#import "NotesCell.h"
 
 @interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -108,20 +109,20 @@
 }
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NotesCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"NotesCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NotesCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[NotesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
 
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(NotesCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if( note.title.length ) {

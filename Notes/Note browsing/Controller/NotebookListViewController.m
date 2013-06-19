@@ -11,6 +11,7 @@
 #import "NoteManager.h"
 #import "CreateNotebookViewController.h"
 #import "NoteListViewController.h"
+#import "NotesCell.h"
 
 @interface NotebookListViewController () <NSFetchedResultsControllerDelegate>
 
@@ -26,7 +27,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -77,13 +78,13 @@
 }
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NotesCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NotesCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[NotesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     [self configureCell:cell atIndexPath:indexPath];
@@ -164,25 +165,26 @@ newIndexPath:(NSIndexPath *)newIndexPath
     [controller endChangesToTableView:self.tableView];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(NotesCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Notebook *notebook = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = notebook.name;
+    cell.colorLayer.backgroundColor = (__bridge CGColorRef)((id)notebook.color.CGColor);
 
-//    NSString *countString = nil;
-//    NSUInteger count = notebook.notes.count;
-//    if( count ) {
-//        if( count > 1 ) {
-//            countString = [NSString stringWithFormat:@"%d notes", count];
-//        }
-//        else {
-//            countString = @"1 note";
-//        }
-//    }
-//    else {
-//        countString = @"No notes";
-//    }
-//    cell.detailTextLabel.text = countString;
+    NSString *countString = nil;
+    NSUInteger count = notebook.notes.count;
+    if( count ) {
+        if( count > 1 ) {
+            countString = [NSString stringWithFormat:@"%d notes", count];
+        }
+        else {
+            countString = @"1 note";
+        }
+    }
+    else {
+        countString = @"No notes";
+    }
+    cell.detailTextLabel.text = countString;
 }
 
 @end
