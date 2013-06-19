@@ -11,6 +11,7 @@
 #import "EditRichTextViewController.h"
 #import "MGSplitViewController.h"
 #import "NoteSearchViewController.h"
+#import "TranscriptViewController.h"
 
 @interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -125,9 +126,10 @@
 
 #pragma mark - Split view
 
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+- (void)splitViewController:(MGSplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
+    UINavigationController *navigationController = (UINavigationController *)viewController;
+    if( [navigationController.topViewController isKindOfClass:[TranscriptViewController class]] ) {
         barButtonItem.title = NSLocalizedString(@"Transcript", @"Transcript");
         self.transcriptButtonItem = barButtonItem;
         self.transcriptPopoverController = popoverController;
@@ -139,9 +141,10 @@
     }
 }
 
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+- (void)splitViewController:(MGSplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
-    if( [splitController isKindOfClass:[MGSplitViewController class]] ) {
+    UINavigationController *navigationController = (UINavigationController *)viewController;
+    if( [navigationController.topViewController isKindOfClass:[TranscriptViewController class]] ) {
         self.transcriptButtonItem = nil;
         self.transcriptPopoverController = nil;
     }
@@ -152,7 +155,7 @@
     }
 }
 
-- (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
+- (void)splitViewController:(MGSplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
 {
     if( [svc isKindOfClass:[MGSplitViewController class]] ) {
         

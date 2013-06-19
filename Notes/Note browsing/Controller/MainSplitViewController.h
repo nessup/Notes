@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MGSplitViewController.h"
 
 @class EditNoteViewController, TranscriptViewController, NotebookListViewController, Note;
 
-@interface MainSplitViewController : UISplitViewController
+@interface MainSplitViewController : MGSplitViewController
 
 @property (nonatomic, strong, readonly) EditNoteViewController *editNoteViewController;
 @property (nonatomic, strong, readonly) TranscriptViewController *transcriptViewController;
