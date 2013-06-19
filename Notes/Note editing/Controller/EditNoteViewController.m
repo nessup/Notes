@@ -53,6 +53,7 @@
 
 - (void)configureView
 {
+    self.title = self.note.title;
     self.editTextController.note = self.note;
 }
 
