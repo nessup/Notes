@@ -14,6 +14,7 @@
 #import "TranscriptViewController.h"
 #import "MainSplitViewController.h"
 #import "NoteManager.h"
+#import "NoteTitleView.h"
 
 @interface EditNoteViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -22,8 +23,9 @@
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *createNewNoteButton;
 @property (nonatomic, strong) UIPopoverController *searchPopoverController;
+@property (nonatomic, strong) NoteTitleView *titleView;
 
-- (void)configureView;
+- (void)updateView;
 @end
 
 @implementation EditNoteViewController
@@ -49,11 +51,17 @@
     self.createNewNoteButton = newNoteButton;
     
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
+    
+    self.titleView = [NoteTitleView new];
+    [self.titleView addTarget:self action:@selector(titleViewTapped:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = self.titleView;
 }
 
-- (void)configureView
+- (void)updateView
 {
-    self.title = self.note.title;
+    NSString *title = self.note.title ? self.note.title : self.note.titlePlaceholder;
+    self.titleView.title = title;
+    self.titleView.subtitle = self.note.notebook.name;
     self.editTextController.note = self.note;
 }
 
@@ -73,15 +81,24 @@
     return _editTextController;
 }
 
+#pragma mark - Note management
+
 - (void)setNote:(Note *)note
 {
     if (_note != note) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_note];
         _note = note;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
         
-        [self configureView];
+        [self updateView];
     }
     
     [self.masterPopoverController dismissPopoverAnimated:YES];
+}
+
+- (void)noteChanged:(id)sender
+{
+    [self updateView];
 }
 
 #pragma mark - Bar button items
@@ -187,6 +204,11 @@
 - (void)createNewNote:(id)sender
 {
     [[MainSplitViewController sharedInstance] setCurrentNote:[[NoteManager sharedInstance] createNewNoteInNotebook:self.note.notebook]];
+}
+
+- (void)titleViewTapped:(id)sender
+{
+    [[[[MainSplitViewController sharedInstance] editNoteViewController] editTextController] focusAndSelectTitle];
 }
 
 @end

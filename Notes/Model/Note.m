@@ -23,4 +23,14 @@ NSString * const NoteCategoryAssignment = @"Assignments";
 @dynamic transcription;
 @dynamic transcriptionAudio;
 
+- (NSString *)titlePlaceholder
+{
+    static NSDateFormatter *formatter = nil;
+    if( !formatter ) {
+        formatter = [NSDateFormatter new];
+        formatter.dateStyle = NSDateFormatterMediumStyle;
+    }
+    return [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:self.dateCreated]];
+}
+
 @end

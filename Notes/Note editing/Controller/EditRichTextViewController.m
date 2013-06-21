@@ -15,6 +15,7 @@
 
 NSString * const WebViewEventName = @"eventName";
 NSString * const WebViewEventCategoryChanged = @"categoryChanged";
+NSString * const WebViewEventTitleChanged = @"titleChanged";
 
 NSString * const WebViewEventValue = @"value";
 
@@ -65,23 +66,26 @@ NSString * const WebViewEventValue = @"value";
             }
             [_afterDOMLoadsBlocks removeAllObjects];
             
-            _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
-                static int count = 0;
-                
-                [self checkSelection:nil];
-                
-                if( count % 50 == 0 ) {
-                    [self commitChangesToNote];
-                }
-                
-                count++;
-            }];
+//            _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
+//                static int count = 0;
+//                
+//                [self checkSelection:nil];
+//                
+//                if( count % 50 == 0 ) {
+//                    [self commitChangesToNote];
+//                }
+//                
+//                count++;
+//            }];
         }
         else if( [data isKindOfClass:[NSDictionary class]] ) {
             NSDictionary *dictionary = (NSDictionary *)data;
             
             if( [dictionary[WebViewEventName] isEqualToString:WebViewEventCategoryChanged] ) {
                 [self categoryChanged:dictionary];
+            }
+            else if( [dictionary[WebViewEventName] isEqualToString:WebViewEventTitleChanged] ) {
+                [self titleChanged:dictionary];
             }
         }
     }];
@@ -133,6 +137,10 @@ NSString * const WebViewEventValue = @"value";
     self.note.category = event[WebViewEventValue];
 }
 
+- (void)titleChanged:(NSDictionary *)event {
+    self.note.title = event[WebViewEventValue];
+}
+
 #pragma mark - Properties
 
 - (UIWebView *)webView
@@ -176,6 +184,9 @@ NSString * const WebViewEventValue = @"value";
 
 - (void)setNote:(Note *)note
 {
+    if( _note == note )
+        return;
+    
     _note = note;
     
     [self doAfterDOMLoads:^{
@@ -183,9 +194,7 @@ NSString * const WebViewEventValue = @"value";
         
         dictionary[@"title"] = note.title ? note.title : @"";
         
-        NSDateFormatter *formatter = [NSDateFormatter new];
-        formatter.dateStyle = NSDateFormatterMediumStyle;
-        dictionary[@"placeholderString"] = [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:note.dateCreated]];
+        dictionary[@"placeholderString"] = [note titlePlaceholder];
         
         dictionary[@"content"] = note.content ? note.content : @"";
      
@@ -546,6 +555,11 @@ static int i = 0;
     _searchTerm = searchTerm;
     
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"doSearch('%@')", searchTerm]];
+}
+
+- (void)focusAndSelectTitle
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"focusAndSelectTitle()"];
 }
 
 @end

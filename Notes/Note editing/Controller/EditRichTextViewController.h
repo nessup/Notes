@@ -37,5 +37,6 @@ enum {
 - (void)commitChangesToNote;
 - (void)doAfterDOMLoads:(void (^)())completion;
 - (NSString *)plainTextContent;
+- (void)focusAndSelectTitle;
 
 @end

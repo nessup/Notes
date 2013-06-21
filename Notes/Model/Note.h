@@ -25,4 +25,6 @@ extern NSString * const NoteCategoryAssignment;
 @property (nonatomic, retain) NSString * transcription;
 @property (nonatomic, retain) NSData * transcriptionAudio;
 
+- (NSString *)titlePlaceholder;
+
 @end

@@ -34,6 +34,7 @@
 		3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8E21759022F001483EA /* ImageIO.framework */; };
 		3B2CC8E6175907ED001483EA /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E5175907ED001483EA /* test.wav */; };
 		3B2CC8EA17591423001483EA /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E917591423001483EA /* Utility.m */; };
+		3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B79AE4F1772DA1200164252 /* NoteTitleView.m */; };
 		3BA577B2175926060052757D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577AF175926060052757D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BA577C4175938410052757D /* TranscriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C3175938410052757D /* TranscriptViewController.m */; };
 		3BA577C7175942E70052757D /* UIViewController+MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */; };
@@ -123,6 +124,8 @@
 		3B2CC8E5175907ED001483EA /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		3B2CC8E817591423001483EA /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		3B2CC8E917591423001483EA /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		3B79AE4E1772DA1200164252 /* NoteTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTitleView.h; sourceTree = "<group>"; };
+		3B79AE4F1772DA1200164252 /* NoteTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTitleView.m; sourceTree = "<group>"; };
 		3BA577AE175926060052757D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3BA577AF175926060052757D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		3BA577C2175938410052757D /* TranscriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptViewController.h; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 				3B00BFE81755919D007B64C0 /* RTEGestureRecognizer.m */,
 				3BECC67E176E3AC400BA1A01 /* ColorPickerView.h */,
 				3BECC67F176E3AC400BA1A01 /* ColorPickerView.m */,
+				3B79AE4E1772DA1200164252 /* NoteTitleView.h */,
+				3B79AE4F1772DA1200164252 /* NoteTitleView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -754,6 +759,7 @@
 				3BECC6CA17717B0E00BA1A01 /* NoteListViewController.m in Sources */,
 				3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */,
 				3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */,
+				3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -241,6 +241,10 @@ function moveCaretToEndOf(element) {
     selection.addRange(textRange);
 }
 
+function focusAndSelectTitle() {
+    moveCaretToEndOf($('#title').get(0));
+}
+
 document.addEventListener('WebViewJavascriptBridgeReady', function onBridgeReady(event) {
     bridge = event.bridge;
 
@@ -291,6 +295,10 @@ $(function() {
         }
     });
     $('#title').keyup(function(event) {
+        bridge.send({
+            eventName:'titleChanged',
+            value:$(this).text()
+        });
         updateUI();
     });
 
