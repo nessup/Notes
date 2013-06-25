@@ -8,6 +8,8 @@
 
 #import "ColorPickerView.h"
 
+#import "Utility.h"
+
 #define ColorDiameter               44.f
 #define DefaultInterColorDistance   10.f
 
@@ -43,6 +45,7 @@ static NSArray *DefaultColors = nil;
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        _selectedColor = DefaultColors[0];
         [self updateView];
     }
     return self;
@@ -102,7 +105,7 @@ static NSArray *DefaultColors = nil;
 
 - (UIView *)createColorViewWithColor:(UIColor *)color
 {
-    UIColor *darkenedColor = [[self class] changeBrightness:color amount:0.9f];
+    UIColor *darkenedColor = ChangeBrightnessOfColorByAmount(color, 0.9f);
     CAGradientLayer *layer = [CAGradientLayer layer];
     layer.colors = @[(id)color.CGColor, (id)darkenedColor.CGColor];
     layer.cornerRadius = 3.f;
@@ -141,25 +144,6 @@ static NSArray *DefaultColors = nil;
     view.layer.borderWidth = 3.f;
     view.layer.cornerRadius = 5.f;
     return view;
-}
-
-#pragma mark - Utility
-
-+ (UIColor*)changeBrightness:(UIColor*)color amount:(CGFloat)amount
-{
-    CGFloat hue, saturation, brightness, alpha;
-    if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
-        brightness += (amount-1.0);
-        brightness = MAX(MIN(brightness, 1.0), 0.0);
-        return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
-    }
-    CGFloat white;
-    if ([color getWhite:&white alpha:&alpha]) {
-        white += (amount-1.0);
-        white = MAX(MIN(white, 1.0), 0.0);
-        return [UIColor colorWithWhite:white alpha:alpha];
-    }
-    return nil;
 }
 
 @end

@@ -21,5 +21,6 @@
 #import "UIColor+HexString.h"
 #import "NSFetchedResultsController+UITableView.h"
 #import "UIViewController+MGSplitViewController.h"
+#import "UIView+Layout.h"
 
 #endif

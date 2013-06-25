@@ -47,7 +47,8 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-    }}
+    }
+}
 
 - (void)endChangesToTableView:(UITableView *)tableView
 {

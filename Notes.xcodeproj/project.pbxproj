@@ -20,6 +20,7 @@
 		3B00BFF817559E25007B64C0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF117559E25007B64C0 /* README.md */; };
 		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
 		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
+		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
 		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
@@ -34,6 +35,26 @@
 		3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2CC8E21759022F001483EA /* ImageIO.framework */; };
 		3B2CC8E6175907ED001483EA /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E5175907ED001483EA /* test.wav */; };
 		3B2CC8EA17591423001483EA /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CC8E917591423001483EA /* Utility.m */; };
+		3B46136C177777D2006D8EBB /* NotebookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46136B177777D2006D8EBB /* NotebookCell.m */; };
+		3B46136F17779391006D8EBB /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46136E17779391006D8EBB /* UIView+Layout.m */; };
+		3B46137217788B00006D8EBB /* NotebookIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46137117788B00006D8EBB /* NotebookIconView.m */; };
+		3B4615891778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46156E1778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.m */; };
+		3B46158A1778961F006D8EBB /* PSTCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615701778961F006D8EBB /* PSTCollectionView.m */; };
+		3B46158B1778961F006D8EBB /* PSTCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615721778961F006D8EBB /* PSTCollectionViewCell.m */; };
+		3B46158C1778961F006D8EBB /* PSTCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615751778961F006D8EBB /* PSTCollectionViewController.m */; };
+		3B46158D1778961F006D8EBB /* PSTCollectionViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615771778961F006D8EBB /* PSTCollectionViewData.m */; };
+		3B46158E1778961F006D8EBB /* PSTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615791778961F006D8EBB /* PSTCollectionViewFlowLayout.m */; };
+		3B46158F1778961F006D8EBB /* PSTCollectionViewItemKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46157B1778961F006D8EBB /* PSTCollectionViewItemKey.m */; };
+		3B4615901778961F006D8EBB /* PSTCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B46157E1778961F006D8EBB /* PSTCollectionViewLayout.m */; };
+		3B4615911778961F006D8EBB /* PSTCollectionViewUpdateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615801778961F006D8EBB /* PSTCollectionViewUpdateItem.m */; };
+		3B4615921778961F006D8EBB /* PSTGridLayoutInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615821778961F006D8EBB /* PSTGridLayoutInfo.m */; };
+		3B4615931778961F006D8EBB /* PSTGridLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615841778961F006D8EBB /* PSTGridLayoutItem.m */; };
+		3B4615941778961F006D8EBB /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */; };
+		3B4615951778961F006D8EBB /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */; };
+		3B51F0431779538700FBFC25 /* notes-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B51F0411779538700FBFC25 /* notes-logo.png */; };
+		3B51F0441779538700FBFC25 /* notes-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B51F0421779538700FBFC25 /* notes-logo@2x.png */; };
+		3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */; };
+		3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC4531775817E006581C3 /* NotebookTableView.m */; };
 		3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B79AE4F1772DA1200164252 /* NoteTitleView.m */; };
 		3BA577B2175926060052757D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577AF175926060052757D /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BA577C4175938410052757D /* TranscriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA577C3175938410052757D /* TranscriptViewController.m */; };
@@ -101,6 +122,8 @@
 		3B00BFFA1755E349007B64C0 /* sketch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sketch.js; sourceTree = "<group>"; };
 		3B00C00717560F54007B64C0 /* SpeechToTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechToTextManager.h; sourceTree = "<group>"; };
 		3B00C00817560F54007B64C0 /* SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextManager.m; sourceTree = "<group>"; };
+		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
+		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
 		3B105C0B1751E00D00C4FF93 /* CreateNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNotebookViewController.h; sourceTree = "<group>"; };
 		3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNotebookViewController.m; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
@@ -124,6 +147,46 @@
 		3B2CC8E5175907ED001483EA /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		3B2CC8E817591423001483EA /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		3B2CC8E917591423001483EA /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		3B46136A177777D2006D8EBB /* NotebookCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookCell.h; sourceTree = "<group>"; };
+		3B46136B177777D2006D8EBB /* NotebookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookCell.m; sourceTree = "<group>"; };
+		3B46136D17779391006D8EBB /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
+		3B46136E17779391006D8EBB /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		3B46137017788B00006D8EBB /* NotebookIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookIconView.h; sourceTree = "<group>"; };
+		3B46137117788B00006D8EBB /* NotebookIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookIconView.m; sourceTree = "<group>"; };
+		3B46156D1778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexPath+PSTCollectionViewAdditions.h"; sourceTree = "<group>"; };
+		3B46156E1778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexPath+PSTCollectionViewAdditions.m"; sourceTree = "<group>"; };
+		3B46156F1778961F006D8EBB /* PSTCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionView.h; sourceTree = "<group>"; };
+		3B4615701778961F006D8EBB /* PSTCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionView.m; sourceTree = "<group>"; };
+		3B4615711778961F006D8EBB /* PSTCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewCell.h; sourceTree = "<group>"; };
+		3B4615721778961F006D8EBB /* PSTCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewCell.m; sourceTree = "<group>"; };
+		3B4615731778961F006D8EBB /* PSTCollectionViewCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewCommon.h; sourceTree = "<group>"; };
+		3B4615741778961F006D8EBB /* PSTCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewController.h; sourceTree = "<group>"; };
+		3B4615751778961F006D8EBB /* PSTCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewController.m; sourceTree = "<group>"; };
+		3B4615761778961F006D8EBB /* PSTCollectionViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewData.h; sourceTree = "<group>"; };
+		3B4615771778961F006D8EBB /* PSTCollectionViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewData.m; sourceTree = "<group>"; };
+		3B4615781778961F006D8EBB /* PSTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		3B4615791778961F006D8EBB /* PSTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		3B46157A1778961F006D8EBB /* PSTCollectionViewItemKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewItemKey.h; sourceTree = "<group>"; };
+		3B46157B1778961F006D8EBB /* PSTCollectionViewItemKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewItemKey.m; sourceTree = "<group>"; };
+		3B46157C1778961F006D8EBB /* PSTCollectionViewLayout+Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PSTCollectionViewLayout+Internals.h"; sourceTree = "<group>"; };
+		3B46157D1778961F006D8EBB /* PSTCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewLayout.h; sourceTree = "<group>"; };
+		3B46157E1778961F006D8EBB /* PSTCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewLayout.m; sourceTree = "<group>"; };
+		3B46157F1778961F006D8EBB /* PSTCollectionViewUpdateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewUpdateItem.h; sourceTree = "<group>"; };
+		3B4615801778961F006D8EBB /* PSTCollectionViewUpdateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewUpdateItem.m; sourceTree = "<group>"; };
+		3B4615811778961F006D8EBB /* PSTGridLayoutInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutInfo.h; sourceTree = "<group>"; };
+		3B4615821778961F006D8EBB /* PSTGridLayoutInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutInfo.m; sourceTree = "<group>"; };
+		3B4615831778961F006D8EBB /* PSTGridLayoutItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutItem.h; sourceTree = "<group>"; };
+		3B4615841778961F006D8EBB /* PSTGridLayoutItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutItem.m; sourceTree = "<group>"; };
+		3B4615851778961F006D8EBB /* PSTGridLayoutRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutRow.h; sourceTree = "<group>"; };
+		3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutRow.m; sourceTree = "<group>"; };
+		3B4615871778961F006D8EBB /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
+		3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
+		3B51F0411779538700FBFC25 /* notes-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notes-logo.png"; sourceTree = "<group>"; };
+		3B51F0421779538700FBFC25 /* notes-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notes-logo@2x.png"; sourceTree = "<group>"; };
+		3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookBrowseViewController.h; sourceTree = "<group>"; };
+		3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookBrowseViewController.m; sourceTree = "<group>"; };
+		3B5DC4521775817E006581C3 /* NotebookTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookTableView.h; sourceTree = "<group>"; };
+		3B5DC4531775817E006581C3 /* NotebookTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookTableView.m; sourceTree = "<group>"; };
 		3B79AE4E1772DA1200164252 /* NoteTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTitleView.h; sourceTree = "<group>"; };
 		3B79AE4F1772DA1200164252 /* NoteTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTitleView.m; sourceTree = "<group>"; };
 		3BA577AE175926060052757D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -342,6 +405,52 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		3B46156C1778961F006D8EBB /* PSTCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				3B46156D1778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.h */,
+				3B46156E1778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.m */,
+				3B46156F1778961F006D8EBB /* PSTCollectionView.h */,
+				3B4615701778961F006D8EBB /* PSTCollectionView.m */,
+				3B4615711778961F006D8EBB /* PSTCollectionViewCell.h */,
+				3B4615721778961F006D8EBB /* PSTCollectionViewCell.m */,
+				3B4615731778961F006D8EBB /* PSTCollectionViewCommon.h */,
+				3B4615741778961F006D8EBB /* PSTCollectionViewController.h */,
+				3B4615751778961F006D8EBB /* PSTCollectionViewController.m */,
+				3B4615761778961F006D8EBB /* PSTCollectionViewData.h */,
+				3B4615771778961F006D8EBB /* PSTCollectionViewData.m */,
+				3B4615781778961F006D8EBB /* PSTCollectionViewFlowLayout.h */,
+				3B4615791778961F006D8EBB /* PSTCollectionViewFlowLayout.m */,
+				3B46157A1778961F006D8EBB /* PSTCollectionViewItemKey.h */,
+				3B46157B1778961F006D8EBB /* PSTCollectionViewItemKey.m */,
+				3B46157C1778961F006D8EBB /* PSTCollectionViewLayout+Internals.h */,
+				3B46157D1778961F006D8EBB /* PSTCollectionViewLayout.h */,
+				3B46157E1778961F006D8EBB /* PSTCollectionViewLayout.m */,
+				3B46157F1778961F006D8EBB /* PSTCollectionViewUpdateItem.h */,
+				3B4615801778961F006D8EBB /* PSTCollectionViewUpdateItem.m */,
+				3B4615811778961F006D8EBB /* PSTGridLayoutInfo.h */,
+				3B4615821778961F006D8EBB /* PSTGridLayoutInfo.m */,
+				3B4615831778961F006D8EBB /* PSTGridLayoutItem.h */,
+				3B4615841778961F006D8EBB /* PSTGridLayoutItem.m */,
+				3B4615851778961F006D8EBB /* PSTGridLayoutRow.h */,
+				3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */,
+				3B4615871778961F006D8EBB /* PSTGridLayoutSection.h */,
+				3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */,
+			);
+			name = PSTCollectionView;
+			path = PSTCollectionView/PSTCollectionView;
+			sourceTree = "<group>";
+		};
+		3B51F0401779537A00FBFC25 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3B51F0411779538700FBFC25 /* notes-logo.png */,
+				3B51F0421779538700FBFC25 /* notes-logo@2x.png */,
+			);
+			name = Resources;
+			path = Controller/Resources;
+			sourceTree = "<group>";
+		};
 		3BA577AC175926060052757D /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,9 +527,9 @@
 		3BECC6C217717B0D00BA1A01 /* Note browsing */ = {
 			isa = PBXGroup;
 			children = (
+				3B51F0401779537A00FBFC25 /* Resources */,
 				3BECC6CB17717B2700BA1A01 /* View */,
 				3BECC6C317717B0E00BA1A01 /* Controller */,
-				3BECC6C817717B0E00BA1A01 /* Resources */,
 			);
 			name = "Note browsing";
 			path = "Notes/Note browsing";
@@ -435,15 +544,10 @@
 				3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */,
 				3BECC6CF17718C3700BA1A01 /* MainSplitViewController.h */,
 				3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */,
+				3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */,
+				3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		3BECC6C817717B0E00BA1A01 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		3BECC6CB17717B2700BA1A01 /* View */ = {
@@ -451,6 +555,12 @@
 			children = (
 				3BECC6CC17717B9C00BA1A01 /* NotesCell.h */,
 				3BECC6CD17717B9C00BA1A01 /* NotesCell.m */,
+				3B5DC4521775817E006581C3 /* NotebookTableView.h */,
+				3B5DC4531775817E006581C3 /* NotebookTableView.m */,
+				3B46136A177777D2006D8EBB /* NotebookCell.h */,
+				3B46136B177777D2006D8EBB /* NotebookCell.m */,
+				3B46137017788B00006D8EBB /* NotebookIconView.h */,
+				3B46137117788B00006D8EBB /* NotebookIconView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -575,8 +685,12 @@
 				3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */,
 				3BFD4B931751D3C600E3A46F /* NSFetchedResultsController+UITableView.h */,
 				3BFD4B941751D3C600E3A46F /* NSFetchedResultsController+UITableView.m */,
+				3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */,
+				3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */,
 				3BA577C5175942E70052757D /* UIViewController+MGSplitViewController.h */,
 				3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */,
+				3B46136D17779391006D8EBB /* UIView+Layout.h */,
+				3B46136E17779391006D8EBB /* UIView+Layout.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -584,6 +698,7 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3B46156C1778961F006D8EBB /* PSTCollectionView */,
 				3B28495C176BF5560030CF03 /* Rangy */,
 				3BA577B8175937110052757D /* MGSplitViewController */,
 				3BA577AC175926060052757D /* JSONKit */,
@@ -717,6 +832,8 @@
 				3BECC67B176D972600BA1A01 /* rangy-core.js in Resources */,
 				3BECC67C176D972600BA1A01 /* rangy-cssclassapplier.js in Resources */,
 				3BECC67D176D972600BA1A01 /* rangy-textrange.js in Resources */,
+				3B51F0431779538700FBFC25 /* notes-logo.png in Resources */,
+				3B51F0441779538700FBFC25 /* notes-logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +877,25 @@
 				3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */,
 				3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */,
 				3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */,
+				3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */,
+				3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */,
+				3B46136C177777D2006D8EBB /* NotebookCell.m in Sources */,
+				3B46136F17779391006D8EBB /* UIView+Layout.m in Sources */,
+				3B46137217788B00006D8EBB /* NotebookIconView.m in Sources */,
+				3B4615891778961F006D8EBB /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
+				3B46158A1778961F006D8EBB /* PSTCollectionView.m in Sources */,
+				3B46158B1778961F006D8EBB /* PSTCollectionViewCell.m in Sources */,
+				3B46158C1778961F006D8EBB /* PSTCollectionViewController.m in Sources */,
+				3B46158D1778961F006D8EBB /* PSTCollectionViewData.m in Sources */,
+				3B46158E1778961F006D8EBB /* PSTCollectionViewFlowLayout.m in Sources */,
+				3B46158F1778961F006D8EBB /* PSTCollectionViewItemKey.m in Sources */,
+				3B4615901778961F006D8EBB /* PSTCollectionViewLayout.m in Sources */,
+				3B4615911778961F006D8EBB /* PSTCollectionViewUpdateItem.m in Sources */,
+				3B4615921778961F006D8EBB /* PSTGridLayoutInfo.m in Sources */,
+				3B4615931778961F006D8EBB /* PSTGridLayoutItem.m in Sources */,
+				3B4615941778961F006D8EBB /* PSTGridLayoutRow.m in Sources */,
+				3B4615951778961F006D8EBB /* PSTGridLayoutSection.m in Sources */,
+				3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,7 +938,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -827,7 +963,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;

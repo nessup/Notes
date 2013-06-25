@@ -34,3 +34,6 @@
 [submodule "Notes/External/TPAACAudioConverter"]
 	path = Notes/External/TPAACAudioConverter
 	url = https://github.com/nessup/TPAACAudioConverter.git
+[submodule "Notes/External/PSTCollectionView"]
+	path = Notes/External/PSTCollectionView
+	url = https://github.com/steipete/PSTCollectionView.git

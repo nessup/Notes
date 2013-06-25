@@ -7,3 +7,4 @@
 //
 
 NSURL *ApplicationDocumentsDirectory();
+UIColor *ChangeBrightnessOfColorByAmount(UIColor *color, CGFloat amount);
