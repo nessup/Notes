@@ -17,14 +17,17 @@ typedef struct {
     UIViewAnimationOptions animationOptions;
 } KeyboardNotificationUserInfo;
 
-static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve){
+static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve) {
     switch (curve) {
         case UIViewAnimationCurveEaseInOut:
             return UIViewAnimationOptionCurveEaseInOut;
+
         case UIViewAnimationCurveEaseIn:
             return UIViewAnimationOptionCurveEaseIn;
+
         case UIViewAnimationCurveEaseOut:
             return UIViewAnimationOptionCurveEaseOut;
+
         case UIViewAnimationCurveLinear:
             return UIViewAnimationOptionCurveLinear;
     }

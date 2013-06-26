@@ -8,7 +8,7 @@
 
 #import "NotesCell.h"
 
-#define ColorLayerWidth             5.f
+#define ColorLayerWidth 5.f
 
 @interface NotesCell ()
 @property (nonatomic, strong) CALayer *colorLayer;
@@ -17,32 +17,31 @@
 @implementation NotesCell
 //@synthesize textLabel = __textLabel;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+
     if (self) {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+
         _colorLayer = [CALayer new];
         [self.layer addSublayer:_colorLayer];
     }
+
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     self.textLabel.frame = CGRectOffset(self.textLabel.frame, ColorLayerWidth, 0.f);
     self.detailTextLabel.frame = CGRectOffset(self.detailTextLabel.frame, ColorLayerWidth, 0.f);
-    
+
     self.colorLayer.frame = (CGRect) {
         CGPointZero,
         ColorLayerWidth,
@@ -56,9 +55,9 @@
 //{
 //    if( __textLabel )
 //        return __textLabel;
-//    
-//    
-//    
+//
+//
+//
 //    return __textLabel;
 //}
 

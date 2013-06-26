@@ -10,6 +10,4 @@
 
 @interface CreateNotebookViewController : UIViewController
 
-- (void)sizeToFitForModalController:(UIViewController *)controller;
-
 @end

@@ -17,7 +17,7 @@
 
 - (void)centerHorizontally {
     self.frame = (CGRect) {
-        roundf(self.superview.frame.size.width/2.f - self.frame.size.width/2.f),
+        roundf(self.superview.frame.size.width / 2.f - self.frame.size.width / 2.f),
         self.frame.origin.y,
         self.frame.size
     };
@@ -26,7 +26,7 @@
 - (void)centerVertically {
     self.frame = (CGRect) {
         self.frame.origin.x,
-        roundf(self.superview.frame.size.height/2.f - self.frame.size.height/2.f),
+        roundf(self.superview.frame.size.height / 2.f - self.frame.size.height / 2.f),
         self.frame.size
     };
 }

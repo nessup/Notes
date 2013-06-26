@@ -12,25 +12,31 @@
 
 + (UIFont *)helveticaNeueWithSize:(CGFloat)size {
     static UIFont *font;
-    if( !font ) {
+
+    if (!font) {
         font = [UIFont fontWithName:@"HelveticaNeue" size:size];
     }
+
     return [font fontWithSize:size];
 }
 
 + (UIFont *)boldHelveticaNeueWithSize:(CGFloat)size {
     static UIFont *font;
-    if( !font ) {
+
+    if (!font) {
         font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
     }
+
     return [font fontWithSize:size];
 }
 
-+ (UIFont *)boldAmericanTypewriter:(CGFloat) size {
++ (UIFont *)boldAmericanTypewriter:(CGFloat)size {
     static UIFont *font;
-    if( !font ) {
+
+    if (!font) {
         font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:size];
     }
+
     return [font fontWithSize:size];
 }
 

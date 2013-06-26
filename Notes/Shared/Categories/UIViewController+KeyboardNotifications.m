@@ -31,6 +31,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification {
     // Does nothing, subclass must override it
 }
+
 - (void)keyboardWillDisappear:(NSNotification *)notification {
     // Does nothing, subclass must override it
 }
@@ -45,15 +46,16 @@
 @implementation NSNotification (KeyboardNotifications)
 
 - (KeyboardNotificationUserInfo)keyboardUserInfo {
-    KeyboardNotificationUserInfo userInfo = (KeyboardNotificationUserInfo){
+    KeyboardNotificationUserInfo userInfo = (KeyboardNotificationUserInfo) {
         [[self.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue],
         [[self.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue],
         [[self.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue],
         [[self.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue],
     };
-    
+
     userInfo.animationOptions = animationOptionsWithCurve(userInfo.animationCurve);
 
     return userInfo;
 }
+
 @end

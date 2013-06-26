@@ -7,6 +7,6 @@
 //
 
 @interface UIColor (HexString)
-+ (UIColor *) colorWithHexString: (NSString *) hexString;
-+ (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length;
++ (UIColor *)colorWithHexString:(NSString *)hexString;
++ (CGFloat)colorComponentFrom:(NSString *)string start:(NSUInteger)start length:(NSUInteger)length;
 @end

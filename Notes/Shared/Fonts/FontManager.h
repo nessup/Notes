@@ -12,6 +12,6 @@
 
 + (UIFont *)helveticaNeueWithSize:(CGFloat)size;
 + (UIFont *)boldHelveticaNeueWithSize:(CGFloat)size;
-+ (UIFont *)boldAmericanTypewriter:(CGFloat) size;
++ (UIFont *)boldAmericanTypewriter:(CGFloat)size;
 
 @end

@@ -10,8 +10,8 @@
 
 #import "Utility.h"
 
-#define Width      88.f
-#define Height      114.f
+#define Width  88.f
+#define Height 114.f
 
 @interface NotebookIconView ()
 @property (nonatomic, strong) CAGradientLayer *layer;
@@ -21,19 +21,21 @@
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
+
     if (self) {
         self.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:0.5f].CGColor;
-        self.layer.shadowOffset = (CGSize) { 0.f, 5.f };
+        self.layer.shadowOffset = (CGSize) {0.f, 5.f };
         self.layer.shadowRadius = 5.f;
-        
+
         _firstLetterLabel = [UILabel new];
         _firstLetterLabel.alpha = 0.6f;
         _firstLetterLabel.backgroundColor = [UIColor clearColor];
         _firstLetterLabel.shadowColor = [UIColor colorWithWhite:0.f alpha:0.2f];
-        _firstLetterLabel.shadowOffset = (CGSize) { 0.f, 1.f };
+        _firstLetterLabel.shadowOffset = (CGSize) {0.f, 1.f };
         _firstLetterLabel.font = [FontManager boldAmericanTypewriter:48.f];
         [self addSubview:_firstLetterLabel];
     }
+
     return self;
 }
 
@@ -51,8 +53,8 @@
 
 - (CGSize)sizeThatFits:(CGSize)size {
     return (CGSize) {
-        Width,
-        Height
+               Width,
+               Height
     };
 }
 

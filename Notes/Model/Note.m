@@ -9,8 +9,8 @@
 #import "Note.h"
 #import "Notebook.h"
 
-NSString * const NoteCategoryClassNotes = @"Class Notes";
-NSString * const NoteCategoryAssignment = @"Assignments";
+NSString *const NoteCategoryClassNotes = @"Class Notes";
+NSString *const NoteCategoryAssignment = @"Assignments";
 
 @implementation Note
 
@@ -23,13 +23,14 @@ NSString * const NoteCategoryAssignment = @"Assignments";
 @dynamic transcription;
 @dynamic transcriptionAudio;
 
-- (NSString *)titlePlaceholder
-{
+- (NSString *)titlePlaceholder {
     static NSDateFormatter *formatter = nil;
-    if( !formatter ) {
+
+    if (!formatter) {
         formatter = [NSDateFormatter new];
         formatter.dateStyle = NSDateFormatterMediumStyle;
     }
+
     return [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:self.dateCreated]];
 }
 

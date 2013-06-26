@@ -15,19 +15,16 @@
 
 @implementation NotebookTableView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    if (self) {
 
-        
-        
+    if (self) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.backgroundView = nil;
         [self addSubview:_tableView];
-        
     }
+
     return self;
 }
 

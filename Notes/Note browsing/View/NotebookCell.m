@@ -10,7 +10,7 @@
 
 #import "NotebookIconView.h"
 
-#define VerticalMargin  10.f
+#define VerticalMargin 10.f
 
 @interface NotebookCell ()
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
@@ -21,23 +21,25 @@
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
+
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        
+
         _containerView = [UIView new];
         [self addSubview:_containerView];
-        
+
         _titleLabel = [UILabel new];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [FontManager helveticaNeueWithSize:16.f];
         _titleLabel.shadowColor = [UIColor colorWithWhite:0.f alpha:0.4f];
-        _titleLabel.shadowOffset = (CGSize) { 0.f, 1.f };
+        _titleLabel.shadowOffset = (CGSize) {0.f, 1.f };
         _titleLabel.numberOfLines = 0;
         [_containerView addSubview:_titleLabel];
-        
+
         _iconView = [NotebookIconView new];
         [_containerView addSubview:_iconView];
     }
+
     return self;
 }
 
@@ -45,8 +47,8 @@
 
 - (CGSize)sizeThatFits:(CGSize)size {
     return (CGSize) {
-        NotebookCellLength,
-        NotebookCellLength
+               NotebookCellLength,
+               NotebookCellLength
     };
 }
 
@@ -60,7 +62,7 @@
     self.titleLabel.frame = (CGRect) {
         0.f,
         CGRectGetMaxY(self.iconView.frame) + VerticalMargin,
-        [self.titleLabel sizeThatFits:(CGSize) {NotebookCellLength, CGFLOAT_MAX}]
+        [self.titleLabel sizeThatFits:(CGSize) {NotebookCellLength, CGFLOAT_MAX }]
     };
     [self.iconView centerHorizontally];
     [self.titleLabel centerHorizontally];

@@ -21,38 +21,35 @@
 @end
 
 @implementation NoteSearchViewController {
-    
 }
 
-- (id)init
-{
+- (id)init {
     self = [super initWithNibName:@"NoteSearchViewController" bundle:nil];
+
     if (self) {
-        
     }
+
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.contentSizeForViewInPopover = (CGSize) {
         self.view.frame.size.width,
         CollapsedHeight
     };
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self updateSearchWithText:searchText];
 }
 
-- (void)updateSearchWithText:(NSString *)searchText
-{
+- (void)updateSearchWithText:(NSString *)searchText {
     EditRichTextViewController *editTextController = [[[MainSplitViewController sharedInstance] editNoteViewController] editTextController];
+
     editTextController.searchTerm = searchText;
-    
+
 //    NSString *plainTextContent = [editTextController plainTextContent];
 //    int occurence = 0;
 //    NSRange range;
@@ -61,35 +58,32 @@
 //        if( range.location == NSNotFound ) {
 //            return;
 //        }
-//        
-//        
+//
+//
 //        occurence++;
 //    }
 }
 
 - (NSRange)rangeOfString:(NSString *)substring
                 inString:(NSString *)string
-             atOccurence:(int)occurence
-{
+             atOccurence:(int)occurence {
     int currentOccurence = 0;
     NSRange rangeToSearchWithin = NSMakeRange(0, string.length);
-    
-    while (YES)
-    {
+
+    while (YES) {
         currentOccurence++;
-        NSRange searchResult = [string rangeOfString: substring
-                                             options: NULL
-                                               range: rangeToSearchWithin];
-        
-        if (searchResult.location == NSNotFound)
-        {
+        NSRange searchResult = [string rangeOfString:substring
+                                             options:NULL
+                                               range:rangeToSearchWithin];
+
+        if (searchResult.location == NSNotFound) {
             return searchResult;
         }
-        if (currentOccurence == occurence)
-        {
+
+        if (currentOccurence == occurence) {
             return searchResult;
         }
-        
+
         int newLocationToStartAt = searchResult.location + searchResult.length;
         rangeToSearchWithin = NSMakeRange(newLocationToStartAt, string.length - newLocationToStartAt);
     }

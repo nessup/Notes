@@ -28,53 +28,57 @@
     self.updateBlocks = [NSMutableArray new];
 }
 
-- (void)applySectionChangesOfType:(NSFetchedResultsChangeType)type atIndex:(NSUInteger)sectionIndex toCollectionView:(UICollectionView *)collectionView
-{
-    switch(type) {
+- (void)applySectionChangesOfType:(NSFetchedResultsChangeType)type atIndex:(NSUInteger)sectionIndex toCollectionView:(UICollectionView *)collectionView {
+    switch (type) {
         case NSFetchedResultsChangeInsert: {
-            [self.updateBlocks addObject:^ {
-                [collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
-            }];
+            [self.updateBlocks
+             addObject:^{
+                 [collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+             }];
             break;
         }
-            
+
         case NSFetchedResultsChangeDelete:
-            [self.updateBlocks addObject: ^{
-                [collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
-            }];
+            [self.updateBlocks
+             addObject: ^{
+                 [collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+             }];
             break;
     }
 }
 
-- (void)applyObjectChangesOfType:(NSFetchedResultsChangeType)type atIndexPath:(NSIndexPath *)indexPath newIndexPath:(NSIndexPath *)newIndexPath toCollectionView:(UICollectionView *)collectionView
-{
-    switch(type) {
+- (void)applyObjectChangesOfType:(NSFetchedResultsChangeType)type atIndexPath:(NSIndexPath *)indexPath newIndexPath:(NSIndexPath *)newIndexPath toCollectionView:(UICollectionView *)collectionView {
+    switch (type) {
         case NSFetchedResultsChangeInsert: {
-            [self.updateBlocks addObject:^ {
-                [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-            }];
+            [self.updateBlocks
+             addObject:^{
+                 [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+             }];
             break;
         }
-            
+
         case NSFetchedResultsChangeDelete: {
-            [self.updateBlocks addObject:^ {
-                [collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
-            }];
+            [self.updateBlocks
+             addObject:^{
+                 [collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+             }];
             break;
         }
-            
+
         case NSFetchedResultsChangeUpdate: {
-            [self.updateBlocks addObject:^ {
-                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            }];
+            [self.updateBlocks
+             addObject:^{
+                 [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+             }];
             break;
         }
-            
+
         case NSFetchedResultsChangeMove: {
-            [self.updateBlocks addObject:^ {
-                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-                [collectionView insertItemsAtIndexPaths:@[indexPath]];
-            }];
+            [self.updateBlocks
+             addObject:^{
+                 [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                 [collectionView insertItemsAtIndexPaths:@[indexPath]];
+             }];
             break;
         }
     }
@@ -82,11 +86,14 @@
 
 - (void)endChangesToCollectionView:(UICollectionView *)collectionView {
     [collectionView performBatchUpdates:^{
-        for( void (^block)() in self.updateBlocks ) {
-            block();
-        }
-        self.updateBlocks = nil;
-    } completion:nil];
+                        for (void (^block)() in self.updateBlocks) {
+                        block();
+                        }
+
+                        self.updateBlocks = nil;
+                    }
+
+                             completion:nil];
 }
 
 @end

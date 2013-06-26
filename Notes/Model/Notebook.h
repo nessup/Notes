@@ -12,7 +12,7 @@
 
 @interface Notebook : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSArray *notes;
 @property (nonatomic, retain) NSString *defaultUserName;
 @property (nonatomic, retain) UIColor *color;
