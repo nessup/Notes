@@ -60,14 +60,14 @@ NSString *const WebViewEventValue = @"value";
 
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
                                                     handler:^(id data, WVJBResponseCallback responseCallback) {
-                                                        if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
-                                                        _DOMLoaded = YES;
+                                                      if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
+                                                      _DOMLoaded = YES;
 
-                                                        for( void (^block)() in _afterDOMLoadsBlocks ) {
-                                                        block();
-                                                        }
+                                                      for( void (^block)() in _afterDOMLoadsBlocks ) {
+                                                      block();
+                                                      }
 
-                                                        [_afterDOMLoadsBlocks removeAllObjects];
+                                                      [_afterDOMLoadsBlocks removeAllObjects];
 
 //            _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
 //                static int count = 0;
@@ -80,19 +80,19 @@ NSString *const WebViewEventValue = @"value";
 //
 //                count++;
 //            }];
-                                                        }
-                                                        else if( [data isKindOfClass:[NSDictionary class]] ) {
-                                                        NSDictionary *dictionary = (NSDictionary *)data;
+                                                      }
+                                                      else if( [data isKindOfClass:[NSDictionary class]] ) {
+                                                      NSDictionary *dictionary = (NSDictionary *)data;
 
-                                                        if( [dictionary[WebViewEventName]
-                                                        isEqualToString:WebViewEventCategoryChanged] ) {
-                                                        [self categoryChanged:dictionary];
-                                                        }
-                                                        else if( [dictionary[WebViewEventName]
-                                                        isEqualToString:WebViewEventTitleChanged] ) {
-                                                        [self titleChanged:dictionary];
-                                                        }
-                                                        }
+                                                      if( [dictionary[WebViewEventName]
+                                                      isEqualToString:WebViewEventCategoryChanged] ) {
+                                                      [self categoryChanged:dictionary];
+                                                      }
+                                                      else if( [dictionary[WebViewEventName]
+                                                      isEqualToString:WebViewEventTitleChanged] ) {
+                                                      [self titleChanged:dictionary];
+                                                      }
+                                                      }
                                                     }];
 
     RTEGestureRecognizer *tapInterceptor = [[RTEGestureRecognizer alloc] init];
@@ -197,24 +197,24 @@ NSString *const WebViewEventValue = @"value";
     _note = note;
 
     [self doAfterDOMLoads:^{
-              NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
-              dictionary[@"title"] = note.title ? note.title : @"";
+            dictionary[@"title"] = note.title ? note.title : @"";
 
-              dictionary[@"placeholderString"] = [note titlePlaceholder];
+            dictionary[@"placeholderString"] = [note titlePlaceholder];
 
-              dictionary[@"content"] = note.content ? note.content : @"";
+            dictionary[@"content"] = note.content ? note.content : @"";
 
-              dictionary[@"categories"] = @[NoteCategoryClassNotes, NoteCategoryAssignment];
+            dictionary[@"categories"] = @[NoteCategoryClassNotes, NoteCategoryAssignment];
 
-              dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
+            dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
 
-              dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
+            dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
 
-              dictionary[@"editingMode"] = @(EditingModeWriting);
+            dictionary[@"editingMode"] = @(EditingModeWriting);
 
-              [self.bridge
-               send:dictionary];
+            [self.bridge
+             send:dictionary];
           }];
 }
 
@@ -252,7 +252,7 @@ NSString *const WebViewEventValue = @"value";
                           delay:0.f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         self.editingToolbar.frame = CGRectMake(0.0f, CGRectGetMinY([notification keyboardUserInfo].frameEnd), self.view.frame.size.width, 44.f);
+                       self.editingToolbar.frame = CGRectMake(0.0f, CGRectGetMinY([notification keyboardUserInfo].frameEnd), self.view.frame.size.width, 44.f);
                      }
 
                      completion:nil];
@@ -261,11 +261,11 @@ NSString *const WebViewEventValue = @"value";
 - (void)keyboardWillDisappear:(NSNotification *)notification {
     [UIView animateWithDuration:0.25
                      animations:^{
-                         self.editingToolbar.frame = (CGRect) {
-                         0.0f,
-                         self.view.frame.size.height,
-                         self.editingToolbar.frame.size
-                         };
+                       self.editingToolbar.frame = (CGRect) {
+                       0.0f,
+                       self.view.frame.size.height,
+                       self.editingToolbar.frame.size
+                       };
                      }];
 }
 
@@ -392,39 +392,39 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)textStyleSelected:(UISegmentedControl *)control {
     switch( control.selectedSegmentIndex ) {
-        case TextStyleBold :
-            [self bold];
-            break;
+      case TextStyleBold :
+          [self bold];
+          break;
 
-        case TextStyleItalic :
-            [self italic];
-            break;
+      case TextStyleItalic :
+          [self italic];
+          break;
 
-        case TextStyleUnderline :
-            [self underline];
-            break;
+      case TextStyleUnderline :
+          [self underline];
+          break;
 
-        default:
-            break;
+      default:
+          break;
     }
 }
 
 - (void)textAlignmentSelected:(UISegmentedControl *)control {
     switch( control.selectedSegmentIndex ) {
-        case TextAlignmentLeft:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
-            break;
+      case TextAlignmentLeft:
+          [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
+          break;
 
-        case TextAlignmentCenter:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
-            break;
+      case TextAlignmentCenter:
+          [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
+          break;
 
-        case TextAlignmentRight:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
-            break;
+      case TextAlignmentRight:
+          [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
+          break;
 
-        default:
-            break;
+      default:
+          break;
     }
 }
 

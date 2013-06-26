@@ -240,10 +240,10 @@
         [[SpeechToTextManager sharedInstance] stop];
 
         [[SpeechToTextManager sharedInstance] getText:^(NSString *transcription, NSData *transcriptionAudio) {
-                                                  if( transcription && transcriptionAudio ) {
-                                                  [self                                   addTranscriptionToCurrentNote:transcription
-                                                                                audio:transcriptionAudio];
-                                                  }
+                                                if( transcription && transcriptionAudio ) {
+                                                [self                                 addTranscriptionToCurrentNote:transcription
+                                                                              audio:transcriptionAudio];
+                                                }
                                               }];
     }
     else {

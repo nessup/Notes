@@ -184,17 +184,17 @@
     self.editingNotebook = newCell;
     [UIView animateWithDuration:0.25f
                      animations:^{
-                         [newCell centerHorizontally];
+                       [newCell centerHorizontally];
                      }
 
                      completion:^(BOOL finished) {
-                         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:[CreateNotebookViewController new]];
-                         popover.delegate = self;
-                         [popover presentPopoverFromRect:newCell.frame
-                                            inView:self.view
-                                         permittedArrowDirections:UIPopoverArrowDirectionUp
-                                          animated:YES];
-                         self.editingPopover = popover;
+                       UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:[CreateNotebookViewController new]];
+                       popover.delegate = self;
+                       [popover presentPopoverFromRect:newCell.frame
+                                          inView:self.view
+                                      permittedArrowDirections:UIPopoverArrowDirectionUp
+                                        animated:YES];
+                       self.editingPopover = popover;
                      }];
 }
 
@@ -203,18 +203,18 @@
     NotebookCell *originalCell = (NotebookCell *)[self.collectionView cellForItemAtIndexPath:self.editingIndexPath];
     [UIView animateWithDuration:0.25f
                      animations:^{
-                         self.editingNotebook.frame = [originalCell.superview
+                       self.editingNotebook.frame = [originalCell.superview
                                       convertRect:originalCell.frame
                                            toView:self.view];
                      }
 
                      completion:^(BOOL finished) {
-                         originalCell.hidden = NO;
-                         [self.editingNotebook removeFromSuperview];
+                       originalCell.hidden = NO;
+                       [self.editingNotebook removeFromSuperview];
 
-                         self.editingIndexPath = nil;
-                         self.editingNotebook = nil;
-                         self.editingPopover = nil;
+                       self.editingIndexPath = nil;
+                       self.editingNotebook = nil;
+                       self.editingPopover = nil;
                      }];
 }
 

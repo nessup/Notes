@@ -47,8 +47,8 @@
 
 - (CGSize)sizeThatFits:(CGSize)size {
     return (CGSize) {
-               NotebookCellLength,
-               NotebookCellLength
+        NotebookCellLength,
+        NotebookCellLength
     };
 }
 

@@ -57,8 +57,6 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navigationController animated:YES completion:nil];
-
-    [controller sizeToFitForModalController:navigationController];
 }
 
 #pragma mark - Table View

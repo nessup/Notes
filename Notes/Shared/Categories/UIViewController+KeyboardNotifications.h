@@ -19,17 +19,17 @@ typedef struct {
 
 static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve) {
     switch( curve ) {
-        case UIViewAnimationCurveEaseInOut:
-            return UIViewAnimationOptionCurveEaseInOut;
+      case UIViewAnimationCurveEaseInOut:
+          return UIViewAnimationOptionCurveEaseInOut;
 
-        case UIViewAnimationCurveEaseIn:
-            return UIViewAnimationOptionCurveEaseIn;
+      case UIViewAnimationCurveEaseIn:
+          return UIViewAnimationOptionCurveEaseIn;
 
-        case UIViewAnimationCurveEaseOut:
-            return UIViewAnimationOptionCurveEaseOut;
+      case UIViewAnimationCurveEaseOut:
+          return UIViewAnimationOptionCurveEaseOut;
 
-        case UIViewAnimationCurveLinear:
-            return UIViewAnimationOptionCurveLinear;
+      case UIViewAnimationCurveLinear:
+          return UIViewAnimationOptionCurveLinear;
     }
 }
 
