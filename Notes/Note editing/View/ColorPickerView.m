@@ -42,7 +42,7 @@ static NSArray *DefaultColors = nil;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if( self ) {
         self.backgroundColor = [UIColor whiteColor];
         _selectedColor = DefaultColors[0];
         [self updateView];
@@ -52,11 +52,11 @@ static NSArray *DefaultColors = nil;
 }
 
 - (void)updateView {
-    if (!self.colorViews) {
+    if( !self.colorViews ) {
         NSMutableArray *colorViews = [NSMutableArray new];
         int i = 0;
 
-        for (UIColor *color in DefaultColors) {
+        for( UIColor *color in DefaultColors ) {
             UIView *view = [self createColorViewWithColor:color];
             view.tag = i;
             [self addSubview:view];
@@ -67,7 +67,7 @@ static NSArray *DefaultColors = nil;
         self.colorViews = colorViews;
     }
 
-    if (!self.selectionView) {
+    if( !self.selectionView ) {
         self.selectionView = [self createSelectionView];
         [self addSubview:self.selectionView];
     }
@@ -80,7 +80,7 @@ static NSArray *DefaultColors = nil;
 
     int i = 0;
 
-    for (UIView *colorView in self.colorViews) {
+    for( UIView *colorView in self.colorViews ) {
         colorView.frame = (CGRect) {
             i *distanceBetweenLayers,
             0.f,
@@ -88,7 +88,7 @@ static NSArray *DefaultColors = nil;
                                    ColorDiameter
         };
 
-        if (colorView.tag == self.selectedColorIndex) {
+        if( colorView.tag == self.selectedColorIndex ) {
             self.selectionView.center = colorView.center;
         }
 

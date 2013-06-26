@@ -22,7 +22,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if( self ) {
         self.backgroundColor = [UIColor clearColor];
 
         _containerView = [UIView new];

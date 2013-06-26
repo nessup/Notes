@@ -15,8 +15,10 @@
 - (MGSplitViewController *)MGSplitViewController {
     UIViewController *parentViewController = self.parentViewController;
 
-    while (parentViewController != nil) {
-        if ([parentViewController isKindOfClass:[MGSplitViewController class]]) return (MGSplitViewController *)parentViewController;
+    while( parentViewController != nil ) {
+        if( [parentViewController isKindOfClass:[MGSplitViewController class]] ) {
+            return (MGSplitViewController *)parentViewController;
+        }
 
         parentViewController = parentViewController.parentViewController;
     }

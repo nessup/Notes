@@ -35,7 +35,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
     }
 
     return self;
@@ -56,7 +56,9 @@
 #pragma mark - Title view
 
 - (UIImageView *)titleView {
-    if (_titleView) return _titleView;
+    if( _titleView ) {
+        return _titleView;
+    }
 
     _titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notes-logo"]];
     _titleView.frame = (CGRect) {
@@ -72,7 +74,9 @@
 #pragma mark - Collection view
 
 - (PSUICollectionView *)collectionView {
-    if (_collectionView) return _collectionView;
+    if( _collectionView ) {
+        return _collectionView;
+    }
 
     _collectionView = [[PSUICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[PSUICollectionViewFlowLayout new]];
     _collectionView.dataSource = self;
@@ -113,12 +117,13 @@
 - (PSUICollectionViewCell *)collectionView:(PSUICollectionViewCell *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NotebookCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NotebookCell" forIndexPath:indexPath];
 
-    if (indexPath.item == self.fetchedResultsController.fetchedObjects.count) {
+    if( indexPath.item == self.fetchedResultsController.fetchedObjects.count ) {
         cell.iconView.firstLetterLabel.textColor = [UIColor greenColor];
         cell.iconView.firstLetterLabel.font = [FontManager boldAmericanTypewriter:48.f];
         cell.iconView.firstLetterLabel.text = @"+";
         cell.titleLabel.text = @"Add";
-    } else {
+    }
+    else {
         [self configureNotebookCell:cell forItemAtIndexPath:indexPath];
     }
 
@@ -134,13 +139,13 @@
 }
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item == self.fetchedResultsController.fetchedObjects.count) {
+    if( indexPath.item == self.fetchedResultsController.fetchedObjects.count ) {
         CreateNotebookViewController *controller = [CreateNotebookViewController new];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:navigationController animated:YES completion:nil];
-        [controller sizeToFitForModalController:navigationController];
-    } else {
+    }
+    else {
         [self presentNotebookPopoverAtIndexPath:indexPath];
     }
 }
@@ -159,9 +164,10 @@
         self.collectionView.alpha = alpha;
     };
 
-    if (animated) {
+    if( animated ) {
         [UIView animateWithDuration:0.25f animations:setEditing];
-    } else {
+    }
+    else {
         setEditing();
     }
 }
@@ -184,10 +190,10 @@
                      completion:^(BOOL finished) {
                          UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:[CreateNotebookViewController new]];
                          popover.delegate = self;
-                         [popover  presentPopoverFromRect:newCell.frame
-                                  inView:self.view
-                               permittedArrowDirections:UIPopoverArrowDirectionUp
-                                animated:YES];
+                         [popover presentPopoverFromRect:newCell.frame
+                                            inView:self.view
+                                         permittedArrowDirections:UIPopoverArrowDirectionUp
+                                          animated:YES];
                          self.editingPopover = popover;
                      }];
 }
@@ -213,7 +219,7 @@
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    if (popoverController == self.editingPopover) {
+    if( popoverController == self.editingPopover ) {
         [self finishPresentingPopover];
     }
 }
@@ -221,7 +227,7 @@
 #pragma mark - Data
 
 - (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
+    if( _fetchedResultsController != nil ) {
         return _fetchedResultsController;
     }
 

@@ -22,7 +22,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if( self ) {
         self.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:0.5f].CGColor;
         self.layer.shadowOffset = (CGSize) {0.f, 5.f };
         self.layer.shadowRadius = 5.f;

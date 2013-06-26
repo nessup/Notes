@@ -18,7 +18,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if( self ) {
         UILabel *(^createLabel)(UIFont *) = ^UILabel *(UIFont *font) {
             UILabel *label = [UILabel new];
             label.font = font;

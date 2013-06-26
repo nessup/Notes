@@ -26,7 +26,7 @@
 - (id)init {
     self = [super initWithNibName:@"NoteSearchViewController" bundle:nil];
 
-    if (self) {
+    if( self ) {
     }
 
     return self;
@@ -70,17 +70,17 @@
     int currentOccurence = 0;
     NSRange rangeToSearchWithin = NSMakeRange(0, string.length);
 
-    while (YES) {
+    while( YES ) {
         currentOccurence++;
         NSRange searchResult = [string rangeOfString:substring
                                              options:NULL
                                                range:rangeToSearchWithin];
 
-        if (searchResult.location == NSNotFound) {
+        if( searchResult.location == NSNotFound ) {
             return searchResult;
         }
 
-        if (currentOccurence == occurence) {
+        if( currentOccurence == occurence ) {
             return searchResult;
         }
 

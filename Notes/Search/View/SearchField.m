@@ -13,7 +13,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
 
-    if (self) {
+    if( self ) {
         [self commonInit];
     }
 
@@ -23,7 +23,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
-    if (self) {
+    if( self ) {
         [self commonInit];
     }
 
@@ -31,8 +31,8 @@
 }
 
 - (void)commonInit {
-    for (UIView *subview in self.subviews) {
-        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+    for( UIView *subview in self.subviews ) {
+        if( [subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")] ) {
             [subview removeFromSuperview];
             break;
         }

@@ -33,7 +33,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
         self.title = NSLocalizedString(@"Detail", @"Detail");
     }
 
@@ -68,7 +68,9 @@
 #pragma mark - Properties
 
 - (EditRichTextViewController *)editTextController {
-    if (_editTextController) return _editTextController;
+    if( _editTextController ) {
+        return _editTextController;
+    }
 
     _editTextController = [EditRichTextViewController new];
     _editTextController.wantsFullScreenLayout = YES;
@@ -82,7 +84,7 @@
 #pragma mark - Note management
 
 - (void)setNote:(Note *)note {
-    if (_note != note) {
+    if( _note != note ) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_note];
         _note = note;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
@@ -102,15 +104,15 @@
 - (void)updateRightButtonItems {
     NSMutableArray *items = [NSMutableArray array];
 
-    if (self.createNewNoteButton) {
+    if( self.createNewNoteButton ) {
         [items addObject:self.createNewNoteButton];
     }
 
-    if (self.searchButtonItem) {
+    if( self.searchButtonItem ) {
         [items addObject:self.searchButtonItem];
     }
 
-    if (self.transcriptButtonItem) {
+    if( self.transcriptButtonItem ) {
         [items addObject:self.transcriptButtonItem];
     }
 
@@ -140,11 +142,12 @@
 - (void)splitViewController:(MGSplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController {
     UINavigationController *navigationController = (UINavigationController *)viewController;
 
-    if ([navigationController.topViewController isKindOfClass:[TranscriptViewController class]]) {
+    if( [navigationController.topViewController isKindOfClass:[TranscriptViewController class]] ) {
         barButtonItem.title = NSLocalizedString(@"Transcript", @"Transcript");
         self.transcriptButtonItem = barButtonItem;
         self.transcriptPopoverController = popoverController;
-    } else {
+    }
+    else {
         barButtonItem.title = NSLocalizedString(@"Master", @"Master");
         [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
         self.masterPopoverController = popoverController;
@@ -154,10 +157,11 @@
 - (void)splitViewController:(MGSplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     UINavigationController *navigationController = (UINavigationController *)viewController;
 
-    if ([navigationController.topViewController isKindOfClass:[TranscriptViewController class]]) {
+    if( [navigationController.topViewController isKindOfClass:[TranscriptViewController class]] ) {
         self.transcriptButtonItem = nil;
         self.transcriptPopoverController = nil;
-    } else {
+    }
+    else {
         // Called when the view is shown again in the split view, invalidating the button and popover controller.
         [self.navigationItem setLeftBarButtonItem:nil animated:YES];
         self.masterPopoverController = nil;
@@ -165,8 +169,9 @@
 }
 
 - (void)splitViewController:(MGSplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController {
-    if ([svc isKindOfClass:[MGSplitViewController class]]) {
-    } else {
+    if( [svc isKindOfClass:[MGSplitViewController class]] ) {
+    }
+    else {
         [self.editTextController commitChangesToNote];
     }
 }
@@ -174,15 +179,16 @@
 #pragma mark - Actions
 
 - (void)toggleSearchPopover:(id)sender {
-    if (!self.searchPopoverController) {
+    if( !self.searchPopoverController ) {
         NoteSearchViewController *controller = [NoteSearchViewController new];
         self.searchPopoverController = [[UIPopoverController alloc] initWithContentViewController:controller];
         controller.parentPopoverController = self.searchPopoverController;
     }
 
-    if (self.searchPopoverController.popoverVisible) {
+    if( self.searchPopoverController.popoverVisible ) {
         [self.searchPopoverController dismissPopoverAnimated:YES];
-    } else {
+    }
+    else {
         [self.searchPopoverController presentPopoverFromBarButtonItem:self.searchButtonItem permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }

@@ -35,7 +35,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
 //        _webViewController = [EditRichTextViewController new];
 //        [self addChildViewController:_webViewController];
 //        [self.view addSubview:_webViewController.view];
@@ -131,7 +131,7 @@
 #pragma mark - Layout
 
 - (void)viewDidLayoutSubviews {
-    if (_hasRecorded) {
+    if( _hasRecorded ) {
         _toggleRecordButton.frame = (CGRect) {
             SideMargin,
             ceilf(TopBarHeight / 2.f - ButtonHeight / 2.f),
@@ -144,7 +144,8 @@
             ceilf((self.view.frame.size.width - 3 * SideMargin) / 2.f),
             ButtonHeight
         };
-    } else {
+    }
+    else {
         _toggleRecordButton.frame = (CGRect) {
             SideMargin,
             ceilf(TopBarHeight / 2.f - ButtonHeight / 2.f),
@@ -184,11 +185,12 @@
 - (void)speechToTextStateChanged:(id)sender {
     SpeechToTextManagerState state = [[SpeechToTextManager sharedInstance] state];
 
-    if (state & SpeechToTextManagerStateInterrupted) {
+    if( state & SpeechToTextManagerStateInterrupted ) {
         _toggleRecordButton.enabled = NO;
         _togglePlaybackButton.enabled = NO;
-    } else {
-        if (state & SpeechToTextManagerStateRecording) {
+    }
+    else {
+        if( state & SpeechToTextManagerStateRecording ) {
             [_toggleRecordButton setTitle:@"Stop Recording" forState:UIControlStateNormal];
             _toggleRecordButton.enabled = YES;
 
@@ -196,13 +198,15 @@
             _togglePlaybackButton.enabled = NO;
 
             _hasRecorded = YES;
-        } else if (state & SpeechToTextManagerStatePlaying) {
+        }
+        else if( state & SpeechToTextManagerStatePlaying ) {
             [_toggleRecordButton setTitle:@"Record" forState:UIControlStateNormal];
             _toggleRecordButton.enabled = NO;
 
             [_togglePlaybackButton setTitle:@"Stop Playing" forState:UIControlStateNormal];
             _togglePlaybackButton.enabled = YES;
-        } else {
+        }
+        else {
             [_toggleRecordButton setTitle:@"Record" forState:UIControlStateNormal];
             _toggleRecordButton.enabled = YES;
 
@@ -211,16 +215,17 @@
         }
     }
 
-    if (state & SpeechToTextManagerStateError) {
+    if( state & SpeechToTextManagerStateError ) {
         [_activityIndicator stopAnimating];
         _activityLabel.hidden = NO;
         _activityLabel.text = @"Couldn't Transcribe";
     }
 
-    if (state & SpeechToTextManagerStateTranscribing) {
+    if( state & SpeechToTextManagerStateTranscribing ) {
         [_activityIndicator startAnimating];
         _activityLabel.hidden = NO;
-    } else {
+    }
+    else {
         [_activityIndicator stopAnimating];
         _activityLabel.hidden = YES;
     }
@@ -231,16 +236,17 @@
 - (void)toggleRecording:(id)sender {
     SpeechToTextManagerState state = [[SpeechToTextManager sharedInstance] state];
 
-    if (state & SpeechToTextManagerStateRecording) {
+    if( state & SpeechToTextManagerStateRecording ) {
         [[SpeechToTextManager sharedInstance] stop];
 
         [[SpeechToTextManager sharedInstance] getText:^(NSString *transcription, NSData *transcriptionAudio) {
-                                                  if (transcription && transcriptionAudio) {
+                                                  if( transcription && transcriptionAudio ) {
                                                   [self                                   addTranscriptionToCurrentNote:transcription
                                                                                 audio:transcriptionAudio];
                                                   }
                                               }];
-    } else {
+    }
+    else {
         [[SpeechToTextManager sharedInstance] startRecording];
     }
 }
@@ -248,9 +254,10 @@
 - (void)togglePlayback:(id)sender {
     SpeechToTextManagerState state = [[SpeechToTextManager sharedInstance] state];
 
-    if (state & SpeechToTextManagerStatePlaying) {
+    if( state & SpeechToTextManagerStatePlaying ) {
         [[SpeechToTextManager sharedInstance] stop];
-    } else {
+    }
+    else {
         [self.note.transcriptionAudio writeToFile:[[[SpeechToTextManager sharedInstance] soundFileURL] path] atomically:NO];
         [[SpeechToTextManager sharedInstance] startPlaying];
     }

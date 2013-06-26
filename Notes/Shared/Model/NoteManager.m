@@ -25,7 +25,7 @@
 - (id)init {
     self = [super init];
 
-    if (self) {
+    if( self ) {
     }
 
     return self;
@@ -36,7 +36,7 @@
 - (void)saveToDisk {
     NSError *error = nil;
 
-    if (![self.context save:&error]) {
+    if( ![self.context save:&error] ) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -70,7 +70,7 @@
 
     NSError *error = nil;
 
-    if (![aFetchedResultsController performFetch:&error]) {
+    if( ![aFetchedResultsController performFetch:&error] ) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -112,7 +112,7 @@
 
     NSError *error = nil;
 
-    if (![aFetchedResultsController performFetch:&error]) {
+    if( ![aFetchedResultsController performFetch:&error] ) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

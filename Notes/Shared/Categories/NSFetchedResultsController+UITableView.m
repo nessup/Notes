@@ -15,7 +15,7 @@
 }
 
 - (void)applySectionChangesOfType:(NSFetchedResultsChangeType)type atIndex:(NSUInteger)sectionIndex toTableView:(UITableView *)tableView {
-    switch (type) {
+    switch( type ) {
         case NSFetchedResultsChangeInsert:
             [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -27,7 +27,7 @@
 }
 
 - (void)applyObjectChangesOfType:(NSFetchedResultsChangeType)type atIndexPath:(NSIndexPath *)indexPath newIndexPath:(NSIndexPath *)newIndexPath toTableView:(UITableView *)tableView {
-    switch (type) {
+    switch( type ) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;

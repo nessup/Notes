@@ -26,7 +26,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
     }
 
     return self;
@@ -49,7 +49,7 @@
 #pragma mark - Actions
 
 - (void)createNewNotebook:(id)sender {
-    if (_createNotePopover) {
+    if( _createNotePopover ) {
         return;
     }
 
@@ -78,7 +78,7 @@
 
     NotesCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (cell == nil) {
+    if( cell == nil ) {
         cell = [[NotesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
 
@@ -92,13 +92,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if( editingStyle == UITableViewCellEditingStyleDelete ) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
 
         NSError *error = nil;
 
-        if (![context save:&error]) {
+        if( ![context save:&error] ) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -124,7 +124,7 @@
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
+    if( _fetchedResultsController != nil ) {
         return _fetchedResultsController;
     }
 
@@ -161,13 +161,15 @@
 
     NSString *countString = nil;
 
-    if (notebook.notes.count) {
-        if (notebook.notes.count > 1) {
+    if( notebook.notes.count ) {
+        if( notebook.notes.count > 1 ) {
             countString = [NSString stringWithFormat:@"%d notes", ((NSArray *)notebook.notes).count];
-        } else {
+        }
+        else {
             countString = @"1 note";
         }
-    } else {
+    }
+    else {
         countString = @"No notes";
     }
 

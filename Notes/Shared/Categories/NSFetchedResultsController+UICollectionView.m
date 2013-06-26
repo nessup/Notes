@@ -29,7 +29,7 @@
 }
 
 - (void)applySectionChangesOfType:(NSFetchedResultsChangeType)type atIndex:(NSUInteger)sectionIndex toCollectionView:(UICollectionView *)collectionView {
-    switch (type) {
+    switch( type ) {
         case NSFetchedResultsChangeInsert: {
             [self.updateBlocks
              addObject:^{
@@ -48,7 +48,7 @@
 }
 
 - (void)applyObjectChangesOfType:(NSFetchedResultsChangeType)type atIndexPath:(NSIndexPath *)indexPath newIndexPath:(NSIndexPath *)newIndexPath toCollectionView:(UICollectionView *)collectionView {
-    switch (type) {
+    switch( type ) {
         case NSFetchedResultsChangeInsert: {
             [self.updateBlocks
              addObject:^{
@@ -86,7 +86,7 @@
 
 - (void)endChangesToCollectionView:(UICollectionView *)collectionView {
     [collectionView performBatchUpdates:^{
-                        for (void (^block)() in self.updateBlocks) {
+                        for( void (^block)() in self.updateBlocks ) {
                         block();
                         }
 

@@ -55,7 +55,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 - (id)init {
     self = [super init];
 
-    if (self) {
+    if( self ) {
         _operationQueue = [NSOperationQueue new];
 
 
@@ -77,9 +77,10 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
                         settings:recordSettings
                            error:&error];
 
-        if (error) {
+        if( error ) {
             NSLog(@"error: %@", [error localizedDescription]);
-        } else {
+        }
+        else {
             [_recorder prepareToRecord];
         }
     }
@@ -88,7 +89,9 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 }
 
 - (NSURL *)soundFileURL {
-    if (_soundFileURL) return _soundFileURL;
+    if( _soundFileURL ) {
+        return _soundFileURL;
+    }
 
     NSArray *dirPaths;
     NSString *docsDir;
@@ -107,7 +110,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 #pragma mark - State management
 
 - (void)setState:(SpeechToTextManagerState)state {
-    if (_state == state) {
+    if( _state == state ) {
         return;
     }
 
@@ -121,8 +124,8 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 #pragma mark - Recording and playback
 
 - (void)startRecording {
-    if (!_player.playing) {
-        if ([_recorder record]) {
+    if( !_player.playing ) {
+        if( [_recorder record] ) {
             self.state &= ~SpeechToTextManagerStateError;
             self.state |= SpeechToTextManagerStateRecording;
         }
@@ -130,7 +133,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 }
 
 - (void)startPlaying {
-    if (!_recorder.recording) {
+    if( !_recorder.recording ) {
         NSError *error;
 
         _player = [[AVAudioPlayer alloc]
@@ -139,11 +142,12 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
         _player.delegate = self;
 
-        if (error)
+        if( error ) {
             NSLog(@"Error: %@",
                   [error localizedDescription]);
+        }
         else {
-            if ([_player play]) {
+            if( [_player play] ) {
                 self.state |= SpeechToTextManagerStatePlaying;
             }
         }
@@ -151,10 +155,11 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 }
 
 - (void)stop {
-    if (_recorder.recording) {
+    if( _recorder.recording ) {
         [_recorder stop];
         self.state &= ~SpeechToTextManagerStateRecording;
-    } else if (_player.playing) {
+    }
+    else if( _player.playing ) {
         [_player stop];
         self.state &= ~SpeechToTextManagerStatePlaying;
     }
@@ -195,21 +200,22 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
         });
     };
 
-    if (hypotheses.count) {
+    if( hypotheses.count ) {
         text = [hypotheses[0] valueForKey:@"utterance"];
 
-        if (completion) {
+        if( completion ) {
             executeCompletion(text, [NSData dataWithContentsOfFile:wavPath]);
         }
-    } else {
+    }
+    else {
         self.state |= SpeechToTextManagerStateError;
 
-        if (completion) {
+        if( completion ) {
             executeCompletion(nil, nil);
         }
     }
 
-    if (_operationQueue.operations.count == 1) {
+    if( _operationQueue.operations.count == 1 ) {
         self.state &= ~SpeechToTextManagerStateTranscribing;
     }
 }
@@ -227,7 +233,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     const char *wavfile = [wavPath cStringUsingEncoding:NSUTF8StringEncoding];
     const char *flacfile = [flacPath cStringUsingEncoding:NSUTF8StringEncoding];
 
-    if (!wavfile || !flacfile) {
+    if( !wavfile || !flacfile ) {
         return NO;
     }
 
@@ -245,7 +251,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
      */
     infile = fopen(wavfile, "rb");
 
-    if (!infile) {
+    if( !infile ) {
         return NO;
     }
 
@@ -256,7 +262,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
      */
     data_location = memstr((char *)buffer, "data", BUFFSIZE);
 
-    if (!data_location) {
+    if( !data_location ) {
         fclose(infile);
         return NO;
     }
@@ -271,7 +277,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
     struct sprec_wav_header *hdr = sprec_wav_header_from_data((char *)buffer);
 
-    if (!hdr) {
+    if( !hdr ) {
         fclose(infile);
         return NO;
     }
@@ -299,7 +305,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
      */
     encoder = FLAC__stream_encoder_new();
 
-    if (!encoder) {
+    if( !encoder ) {
         fclose(infile);
         free(hdr);
         return NO;
@@ -314,7 +320,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
     err = FLAC__stream_encoder_init_file(encoder, flacfile, NULL, NULL);
 
-    if (err) {
+    if( err ) {
         fclose(infile);
         free(hdr);
         FLAC__stream_encoder_delete(encoder);
@@ -326,19 +332,20 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
      */
     size_t left = total_samples;
 
-    while (left > 0) {
+    while( left > 0 ) {
         size_t need = left > BUFFSIZE ? BUFFSIZE : left;
         fread(buffer, channels * bits_per_sample / 8, need, infile);
 
         size_t i;
 
-        for (i = 0; i < need * channels; i++) {
-            if (bits_per_sample == 16) {
+        for( i = 0; i < need * channels; i++ ) {
+            if( bits_per_sample == 16 ) {
                 /**
                  * 16 bps, signed little endian
                  */
                 pcm[i] = *(int16_t *)(buffer + i * 2);
-            } else {
+            }
+            else {
                 /**
                  * 8 bps, unsigned
                  */
@@ -348,7 +355,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
         FLAC__bool succ = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
 
-        if (!succ) {
+        if( !succ ) {
             fclose(infile);
             free(hdr);
             FLAC__stream_encoder_delete(encoder);
@@ -415,8 +422,8 @@ char *memstr(char *haystack, char *needle, int size) {
     char *p;
     char needlesize = strlen(needle);
 
-    for (p = haystack; p <= haystack - needlesize + size; p++) {
-        if (memcmp(p, needle, needlesize) == 0) {
+    for( p = haystack; p <= haystack - needlesize + size; p++ ) {
+        if( memcmp(p, needle, needlesize) == 0 ) {
             /**
              * Found it
              */
@@ -435,7 +442,7 @@ struct sprec_wav_header *sprec_wav_header_from_data(const char *ptr) {
 
     hdr = malloc(sizeof(*hdr));
 
-    if (!hdr) {
+    if( !hdr ) {
         return NULL;
     }
 

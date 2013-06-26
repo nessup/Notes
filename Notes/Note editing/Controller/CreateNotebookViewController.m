@@ -31,7 +31,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
     }
 
     return self;
@@ -110,9 +110,10 @@
 
     NSString *lastUserName = [[NSUserDefaults standardUserDefaults] valueForKey:@"lastUserName"];
 
-    if (lastUserName) {
+    if( lastUserName ) {
         self.userNameField.text = lastUserName;
-    } else {
+    }
+    else {
         self.userNameField.placeholder = @"Your Name";
     }
 }
@@ -168,7 +169,7 @@
 - (void)textFieldTextDidChange:(NSNotification *)notification {
     UITextField *textField = (UITextField *)notification.object;
 
-    if (textField == _notebookNameField) {
+    if( textField == _notebookNameField ) {
         self.navigationItem.rightBarButtonItem.enabled = textField.text.length > 0;
     }
 }
@@ -181,12 +182,14 @@
 
     UIResponder *nextResponder = [textField.superview viewWithTag:nextTag];
 
-    if (nextResponder) {
+    if( nextResponder ) {
         [nextResponder becomeFirstResponder];
-    } else {
-        if (self.navigationItem.rightBarButtonItem.enabled) {
+    }
+    else {
+        if( self.navigationItem.rightBarButtonItem.enabled ) {
             [self createNotebook:self];
-        } else {
+        }
+        else {
             [_notebookNameField becomeFirstResponder];
         }
     }

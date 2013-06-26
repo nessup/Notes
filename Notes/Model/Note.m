@@ -26,7 +26,7 @@ NSString *const NoteCategoryAssignment = @"Assignments";
 - (NSString *)titlePlaceholder {
     static NSDateFormatter *formatter = nil;
 
-    if (!formatter) {
+    if( !formatter ) {
         formatter = [NSDateFormatter new];
         formatter.dateStyle = NSDateFormatterMediumStyle;
     }

@@ -36,7 +36,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
         self.editNoteViewController = [EditNoteViewController new];
         UINavigationController *editNoteNavigationController = [[UINavigationController alloc] initWithRootViewController:self.editNoteViewController];
 

@@ -44,7 +44,7 @@ NSString *const WebViewEventValue = @"value";
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
-    if (self) {
+    if( self ) {
         _afterDOMLoadsBlocks = [NSMutableArray array];
     }
 
@@ -60,10 +60,10 @@ NSString *const WebViewEventValue = @"value";
 
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
                                                     handler:^(id data, WVJBResponseCallback responseCallback) {
-                                                        if ([data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"]) {
+                                                        if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
                                                         _DOMLoaded = YES;
 
-                                                        for (void (^block)() in _afterDOMLoadsBlocks) {
+                                                        for( void (^block)() in _afterDOMLoadsBlocks ) {
                                                         block();
                                                         }
 
@@ -80,14 +80,16 @@ NSString *const WebViewEventValue = @"value";
 //
 //                count++;
 //            }];
-                                                        } else if ([data isKindOfClass:[NSDictionary class]]) {
+                                                        }
+                                                        else if( [data isKindOfClass:[NSDictionary class]] ) {
                                                         NSDictionary *dictionary = (NSDictionary *)data;
 
-                                                        if ([dictionary[WebViewEventName]
-                                                        isEqualToString:WebViewEventCategoryChanged]) {
+                                                        if( [dictionary[WebViewEventName]
+                                                        isEqualToString:WebViewEventCategoryChanged] ) {
                                                         [self categoryChanged:dictionary];
-                                                        } else if ([dictionary[WebViewEventName]
-                                                        isEqualToString:WebViewEventTitleChanged]) {
+                                                        }
+                                                        else if( [dictionary[WebViewEventName]
+                                                        isEqualToString:WebViewEventTitleChanged] ) {
                                                         [self titleChanged:dictionary];
                                                         }
                                                         }
@@ -101,10 +103,11 @@ NSString *const WebViewEventValue = @"value";
         NSString *javascript = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).toString()", touchPoint.x, touchPoint.y];
         NSString *elementAtPoint = [self.webView stringByEvaluatingJavaScriptFromString:javascript];
 
-        if ([elementAtPoint rangeOfString:@"canvas"].location != NSNotFound) {
+        if( [elementAtPoint rangeOfString:@"canvas"].location != NSNotFound ) {
 //            initialPointOfImage = touchPoint;
             self.webView.scrollView.scrollEnabled = NO;
-        } else {
+        }
+        else {
 //            initialPointOfImage = CGPointZero;
         }
     };
@@ -148,7 +151,9 @@ NSString *const WebViewEventValue = @"value";
 #pragma mark - Properties
 
 - (UIWebView *)webView {
-    if (_webView) return _webView;
+    if( _webView ) {
+        return _webView;
+    }
 
     _webView = [UIWebView new];
     _webView.keyboardDisplayRequiresUserAction = NO;
@@ -158,7 +163,9 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (UIToolbar *)editingToolbar {
-    if (_editingToolbar) return _editingToolbar;
+    if( _editingToolbar ) {
+        return _editingToolbar;
+    }
 
     _editingToolbar = [UIToolbar new];
     _editingToolbar.barStyle = UIBarStyleBlackTranslucent;
@@ -168,10 +175,12 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (UIWindow *)keyboardWindow {
-    if (_keyboardWindow) return _keyboardWindow;
+    if( _keyboardWindow ) {
+        return _keyboardWindow;
+    }
 
-    for (UIWindow *testWindow in [[UIApplication sharedApplication] windows]) {
-        if (![[testWindow class] isEqual:[UIWindow class]]) {
+    for( UIWindow *testWindow in [[UIApplication sharedApplication] windows] ) {
+        if( ![[testWindow class] isEqual:[UIWindow class]] ) {
             _keyboardWindow = testWindow;
             break;
         }
@@ -181,7 +190,9 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (void)setNote:(Note *)note {
-    if (_note == note) return;
+    if( _note == note ) {
+        return;
+    }
 
     _note = note;
 
@@ -203,7 +214,7 @@ NSString *const WebViewEventValue = @"value";
               dictionary[@"editingMode"] = @(EditingModeWriting);
 
               [self.bridge
-              send:dictionary];
+               send:dictionary];
           }];
 }
 
@@ -264,11 +275,11 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)removeDefaultKeyboardAccessory {
     // Locate UIWebFormView.
-    for (UIView *possibleFormView in [self.keyboardWindow subviews]) {
+    for( UIView *possibleFormView in [self.keyboardWindow subviews] ) {
         // iOS 5 sticks the UIWebFormView inside a UIPeripheralHostView.
-        if ([[possibleFormView description] rangeOfString:@"UIPeripheralHostView"].location != NSNotFound) {
-            for (UIView *subview in [possibleFormView subviews]) {
-                if ([[subview description] rangeOfString:@"UIWebFormAccessory"].location != NSNotFound) {
+        if( [[possibleFormView description] rangeOfString:@"UIPeripheralHostView"].location != NSNotFound ) {
+            for( UIView *subview in [possibleFormView subviews] ) {
+                if( [[subview description] rangeOfString:@"UIWebFormAccessory"].location != NSNotFound ) {
                     [subview removeFromSuperview];
                 }
             }
@@ -299,7 +310,7 @@ NSString *const WebViewEventValue = @"value";
     [items addObject:flexibleSpace];
     [items addObject:segmentedControlButtonItem];
 
-    if (currentBoldStatus != boldEnabled || currentItalicStatus != italicEnabled || currentUnderlineStatus != underlineEnabled || sender == self) {
+    if( currentBoldStatus != boldEnabled || currentItalicStatus != italicEnabled || currentUnderlineStatus != underlineEnabled || sender == self ) {
         self.navigationItem.rightBarButtonItems = items;
         currentBoldStatus = boldEnabled;
         currentItalicStatus = italicEnabled;
@@ -312,7 +323,9 @@ NSString *const WebViewEventValue = @"value";
     NSString *foreColor = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('foreColor')"];
     UIColor *color = [self colorFromRGBValue:foreColor];
 
-    if (color) [fontColorPicker setTintColor:color];
+    if( color ) {
+        [fontColorPicker setTintColor:color];
+    }
 
     [items addObject:fontColorPicker];
 
@@ -362,7 +375,7 @@ NSString *const WebViewEventValue = @"value";
     //    [items addObject:undo];
     //    [items addObject:redo];
 
-    if (![currentForeColor isEqualToString:foreColor] /*|| ![currentFontName isEqualToString:fontName] || currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self) {
+    if( ![currentForeColor isEqualToString:foreColor] /*|| ![currentFontName isEqualToString:fontName] || currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self ) {
         self.editingToolbar.items = items;
         currentForeColor = foreColor;
         //        currentFontName = fontName;
@@ -378,7 +391,7 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (void)textStyleSelected:(UISegmentedControl *)control {
-    switch (control.selectedSegmentIndex) {
+    switch( control.selectedSegmentIndex ) {
         case TextStyleBold :
             [self bold];
             break;
@@ -397,7 +410,7 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (void)textAlignmentSelected:(UISegmentedControl *)control {
-    switch (control.selectedSegmentIndex) {
+    switch( control.selectedSegmentIndex ) {
         case TextAlignmentLeft:
             [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
             break;
@@ -469,8 +482,10 @@ NSString *const WebViewEventValue = @"value";
 
     selectedButtonTitle = [selectedButtonTitle lowercaseString];
 
-    if ([actionSheet.title isEqualToString:@"Select a font"]) [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('fontName', false, '%@')", selectedButtonTitle]];
-    else [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('foreColor', false, '%@')", selectedButtonTitle]];
+    if( [actionSheet.title isEqualToString:@"Select a font"] ) {
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('fontName', false, '%@')", selectedButtonTitle]];
+    }
+    else { [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('foreColor', false, '%@')", selectedButtonTitle]]; }
 }
 
 #pragma mark Inserting photos
@@ -498,7 +513,7 @@ static int i = 0;
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     UIImage *image = nil;
 
-    if ([mediaType isEqualToString:@"public.image"]) {
+    if( [mediaType isEqualToString:@"public.image"] ) {
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *data = UIImagePNGRepresentation(image);
         [data writeToFile:imagePath atomically:YES];
@@ -515,7 +530,9 @@ static int i = 0;
 #pragma mark - Utility
 
 - (UIColor *)colorFromRGBValue:(NSString *)rgb { // General format is 'rgb(red, green, blue)'
-    if ([rgb rangeOfString:@"rgb"].location == NSNotFound) return nil;
+    if( [rgb rangeOfString:@"rgb"].location == NSNotFound ) {
+        return nil;
+    }
 
     NSMutableString *mutableCopy = [rgb mutableCopy];
     [mutableCopy replaceCharactersInRange:NSMakeRange(0, 4) withString:@""];
@@ -531,11 +548,12 @@ static int i = 0;
 }
 
 - (void)doAfterDOMLoads:(void (^)())completion {
-    if (_DOMLoaded) {
-        if (completion) {
+    if( _DOMLoaded ) {
+        if( completion ) {
             completion();
         }
-    } else {
+    }
+    else {
         [_afterDOMLoadsBlocks addObject:[completion copy]];
     }
 }

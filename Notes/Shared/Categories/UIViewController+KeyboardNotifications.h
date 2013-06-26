@@ -18,7 +18,7 @@ typedef struct {
 } KeyboardNotificationUserInfo;
 
 static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve curve) {
-    switch (curve) {
+    switch( curve ) {
         case UIViewAnimationCurveEaseInOut:
             return UIViewAnimationOptionCurveEaseInOut;
 
