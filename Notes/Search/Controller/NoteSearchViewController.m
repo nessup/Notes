@@ -65,8 +65,8 @@
 }
 
 - (NSRange)rangeOfString:(NSString *)substring
-                inString:(NSString *)string
-             atOccurence:(int)occurence {
+    inString:(NSString *)string
+    atOccurence:(int)occurence {
     int currentOccurence = 0;
     NSRange rangeToSearchWithin = NSMakeRange(0, string.length);
 
