@@ -1,38 +1,37 @@
 //
-//  CreateNotebookViewController.m
+//  EditNotebookViewController.m
 //  Notes
 //
 //  Created by Dany on 5/25/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "CreateNotebookViewController.h"
+#import "EditNotebookViewController.h"
 
 #import "EditRichTextViewController.h"
 #import "NoteManager.h"
 #import "ColorPickerView.h"
 
-#define ModalWidth           485.f
-#define ModalHeight          485.f
-#define ColorPickerViewWidth 100.f
-#define TopMargin            10.f
-#define VerticalPadding      10.f
+#define PopoverWidth            498.f
+#define ColorPickerViewWidth    100.f
+#define TopMargin               10.f
+#define VerticalPadding         10.f
+#define SideMargin              10.f
 
-@interface CreateNotebookViewController () <UITextFieldDelegate>
-
+@interface EditNotebookViewController () <UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *notebookNameField;
 @property (nonatomic, strong) UITextField *userNameField;
 @property (nonatomic, strong) ColorPickerView *colorPickerView;
-
 @end
 
-@implementation CreateNotebookViewController
+@implementation EditNotebookViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if( self ) {
-    }
+        _rightBarButtonTitle = @"Done";
+    }   
 
     return self;
 }
@@ -93,20 +92,21 @@
     [self.view addSubview:_userNameField];
 
     _colorPickerView = [ColorPickerView new];
+    [_colorPickerView addTarget:self action:@selector(colorPicked:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_colorPickerView];
+    
+    [self viewWillLayoutSubviews];
+    self.contentSizeForViewInPopover = (CGSize) {
+        PopoverWidth,
+        CGRectGetMaxY(self.colorPickerView.frame) + VerticalPadding
+    };
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"Create New Notebook";
-
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
-
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Create Notebook" style:UIBarButtonItemStyleDone target:self action:@selector(createNotebook:)];
-    doneButton.enabled = NO;
-    self.navigationItem.rightBarButtonItem = doneButton;
 
     NSString *lastUserName = [[NSUserDefaults standardUserDefaults] valueForKey:@"lastUserName"];
 
@@ -120,6 +120,12 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self configureView];
+    [self.notebookNameField becomeFirstResponder];
 }
 
 #pragma mark - Layout
@@ -140,7 +146,7 @@
 
     [self.colorPickerView sizeToFit];
     self.colorPickerView.frame = (CGRect) {
-        roundf(self.view.frame.size.width / 2.f - self.colorPickerView.frame.size.width / 2.f),
+        SideMargin,
         CGRectGetMaxY(self.userNameField.frame) + TopMargin,
         self.colorPickerView.frame.size
     };
@@ -149,29 +155,51 @@
 #pragma mark - Data
 
 - (void)configureView {
+    self.notebookNameField.text = self.notebook.name;
+    self.userNameField.text = self.notebook.defaultUserName;
+    [self updateToolbar];
+}
+
+- (void)updateToolbar {
+    if( !self.navigationItem.rightBarButtonItem ) {
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:self.rightBarButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(finishEditing:)];
+        doneButton.enabled = NO;
+        self.navigationItem.rightBarButtonItem = doneButton;
+    }
+    
+    self.navigationItem.rightBarButtonItem.enabled = self.notebookNameField.text.length > 0;
+}
+
+- (void)commitChangesToNotebookObject {
+    self.notebook.name = self.notebookNameField.text;
+    self.notebook.defaultUserName = self.userNameField.text;
+    self.notebook.color = self.colorPickerView.selectedColor;
 }
 
 #pragma mark - Actions
 
 - (void)cancel:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate editNotebookViewControllerDidFinishEditing:self];
 }
 
-- (void)createNotebook:(id)sender {
-    Notebook *notebook = [[NoteManager sharedInstance] createNewNotebookNamed:self.notebookNameField.text];
-
-    notebook.defaultUserName = self.notebookNameField.text;
-    notebook.color = self.colorPickerView.selectedColor;
+- (void)finishEditing:(id)sender {
+    [self commitChangesToNotebookObject];
     [[NoteManager sharedInstance] saveToDisk];
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate editNotebookViewControllerDidFinishEditing:self];
 }
 
 - (void)textFieldTextDidChange:(NSNotification *)notification {
     UITextField *textField = (UITextField *)notification.object;
 
     if( textField == _notebookNameField ) {
-        self.navigationItem.rightBarButtonItem.enabled = textField.text.length > 0;
+        [self updateToolbar];
     }
+    
+    [self commitChangesToNotebookObject];
+}
+
+- (void)colorPicked:(ColorPickerView *)colorPickerView {
+    [self commitChangesToNotebookObject];
 }
 
 #pragma mark - Text field delegate
@@ -187,7 +215,7 @@
     }
     else {
         if( self.navigationItem.rightBarButtonItem.enabled ) {
-            [self createNotebook:self];
+            [self finishEditing:self];
         }
         else {
             [_notebookNameField becomeFirstResponder];

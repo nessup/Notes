@@ -15,5 +15,6 @@
 
 @interface NotebookCell : PSUICollectionViewCell
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) NotebookIconView *iconView;
 @end

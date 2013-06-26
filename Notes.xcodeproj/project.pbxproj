@@ -21,7 +21,7 @@
 		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
 		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
 		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
-		3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */; };
+		3B105C0D1751E00E00C4FF93 /* EditNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
 		3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284963176C52460030CF03 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -124,8 +124,8 @@
 		3B00C00817560F54007B64C0 /* SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextManager.m; sourceTree = "<group>"; };
 		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
 		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
-		3B105C0B1751E00D00C4FF93 /* CreateNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNotebookViewController.h; sourceTree = "<group>"; };
-		3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNotebookViewController.m; sourceTree = "<group>"; };
+		3B105C0B1751E00D00C4FF93 /* EditNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNotebookViewController.h; sourceTree = "<group>"; };
+		3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNotebookViewController.m; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
 		3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.min.js"; sourceTree = "<group>"; };
 		3B28495D176BF5600030CF03 /* rangy-core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "rangy-core.js"; path = "Rangy/dev/rangy-core.js"; sourceTree = "<group>"; };
@@ -644,8 +644,8 @@
 				3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */,
 				3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */,
 				3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */,
-				3B105C0B1751E00D00C4FF93 /* CreateNotebookViewController.h */,
-				3B105C0C1751E00E00C4FF93 /* CreateNotebookViewController.m */,
+				3B105C0B1751E00D00C4FF93 /* EditNotebookViewController.h */,
+				3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -859,7 +859,7 @@
 				3BFD4B781750C63600E3A46F /* UIColor+HexString.m in Sources */,
 				3BFD4B8F1751BE5100E3A46F /* NoteManager.m in Sources */,
 				3BFD4B951751D3C600E3A46F /* NSFetchedResultsController+UITableView.m in Sources */,
-				3B105C0D1751E00E00C4FF93 /* CreateNotebookViewController.m in Sources */,
+				3B105C0D1751E00E00C4FF93 /* EditNotebookViewController.m in Sources */,
 				3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */,
 				3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */,
 				3B2CC8EA17591423001483EA /* Utility.m in Sources */,

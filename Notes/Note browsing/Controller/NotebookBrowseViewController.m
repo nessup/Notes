@@ -11,7 +11,7 @@
 #import "NoteManager.h"
 #import "NotebookCell.h"
 #import "PSTCollectionView.h"
-#import "CreateNotebookViewController.h"
+#import "EditNotebookViewController.h"
 #import "NSFetchedResultsController+UICollectionView.h"
 #import "NotebookIconView.h"
 
@@ -20,7 +20,7 @@
 #define TableViewWidth  250.f
 #define HeaderHeight    300.f
 
-@interface NotebookBrowseViewController () <NSFetchedResultsControllerDelegate, PSTCollectionViewDataSource, PSTCollectionViewDelegate, PSTCollectionViewDelegateFlowLayout, UIPopoverControllerDelegate>
+@interface NotebookBrowseViewController () <NSFetchedResultsControllerDelegate, PSTCollectionViewDataSource, PSTCollectionViewDelegate, PSTCollectionViewDelegateFlowLayout, UIPopoverControllerDelegate, EditNotebookViewControllerDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) PSUICollectionView *collectionView;
 @property (nonatomic, strong) UIImageView *titleView;
@@ -28,7 +28,7 @@
 // Notebook creation and editing
 @property (nonatomic, strong) UIPopoverController *editingPopover;
 @property (nonatomic, strong) NSIndexPath *editingIndexPath;
-@property (nonatomic, strong) NotebookCell *editingNotebook;
+@property (nonatomic, strong) NotebookCell *editingNotebookCell;
 @end
 
 @implementation NotebookBrowseViewController
@@ -121,7 +121,7 @@
         cell.iconView.firstLetterLabel.textColor = [UIColor greenColor];
         cell.iconView.firstLetterLabel.font = [FontManager boldAmericanTypewriter:48.f];
         cell.iconView.firstLetterLabel.text = @"+";
-        cell.titleLabel.text = @"Add";
+        cell.title = @"Add";
     }
     else {
         [self configureNotebookCell:cell forItemAtIndexPath:indexPath];
@@ -133,20 +133,33 @@
 - (void)configureNotebookCell:(NotebookCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     Notebook *notebook = self.fetchedResultsController.fetchedObjects[indexPath.item];
 
-    cell.iconView.firstLetterLabel.text = [notebook.name substringWithRange:NSMakeRange(0, 1)];
+    cell.iconView.firstLetterLabel.text = notebook.name.length ? [notebook.name substringWithRange:NSMakeRange(0, 1)] : @"";
     cell.iconView.color = notebook.color;
-    cell.titleLabel.text = notebook.name;
+    cell.title = notebook.name;
 }
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if( indexPath.item == self.fetchedResultsController.fetchedObjects.count ) {
-        CreateNotebookViewController *controller = [CreateNotebookViewController new];
+    void (^presentPopover)(NSString *, Notebook *) = ^ (NSString *title, Notebook *notebook) {
+        EditNotebookViewController *controller = [EditNotebookViewController new];
+        controller.title = title;
+        controller.notebook = notebook;
+        controller.delegate = self;
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navigationController animated:YES completion:nil];
+        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+        [self presentNotebookPopover:popoverController atIndexPath:indexPath];
+    };
+    
+    if( indexPath.item == self.fetchedResultsController.fetchedObjects.count ) {
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            Notebook *notebook = [[NoteManager sharedInstance] createNewNotebookNamed:@""];
+            [self.fetchedResultsController performFetch:nil];
+            presentPopover(@"Add Notebook", notebook);
+        });
     }
     else {
-        [self presentNotebookPopoverAtIndexPath:indexPath];
+        presentPopover(@"Edit Notebook", self.fetchedResultsController.fetchedObjects[indexPath.item]);
     }
 }
 
@@ -172,7 +185,7 @@
     }
 }
 
-- (void)presentNotebookPopoverAtIndexPath:(NSIndexPath *)indexPath {
+- (void)presentNotebookPopover:(UIPopoverController *)popoverController atIndexPath:(NSIndexPath *)indexPath {
     self.editing = YES;
     NotebookCell *originalCell = (NotebookCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     self.editingIndexPath = indexPath;
@@ -181,47 +194,40 @@
     [self configureNotebookCell:newCell forItemAtIndexPath:indexPath];
     newCell.frame = [originalCell.superview convertRect:originalCell.frame toView:self.view];
     [self.view addSubview:newCell];
-    self.editingNotebook = newCell;
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                       [newCell centerHorizontally];
-                     }
-
-                     completion:^(BOOL finished) {
-                       UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:[CreateNotebookViewController new]];
-                       popover.delegate = self;
-                       [popover presentPopoverFromRect:newCell.frame
-                                          inView:self.view
-                                      permittedArrowDirections:UIPopoverArrowDirectionUp
-                                        animated:YES];
-                       self.editingPopover = popover;
-                     }];
+    self.editingNotebookCell = newCell;
+    [UIView animateWithDuration:0.25f animations:^{
+        [newCell centerHorizontally];
+    } completion:^(BOOL finished) {
+        popoverController.delegate = self;
+        [popoverController presentPopoverFromRect:newCell.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        self.editingPopover = popoverController;
+    }];
 }
 
 - (void)finishPresentingPopover {
     self.editing = NO;
     NotebookCell *originalCell = (NotebookCell *)[self.collectionView cellForItemAtIndexPath:self.editingIndexPath];
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                       self.editingNotebook.frame = [originalCell.superview
-                                      convertRect:originalCell.frame
-                                           toView:self.view];
-                     }
-
-                     completion:^(BOOL finished) {
-                       originalCell.hidden = NO;
-                       [self.editingNotebook removeFromSuperview];
-
-                       self.editingIndexPath = nil;
-                       self.editingNotebook = nil;
-                       self.editingPopover = nil;
-                     }];
+    [UIView animateWithDuration:0.25f animations:^{
+        self.editingNotebookCell.frame = [originalCell.superview convertRect:originalCell.frame toView:self.view];
+    } completion:^(BOOL finished) {
+        originalCell.hidden = NO;
+        [self.editingNotebookCell removeFromSuperview];
+        
+        self.editingIndexPath = nil;
+        self.editingNotebookCell = nil;
+        self.editingPopover = nil;
+    }];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     if( popoverController == self.editingPopover ) {
         [self finishPresentingPopover];
     }
+}
+
+- (void)editNotebookViewControllerDidFinishEditing:(EditNotebookViewController *)editNotebookViewController {
+    [self.editingPopover dismissPopoverAnimated:YES];
+    [self popoverControllerDidDismissPopover:self.editingPopover];
 }
 
 #pragma mark - Data
@@ -238,22 +244,37 @@
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    if( self.editing )
+        return;
+    
     [controller prepareCollectionViewForChanges:(UICollectionView *)self.collectionView];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-    atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    if( self.editing )
+        return;
+    
     [controller applySectionChangesOfType:type atIndex:sectionIndex toCollectionView:(UICollectionView *)self.collectionView];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-    atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-    newIndexPath:(NSIndexPath *)newIndexPath {
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    if( self.editing )
+        return;
+    
     [controller applyObjectChangesOfType:type atIndexPath:indexPath newIndexPath:newIndexPath toCollectionView:(UICollectionView *)self.collectionView];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [controller endChangesToCollectionView:(UICollectionView *)self.collectionView];
+    if( self.editing ) {
+        [self configureNotebookCell:self.editingNotebookCell forItemAtIndexPath:self.editingIndexPath];
+        [self.collectionView reloadData];
+    }
+    else {
+        [controller endChangesToCollectionView:(UICollectionView *)self.collectionView];
+    }
 }
 
 @end

@@ -47,9 +47,8 @@
 - (Notebook *)createNewNotebookNamed:(NSString *)name {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Notebook" inManagedObjectContext:self.context];
     Notebook *notebook = (Notebook *)[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
-
     notebook.name = name;
-
+    notebook.color = [UIColor whiteColor];
     return notebook;
 }
 

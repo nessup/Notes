@@ -9,7 +9,7 @@
 #import "NotebookListViewController.h"
 
 #import "NoteManager.h"
-#import "CreateNotebookViewController.h"
+#import "EditNotebookViewController.h"
 #import "NoteListViewController.h"
 #import "NotesCell.h"
 
@@ -53,7 +53,7 @@
         return;
     }
 
-    CreateNotebookViewController *controller = [CreateNotebookViewController new];
+    EditNotebookViewController *controller = [EditNotebookViewController new];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navigationController animated:YES completion:nil];

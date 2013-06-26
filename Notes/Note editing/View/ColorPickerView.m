@@ -77,29 +77,29 @@ static NSArray *DefaultColors = nil;
 
 - (void)layoutSubviews {
     CGFloat distanceBetweenLayers = (self.frame.size.width - self.colorViews.count * ColorDiameter) / (self.colorViews.count - 1) + ColorDiameter;
-
+    
     int i = 0;
-
+    
     for( UIView *colorView in self.colorViews ) {
         colorView.frame = (CGRect) {
             i *distanceBetweenLayers,
             0.f,
-                                   ColorDiameter,
-                                   ColorDiameter
+            ColorDiameter,
+            ColorDiameter
         };
-
+        
         if( colorView.tag == self.selectedColorIndex ) {
             self.selectionView.center = colorView.center;
         }
-
+        
         i++;
     }
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
     return (CGSize) {
-               self.colorViews.count *ColorDiameter + (self.colorViews.count - 1) * DefaultInterColorDistance,
-               ColorDiameter
+        self.colorViews.count *ColorDiameter + (self.colorViews.count - 1) * DefaultInterColorDistance,
+        ColorDiameter
     };
 }
 
@@ -128,6 +128,7 @@ static NSArray *DefaultColors = nil;
     self.selectedColorIndex = sender.tag;
     self.selectedColor = DefaultColors[self.selectedColorIndex];
     [self updateView];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - Selection

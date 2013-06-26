@@ -34,6 +34,7 @@
         _titleLabel.shadowColor = [UIColor colorWithWhite:0.f alpha:0.4f];
         _titleLabel.shadowOffset = (CGSize) {0.f, 1.f };
         _titleLabel.numberOfLines = 0;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         [_containerView addSubview:_titleLabel];
 
         _iconView = [NotebookIconView new];
@@ -67,6 +68,17 @@
     [self.iconView centerHorizontally];
     [self.titleLabel centerHorizontally];
     [self.containerView centerMiddle];
+}
+
+#pragma mark - Properties
+
+- (void)setTitle:(NSString *)title {
+    self.titleLabel.text = title;
+    [self setNeedsLayout];
+}
+
+- (NSString *)title {
+    return self.titleLabel.text;
 }
 
 @end
