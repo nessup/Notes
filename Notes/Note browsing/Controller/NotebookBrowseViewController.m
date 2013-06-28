@@ -159,7 +159,7 @@
     void (^presentPopover)(NSString *, BOOL) = ^ (NSString *title, BOOL creatingNotebook) {
         NoteListViewController *controller = [NoteListViewController new];
         controller.editNotebookViewController.title = title;
-        controller.editNotebookViewController.creatingNotebook = YES;
+        controller.editNotebookViewController.creatingNotebook = creatingNotebook;
         controller.notebook = self.editingNotebook;
         controller.editing = creatingNotebook;
         controller.delegate = self;

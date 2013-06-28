@@ -15,7 +15,8 @@
 #import "NotesCell.h"
 #import "EditNotebookViewController.h"
 #import "TestView.h"
-#import "UIAlertView+MKBlockAdditions.h"
+#import "OverlayView.h"
+#import "TableView.h"
 
 #define Width       498.f
 #define Height      600.f
@@ -23,6 +24,8 @@
 @interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate, EditNotebookViewControllerDelegate, UIPopoverControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) UIBarButtonItem *addButton;
+@property (nonatomic, strong) OverlayView *noNotesOverlayView;
+@property (nonatomic, strong) TableView *tableView;
 @end
 
 @implementation NoteListViewController {
@@ -81,7 +84,6 @@
     CGFloat height = 0;
     if( _showsTableHeaverViewOnly ) {
         height = self.editNotebookViewController.view.frame.size.height + 35.f;
-        
     }
     else {
         height = CGRectGetMaxY(self.tableView.frame);
@@ -95,6 +97,9 @@
         Width,
         height
     };
+    [UIView animateWithDuration:0.25f animations:^{
+        self.tableView.overlayView.alpha = !showsTableHeaverViewOnly;
+    }];
 }
 
 - (void)setNotebook:(Notebook *)notebook {
@@ -133,6 +138,12 @@
         leftButton = self.editNotebookViewController.navigationItem.leftBarButtonItem;
         rightButton = self.editNotebookViewController.navigationItem.rightBarButtonItem;
         self.title = self.editNotebookViewController.title;
+        
+        // Having an overlay view means we have no cells to show, so hide the
+        // table view
+        if( self.tableView.overlayView ) {
+            self.showsTableHeaverViewOnly = YES;
+        }
     }
     else {
         [self.editNotebookViewController willMoveToParentViewController:nil];
@@ -161,7 +172,29 @@
     }
 }
 
+- (OverlayView *)noNotesOverlayView {
+    if( _noNotesOverlayView )
+        return _noNotesOverlayView;
+    
+    _noNotesOverlayView = [OverlayView new];
+    _noNotesOverlayView.titleLabel.text = @"This notebook has no notes.";
+    [_noNotesOverlayView.actionButton setTitle:@"Add Your First Note" forState:UIControlStateNormal];
+    [_noNotesOverlayView.actionButton addTarget:self action:@selector(createNewNote:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return _noNotesOverlayView;
+}
+
 #pragma mark - Actions
+
+- (void)loadView {
+    self.view = self.tableView = [[TableView alloc] initWithFrame:(CGRect) {
+        CGPointZero,
+        Width,
+        Height
+    } style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+}
 
 - (void)createNewNote:(id)sender {
     [[NoteManager sharedInstance] createNewNoteInNotebook:self.notebook];
@@ -175,7 +208,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    NSUInteger count = [sectionInfo numberOfObjects];
+    if( count == 0 ) {
+        self.tableView.overlayView = self.noNotesOverlayView;
+    }
+    else {
+        self.tableView.overlayView = nil;
+    }
+    return count;
 }
 
 // Customize the appearance of table view cells.

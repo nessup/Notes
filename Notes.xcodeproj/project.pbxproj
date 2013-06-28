@@ -22,6 +22,8 @@
 		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
 		3B0440D8177D5F3800EA28C3 /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440D7177D5F3800EA28C3 /* TestView.m */; };
 		3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */; };
+		3B0440DF177DE97E00EA28C3 /* TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440DE177DE97E00EA28C3 /* TableView.m */; };
+		3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440E1177DE9F000EA28C3 /* OverlayView.m */; };
 		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
@@ -128,6 +130,10 @@
 		3B0440D7177D5F3800EA28C3 /* TestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
 		3B0440D9177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+MKBlockAdditions.h"; sourceTree = "<group>"; };
 		3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+MKBlockAdditions.m"; sourceTree = "<group>"; };
+		3B0440DD177DE97E00EA28C3 /* TableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableView.h; sourceTree = "<group>"; };
+		3B0440DE177DE97E00EA28C3 /* TableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView.m; sourceTree = "<group>"; };
+		3B0440E0177DE9F000EA28C3 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		3B0440E1177DE9F000EA28C3 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
 		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
 		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
@@ -372,6 +378,17 @@
 				3B2CC8E4175905A5001483EA /* wav.h */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		3B0440DC177DE96D00EA28C3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B0440DD177DE97E00EA28C3 /* TableView.h */,
+				3B0440DE177DE97E00EA28C3 /* TableView.m */,
+				3B0440E0177DE9F000EA28C3 /* OverlayView.h */,
+				3B0440E1177DE9F000EA28C3 /* OverlayView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		3B1FF19E1754086D004B2CFE /* jquery */ = {
@@ -673,6 +690,7 @@
 		3BF3F67C174D2BE200AAD591 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3B0440DC177DE96D00EA28C3 /* View */,
 				3B2CC8E71759140E001483EA /* Utility */,
 				3BFD4B8C1751BE3A00E3A46F /* Model */,
 				3BFD4B721750C48900E3A46F /* Fonts */,
@@ -908,6 +926,8 @@
 				3BF65AD4177B7EFA0035DC29 /* EditNotebookViewController.m in Sources */,
 				3B0440D8177D5F3800EA28C3 /* TestView.m in Sources */,
 				3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */,
+				3B0440DF177DE97E00EA28C3 /* TableView.m in Sources */,
+				3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
