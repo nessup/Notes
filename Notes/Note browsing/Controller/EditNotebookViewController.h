@@ -14,10 +14,12 @@
 - (void)editNotebookViewControllerDidFinishEditing:(EditNotebookViewController *)editNotebookViewController;
 @end
 
-@class Notebook, ColorPickerView;
+@class Notebook;
 
 @interface EditNotebookViewController : UIViewController
 @property (nonatomic, strong) Notebook *notebook;
-@property (nonatomic, strong) NSString *rightBarButtonTitle;
 @property (nonatomic, weak) id<EditNotebookViewControllerDelegate> delegate;
+@property (nonatomic, readonly) BOOL madeChanges;
+@property (nonatomic) BOOL creatingNotebook;
+@property (nonatomic, strong) UIBarButtonItem *editButtonItem;
 @end

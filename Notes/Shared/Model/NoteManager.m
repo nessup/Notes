@@ -45,10 +45,11 @@
 #pragma mark - Notebook
 
 - (Notebook *)createNewNotebookNamed:(NSString *)name {
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Notebook" inManagedObjectContext:self.context];
-    Notebook *notebook = (Notebook *)[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.context];
+    Notebook *notebook = (Notebook *)[NSEntityDescription insertNewObjectForEntityForName:@"Notebook" inManagedObjectContext:self.context];
     notebook.name = name;
     notebook.color = [UIColor whiteColor];
+    notebook.dateCreated = [NSDate date];
+//    [self.context insertObject:notebook];
     return notebook;
 }
 
@@ -60,7 +61,7 @@
 
     [fetchRequest setFetchBatchSize:20];
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
 
     [fetchRequest setSortDescriptors:sortDescriptors];

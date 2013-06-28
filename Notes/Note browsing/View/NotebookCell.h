@@ -9,7 +9,7 @@
 #import "PSTCollectionView.h"
 #import "PSTCollectionViewCell.h"
 
-#define NotebookCellLength 200.f
+#define NotebookCellMaxWidth    200.f
 
 @class NotebookIconView;
 

@@ -22,5 +22,6 @@
 #import "NSFetchedResultsController+UITableView.h"
 #import "UIViewController+MGSplitViewController.h"
 #import "UIView+Layout.h"
+#import "UIAlertView+MKBlockAdditions.h"
 
 #endif

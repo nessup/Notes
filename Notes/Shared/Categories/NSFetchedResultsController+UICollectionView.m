@@ -60,7 +60,7 @@
       case NSFetchedResultsChangeDelete: {
           [self.updateBlocks
            addObject:^{
-                [collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
             }];
           break;
       }
@@ -77,7 +77,7 @@
           [self.updateBlocks
            addObject:^{
                 [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-                [collectionView insertItemsAtIndexPaths:@[indexPath]];
+                [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
             }];
           break;
       }

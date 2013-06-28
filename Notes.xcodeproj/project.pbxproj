@@ -20,8 +20,9 @@
 		3B00BFF817559E25007B64C0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF117559E25007B64C0 /* README.md */; };
 		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
 		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
+		3B0440D8177D5F3800EA28C3 /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440D7177D5F3800EA28C3 /* TestView.m */; };
+		3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */; };
 		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
-		3B105C0D1751E00E00C4FF93 /* EditNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
 		3B284969176C52460030CF03 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B284963176C52460030CF03 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -95,6 +96,7 @@
 		3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */; };
 		3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */; };
 		3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F681174D37C400AAD591 /* QuartzCore.framework */; };
+		3BF65AD4177B7EFA0035DC29 /* EditNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF65AD2177B7EFA0035DC29 /* EditNotebookViewController.m */; };
 		3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */; };
 		3BFD4B641750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */; };
 		3BFD4B651750023D00E3A46F /* WebViewJavascriptBridge_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD4B621750023D00E3A46F /* WebViewJavascriptBridge_iOS.m */; };
@@ -122,10 +124,12 @@
 		3B00BFFA1755E349007B64C0 /* sketch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sketch.js; sourceTree = "<group>"; };
 		3B00C00717560F54007B64C0 /* SpeechToTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechToTextManager.h; sourceTree = "<group>"; };
 		3B00C00817560F54007B64C0 /* SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextManager.m; sourceTree = "<group>"; };
+		3B0440D6177D5F3800EA28C3 /* TestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
+		3B0440D7177D5F3800EA28C3 /* TestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
+		3B0440D9177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+MKBlockAdditions.h"; sourceTree = "<group>"; };
+		3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+MKBlockAdditions.m"; sourceTree = "<group>"; };
 		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
 		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
-		3B105C0B1751E00D00C4FF93 /* EditNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNotebookViewController.h; sourceTree = "<group>"; };
-		3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNotebookViewController.m; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
 		3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.min.js"; sourceTree = "<group>"; };
 		3B28495D176BF5600030CF03 /* rangy-core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "rangy-core.js"; path = "Rangy/dev/rangy-core.js"; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 		3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardNotifications.h"; sourceTree = "<group>"; };
 		3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardNotifications.m"; sourceTree = "<group>"; };
 		3BF3F681174D37C400AAD591 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3BF65AD2177B7EFA0035DC29 /* EditNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNotebookViewController.m; sourceTree = "<group>"; };
+		3BF65AD3177B7EFA0035DC29 /* EditNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNotebookViewController.h; sourceTree = "<group>"; };
 		3BFD4B5E1750023D00E3A46F /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		3BFD4B5F1750023D00E3A46F /* WebViewJavascriptBridgeAbstract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeAbstract.h; sourceTree = "<group>"; };
 		3BFD4B601750023D00E3A46F /* WebViewJavascriptBridgeAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeAbstract.m; sourceTree = "<group>"; };
@@ -546,6 +552,8 @@
 				3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */,
 				3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */,
 				3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */,
+				3BF65AD3177B7EFA0035DC29 /* EditNotebookViewController.h */,
+				3BF65AD2177B7EFA0035DC29 /* EditNotebookViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -571,6 +579,8 @@
 				3B2CC8E5175907ED001483EA /* test.wav */,
 				3BF3F64E174C892400AAD591 /* AppDelegate.h */,
 				3BF3F64F174C892400AAD591 /* AppDelegate.m */,
+				3B0440D6177D5F3800EA28C3 /* TestView.h */,
+				3B0440D7177D5F3800EA28C3 /* TestView.m */,
 				3BECC6C217717B0D00BA1A01 /* Note browsing */,
 				3BECC670176D7CCC00BA1A01 /* Search */,
 				3B00C00517560EED007B64C0 /* Recording */,
@@ -644,8 +654,6 @@
 				3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */,
 				3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */,
 				3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */,
-				3B105C0B1751E00D00C4FF93 /* EditNotebookViewController.h */,
-				3B105C0C1751E00E00C4FF93 /* EditNotebookViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -691,6 +699,8 @@
 				3BA577C6175942E70052757D /* UIViewController+MGSplitViewController.m */,
 				3B46136D17779391006D8EBB /* UIView+Layout.h */,
 				3B46136E17779391006D8EBB /* UIView+Layout.m */,
+				3B0440D9177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.h */,
+				3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -859,7 +869,6 @@
 				3BFD4B781750C63600E3A46F /* UIColor+HexString.m in Sources */,
 				3BFD4B8F1751BE5100E3A46F /* NoteManager.m in Sources */,
 				3BFD4B951751D3C600E3A46F /* NSFetchedResultsController+UITableView.m in Sources */,
-				3B105C0D1751E00E00C4FF93 /* EditNotebookViewController.m in Sources */,
 				3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */,
 				3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */,
 				3B2CC8EA17591423001483EA /* Utility.m in Sources */,
@@ -896,6 +905,9 @@
 				3B4615941778961F006D8EBB /* PSTGridLayoutRow.m in Sources */,
 				3B4615951778961F006D8EBB /* PSTGridLayoutSection.m in Sources */,
 				3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */,
+				3BF65AD4177B7EFA0035DC29 /* EditNotebookViewController.m in Sources */,
+				3B0440D8177D5F3800EA28C3 /* TestView.m in Sources */,
+				3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

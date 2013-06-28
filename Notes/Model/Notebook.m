@@ -14,5 +14,6 @@
 @dynamic notes;
 @dynamic defaultUserName;
 @dynamic color;
+@dynamic dateCreated;
 
 @end

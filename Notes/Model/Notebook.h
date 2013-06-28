@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSArray *notes;
 @property (nonatomic, retain) NSString *defaultUserName;
 @property (nonatomic, retain) UIColor *color;
+@property (nonatomic, retain) NSDate *dateCreated;
 
 @end

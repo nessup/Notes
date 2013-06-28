@@ -11,6 +11,7 @@
 #import "EditRichTextViewController.h"
 #import "NoteManager.h"
 #import "ColorPickerView.h"
+#import "TestView.h"
 
 #define PopoverWidth            498.f
 #define ColorPickerViewWidth    100.f
@@ -22,15 +23,17 @@
 @property (nonatomic, strong) UITextField *notebookNameField;
 @property (nonatomic, strong) UITextField *userNameField;
 @property (nonatomic, strong) ColorPickerView *colorPickerView;
+@property (nonatomic, readwrite) BOOL madeChanges;
+@property (nonatomic, copy) NSString *notebookNameBeforeEdit;
 @end
 
 @implementation EditNotebookViewController
+@synthesize editButtonItem = __editButtonItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if( self ) {
-        _rightBarButtonTitle = @"Done";
     }   
 
     return self;
@@ -39,7 +42,7 @@
 #pragma mark - View creation
 
 - (void)loadView {
-    [super loadView];
+    self.view = [[UIView alloc] init];
 
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -96,18 +99,38 @@
     [self.view addSubview:_colorPickerView];
     
     [self viewWillLayoutSubviews];
-    self.contentSizeForViewInPopover = (CGSize) {
+//    self.contentSizeForViewInPopover = (CGSize) {
+//        PopoverWidth,
+//        CGRectGetMaxY(self.colorPickerView.frame) + VerticalPadding
+//    };
+    self.view.frame = (CGRect) {
+        self.view.frame.origin,
         PopoverWidth,
         CGRectGetMaxY(self.colorPickerView.frame) + VerticalPadding
     };
 }
 
+#pragma mark - Bar button items
+
+- (UIBarButtonItem *)deleteButton {
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete Notebook" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteNotebook:)];
+    deleteButton.tintColor = [UIColor redColor];
+    return deleteButton;
+}
+
+- (UIBarButtonItem *)createButton {
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(finishEditing:)];
+    return button;
+}
+
+- (UIBarButtonItem *)cancelButton {
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancel:)];
+    return button;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
-
+    
     NSString *lastUserName = [[NSUserDefaults standardUserDefaults] valueForKey:@"lastUserName"];
 
     if( lastUserName ) {
@@ -116,6 +139,7 @@
     else {
         self.userNameField.placeholder = @"Your Name";
     }
+    [self configureView];
 }
 
 - (void)dealloc {
@@ -125,6 +149,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configureView];
+    self.madeChanges = NO;
     [self.notebookNameField becomeFirstResponder];
 }
 
@@ -157,23 +182,30 @@
 - (void)configureView {
     self.notebookNameField.text = self.notebook.name;
     self.userNameField.text = self.notebook.defaultUserName;
-    [self updateToolbar];
-}
-
-- (void)updateToolbar {
-    if( !self.navigationItem.rightBarButtonItem ) {
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:self.rightBarButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(finishEditing:)];
-        doneButton.enabled = NO;
-        self.navigationItem.rightBarButtonItem = doneButton;
-    }
+    self.colorPickerView.selectedColor = self.notebook.color;
     
-    self.navigationItem.rightBarButtonItem.enabled = self.notebookNameField.text.length > 0;
+    UIBarButtonItem *leftButton, *rightButton;
+    if( self.creatingNotebook ) {
+        leftButton = [self cancelButton];
+        rightButton = [self createButton];
+    }
+    else {
+        leftButton = self.editButtonItem;
+        rightButton = [self deleteButton];
+    }
+    self.navigationItem.leftBarButtonItem = leftButton;
+    self.navigationItem.rightBarButtonItem = rightButton;
 }
 
 - (void)commitChangesToNotebookObject {
     self.notebook.name = self.notebookNameField.text;
     self.notebook.defaultUserName = self.userNameField.text;
     self.notebook.color = self.colorPickerView.selectedColor;
+}
+
+- (void)setNotebook:(Notebook *)notebook {
+    _notebook = notebook;
+    self.notebookNameBeforeEdit = notebook.name;
 }
 
 #pragma mark - Actions
@@ -183,22 +215,35 @@
 }
 
 - (void)finishEditing:(id)sender {
+    if( !self.notebookNameField.text.length ) {
+        if( self.creatingNotebook ) {
+            [UIAlertView alertViewWithTitle:@"Please first name your new notebook." message:nil];
+            return;
+        }
+        else {
+            self.notebookNameField.text = self.notebookNameBeforeEdit;
+        }
+    }
     [self commitChangesToNotebookObject];
     [[NoteManager sharedInstance] saveToDisk];
+    self.creatingNotebook = NO;
     [self.delegate editNotebookViewControllerDidFinishEditing:self];
 }
 
-- (void)textFieldTextDidChange:(NSNotification *)notification {
-    UITextField *textField = (UITextField *)notification.object;
+- (void)deleteNotebook:(id)sender {
+    [UIAlertView alertViewWithTitle:[NSString stringWithFormat:@"Are you sure you want to delete \"%@\"?", self.notebook.name] message:@"This cannot be undone." cancelButtonTitle:@"Yes" otherButtonTitles:@[@"No"] onDismiss:^(int buttonIndex) {
+    } onCancel:^{
+        [[[NoteManager sharedInstance] context] deleteObject:self.notebook];
+    }];
+}
 
-    if( textField == _notebookNameField ) {
-        [self updateToolbar];
-    }
-    
+- (void)textFieldTextDidChange:(NSNotification *)notification {
+    self.madeChanges = YES;
     [self commitChangesToNotebookObject];
 }
 
 - (void)colorPicked:(ColorPickerView *)colorPickerView {
+    self.madeChanges = YES;
     [self commitChangesToNotebookObject];
 }
 

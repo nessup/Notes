@@ -55,7 +55,6 @@ static NSArray *DefaultColors = nil;
     if( !self.colorViews ) {
         NSMutableArray *colorViews = [NSMutableArray new];
         int i = 0;
-
         for( UIColor *color in DefaultColors ) {
             UIView *view = [self createColorViewWithColor:color];
             view.tag = i;
@@ -125,10 +124,27 @@ static NSArray *DefaultColors = nil;
 }
 
 - (void)colorViewTapped:(UIView *)sender {
-    self.selectedColorIndex = sender.tag;
-    self.selectedColor = DefaultColors[self.selectedColorIndex];
+    self.selectedColor = DefaultColors[sender.tag];
     [self updateView];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)setSelectedColor:(UIColor *)selectedColor {
+    int i = 0;
+    BOOL found = NO;
+    for( UIColor *color in DefaultColors ) {
+        if( [color isEqual:selectedColor] ) {
+            self.selectedColorIndex = i;
+            NSLog(@"sel %d", self.selectedColorIndex);
+            _selectedColor = selectedColor;
+            found = YES;
+            break;
+        }
+        i++;
+    }
+    if( !found ) {
+        @throw [NSException exceptionWithName:@"Bad color!" reason:@"The selected color was not among the colors supported by this view." userInfo:nil];
+    }
 }
 
 #pragma mark - Selection

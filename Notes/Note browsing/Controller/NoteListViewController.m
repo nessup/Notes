@@ -13,9 +13,16 @@
 #import "TranscriptViewController.h"
 #import "EditNoteViewController.h"
 #import "NotesCell.h"
+#import "EditNotebookViewController.h"
+#import "TestView.h"
+#import "UIAlertView+MKBlockAdditions.h"
 
-@interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
+#define Width       498.f
+#define Height      600.f
+
+@interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate, EditNotebookViewControllerDelegate, UIPopoverControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) UIBarButtonItem *addButton;
 @end
 
 @implementation NoteListViewController {
@@ -28,10 +35,26 @@
     if( self ) {
         self.title = NSLocalizedString(@"Master", @"Master");
         self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+        self.contentSizeForViewInPopover = CGSizeMake(498.f, 600.0);
     }
 
     return self;
+}
+
+//- (void)loadView {
+//    self.view = [TestView new];
+//}
+
+- (void)updateView {
+    if( !self.editing ) {
+        NSUInteger notesCount = self.fetchedResultsController.fetchedObjects.count;
+        if( notesCount != 1 ) {
+            self.title = [NSString stringWithFormat:@"%d Notes", notesCount];
+        }
+        else {
+            self.title = @"1 note";
+        }
+    }
 }
 
 - (void)viewDidLoad {
@@ -41,31 +64,8 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-
-//    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
-//    void (^insertNewNoteForToday)() = ^ {
-//        Note *newNote = [[NoteManager sharedInstance] createNewNoteInNotebook:nil];
-//
-//        [[EditNoteViewController sharedInstance] setNote:newNote];
-//    };
-//    if( [sectionInfo numberOfObjects] ) {
-//        Note *latestNote = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//        NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:latestNote.dateCreated];
-//        NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
-//        if([today day] == [otherDay day] &&
-//           [today month] == [otherDay month] &&
-//           [today year] == [otherDay year] &&
-//           [today era] == [otherDay era]) {
-//            [[EditNoteViewController sharedInstance] setNote:latestNote];
-//        }
-//        else {
-//            insertNewNoteForToday();
-//        }
-//    }
-//    else {
-//        insertNewNoteForToday();
-//    }
+    self.addButton = addButton;
+    self.navigationItem.rightBarButtonItem = self.addButton;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -75,15 +75,90 @@
 
 #pragma mark - Properties
 
+- (void)setShowsTableHeaverViewOnly:(BOOL)showsTableHeaverViewOnly {
+    _showsTableHeaverViewOnly = showsTableHeaverViewOnly;
+    
+    CGFloat height = 0;
+    if( _showsTableHeaverViewOnly ) {
+        height = self.editNotebookViewController.view.frame.size.height + 35.f;
+        
+    }
+    else {
+        height = CGRectGetMaxY(self.tableView.frame);
+    }
+    self.view.frame = (CGRect) {
+        CGPointZero,
+        Width,
+        height
+    };
+    self.parentPopoverController.popoverContentSize = (CGSize) {
+        Width,
+        height
+    };
+}
+
 - (void)setNotebook:(Notebook *)notebook {
     _notebook = notebook;
 
     _fetchedResultsController = nil;
-    self.title = notebook.name;
+    [self updateView];
 }
 
 - (UITableView *)currentTableView {
     return _searching ? self.searchDisplayController.searchResultsTableView : self.tableView;
+}
+
+- (EditNotebookViewController *)editNotebookViewController {
+    if( _editNotebookViewController )
+        return _editNotebookViewController;
+    
+    _editNotebookViewController = [EditNotebookViewController new];
+    _editNotebookViewController.delegate = self;
+    _editNotebookViewController.editButtonItem = self.editButtonItem;
+    
+    return _editNotebookViewController;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    UIBarButtonItem *leftButton, *rightButton;
+    if( self.editing ) {
+        self.editNotebookViewController.notebook = self.notebook;
+        
+        [self addChildViewController:self.editNotebookViewController];
+        self.tableView.tableHeaderView = self.editNotebookViewController.view;
+        [self.editNotebookViewController didMoveToParentViewController:self];
+        
+        leftButton = self.editNotebookViewController.navigationItem.leftBarButtonItem;
+        rightButton = self.editNotebookViewController.navigationItem.rightBarButtonItem;
+        self.title = self.editNotebookViewController.title;
+    }
+    else {
+        [self.editNotebookViewController willMoveToParentViewController:nil];
+        self.tableView.tableHeaderView = nil;
+        [self.editNotebookViewController removeFromParentViewController];
+        
+        leftButton = self.editButtonItem;
+        rightButton = self.addButton;
+        [self updateView];
+        
+        if( self.showsTableHeaverViewOnly ) {
+            self.parentPopoverController.popoverContentSize = self.contentSizeForViewInPopover;
+            self.showsTableHeaverViewOnly = NO;
+        }
+    }
+    self.navigationItem.leftBarButtonItem = leftButton;
+    self.navigationItem.rightBarButtonItem = rightButton;
+}
+
+- (void)editNotebookViewControllerDidFinishEditing:(EditNotebookViewController *)editNotebookViewController {
+    if( editNotebookViewController.creatingNotebook ) {
+        [self.delegate noteListViewControllerDidFinish:self];
+    }
+    else {
+        self.editing = NO;
+    }
 }
 
 #pragma mark - Actions
@@ -182,6 +257,7 @@
 
     _fetchedResultsController = [[NoteManager sharedInstance] fetchAllNotesInNotebook:self.notebook];
     _fetchedResultsController.delegate = self;
+    [self updateView];
 
     return _fetchedResultsController;
 }

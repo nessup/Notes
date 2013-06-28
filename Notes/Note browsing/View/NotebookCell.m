@@ -14,7 +14,7 @@
 
 @interface NotebookCell ()
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
-@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic) BOOL placeholding;
 @end
 
 @implementation NotebookCell
@@ -25,20 +25,19 @@
     if( self ) {
         self.backgroundColor = [UIColor clearColor];
 
-        _containerView = [UIView new];
-        [self addSubview:_containerView];
-
         _titleLabel = [UILabel new];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [FontManager helveticaNeueWithSize:16.f];
         _titleLabel.shadowColor = [UIColor colorWithWhite:0.f alpha:0.4f];
         _titleLabel.shadowOffset = (CGSize) {0.f, 1.f };
-        _titleLabel.numberOfLines = 0;
+        _titleLabel.numberOfLines = 2;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_containerView addSubview:_titleLabel];
+        [self addSubview:_titleLabel];
 
         _iconView = [NotebookIconView new];
-        [_containerView addSubview:_iconView];
+        [self addSubview:_iconView];
+        
+        _placeholding = YES;
     }
 
     return self;
@@ -46,38 +45,55 @@
 
 #pragma mark - Layout
 
-- (CGSize)sizeThatFits:(CGSize)size {
-    return (CGSize) {
-        NotebookCellLength,
-        NotebookCellLength
-    };
+- (CGFloat)minimumHeight {
+    return self.iconView.frame.size.height + VerticalMargin + self.titleLabel.font.lineHeight*self.titleLabel.numberOfLines;
 }
 
 - (void)layoutSubviews {
     [self.iconView sizeToFit];
-    self.containerView.frame = (CGRect) {
-        CGPointZero,
-        MAX(self.iconView.frame.size.width, self.titleLabel.frame.size.width),
-        self.iconView.frame.size.height + self.titleLabel.frame.size.height
-    };
+    CGSize titleSize = [self.titleLabel sizeThatFits:(CGSize) {NotebookCellMaxWidth, CGFLOAT_MAX }];
     self.titleLabel.frame = (CGRect) {
         0.f,
         CGRectGetMaxY(self.iconView.frame) + VerticalMargin,
-        [self.titleLabel sizeThatFits:(CGSize) {NotebookCellLength, CGFLOAT_MAX }]
+        titleSize
     };
     [self.iconView centerHorizontally];
     [self.titleLabel centerHorizontally];
-    [self.containerView centerMiddle];
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+    [self layoutSubviews];
+    return (CGSize) {
+        NotebookCellMaxWidth,
+        MAX(CGRectGetMaxY(self.titleLabel.frame), self.minimumHeight)
+    };
 }
 
 #pragma mark - Properties
 
+- (void)setPlaceholding:(BOOL)placeholding {
+    _placeholding = placeholding;
+    UIColor *textColor = nil;
+    if( _placeholding ) {
+        textColor = [UIColor grayColor];
+        self.titleLabel.text = @"Your New Notebook";
+    }
+    else {
+        textColor = [UIColor blackColor];
+    }
+    self.titleLabel.textColor = textColor;
+}
+
 - (void)setTitle:(NSString *)title {
     self.titleLabel.text = title;
+    self.placeholding = (title.length == 0);
     [self setNeedsLayout];
 }
 
 - (NSString *)title {
+    if( self.placeholding )
+        return @"";
+    
     return self.titleLabel.text;
 }
 
