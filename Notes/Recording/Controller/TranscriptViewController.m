@@ -59,7 +59,7 @@
 
     self.title = @"Transcript";
 
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 
 //    [_webViewController view];
 //

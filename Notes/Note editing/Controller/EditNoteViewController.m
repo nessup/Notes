@@ -12,16 +12,21 @@
 #import "MGSplitViewController.h"
 #import "NoteSearchViewController.h"
 #import "TranscriptViewController.h"
-#import "MainSplitViewController.h"
+#import "EditNoteSplitViewController.h"
 #import "NoteManager.h"
 #import "NoteTitleView.h"
+#import "UIViewController+MGSplitViewController.h"
+#import "NoteListViewController.h"
 
 @interface EditNoteViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (nonatomic, strong) NoteListViewController *noteListViewController;
+@property (strong, nonatomic) UIPopoverController *noteListPopoverController;
 @property (nonatomic, strong) UIPopoverController *transcriptPopoverController;
+@property (nonatomic, strong) UIBarButtonItem *notebookBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *libraryBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *transcriptButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *createNewNoteButton;
+@property (nonatomic, strong) UIBarButtonItem *createNoteButtonItem;
 @property (nonatomic, strong) UIPopoverController *searchPopoverController;
 @property (nonatomic, strong) NoteTitleView *titleView;
 
@@ -45,16 +50,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
-    self.searchButtonItem = searchButtonItem;
-    UIBarButtonItem *newNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
-    self.createNewNoteButton = newNoteButton;
+    self.searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
+    self.createNoteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
+    self.libraryBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStyleBordered target:self action:@selector(close:)];
+    self.notebookBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Notebook" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNotebookPopover:)];
 
     [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 
     self.titleView = [NoteTitleView new];
     [self.titleView addTarget:self action:@selector(titleViewTapped:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = self.titleView;
+    
+    [self updateLeftButtonItems];
 }
 
 - (void)updateView {
@@ -62,6 +69,7 @@
 
     self.titleView.title = title;
     self.titleView.subtitle = self.note.notebook.name;
+    self.notebookBarButtonItem.title = self.note.notebook.name;
     self.editTextController.note = self.note;
 }
 
@@ -81,6 +89,15 @@
     return _editTextController;
 }
 
+- (NoteListViewController *)noteListViewController {
+    if( _noteListViewController )
+        return _noteListViewController;
+    
+    _noteListViewController = [NoteListViewController new];
+    
+    return _noteListViewController;
+}
+
 #pragma mark - Note management
 
 - (void)setNote:(Note *)note {
@@ -92,7 +109,7 @@
         [self updateView];
     }
 
-    [self.masterPopoverController dismissPopoverAnimated:YES];
+    [self.noteListPopoverController dismissPopoverAnimated:YES];
 }
 
 - (void)noteChanged:(id)sender {
@@ -101,11 +118,18 @@
 
 #pragma mark - Bar button items
 
+- (void)updateLeftButtonItems {
+    NSMutableArray *items = [NSMutableArray array];
+    [items addObject:self.notebookBarButtonItem];
+    [items addObject:self.libraryBarButtonItem];
+    self.navigationItem.leftBarButtonItems = items;
+}
+
 - (void)updateRightButtonItems {
     NSMutableArray *items = [NSMutableArray array];
 
-    if( self.createNewNoteButton ) {
-        [items addObject:self.createNewNoteButton];
+    if( self.createNoteButtonItem ) {
+        [items addObject:self.createNoteButtonItem];
     }
 
     if( self.searchButtonItem ) {
@@ -131,8 +155,8 @@
     [self updateRightButtonItems];
 }
 
-- (void)setCreateNewNoteButton:(UIBarButtonItem *)createNewNoteButton {
-    _createNewNoteButton = createNewNoteButton;
+- (void)setcreateNoteButtonItem:(UIBarButtonItem *)createNoteButtonItem {
+    _createNoteButtonItem = createNoteButtonItem;
 
     [self updateRightButtonItems];
 }
@@ -147,11 +171,6 @@
         self.transcriptButtonItem = barButtonItem;
         self.transcriptPopoverController = popoverController;
     }
-    else {
-        barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-        [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-        self.masterPopoverController = popoverController;
-    }
 }
 
 - (void)splitViewController:(MGSplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
@@ -160,11 +179,6 @@
     if( [navigationController.topViewController isKindOfClass:[TranscriptViewController class]] ) {
         self.transcriptButtonItem = nil;
         self.transcriptPopoverController = nil;
-    }
-    else {
-        // Called when the view is shown again in the split view, invalidating the button and popover controller.
-        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-        self.masterPopoverController = nil;
     }
 }
 
@@ -194,11 +208,34 @@
 }
 
 - (void)createNewNote:(id)sender {
-    [[MainSplitViewController sharedInstance] setCurrentNote:[[NoteManager sharedInstance] createNewNoteInNotebook:self.note.notebook]];
+    [[EditNoteSplitViewController sharedInstance] setCurrentNote:[[NoteManager sharedInstance] createNewNoteInNotebook:self.note.notebook]];
 }
 
 - (void)titleViewTapped:(id)sender {
-    [[[[MainSplitViewController sharedInstance] editNoteViewController] editTextController] focusAndSelectTitle];
+    [[[[EditNoteSplitViewController sharedInstance] editNoteViewController] editTextController] focusAndSelectTitle];
+}
+
+- (void)close:(id)sender {
+    [[EditNoteSplitViewController sharedInstance] close];
+}
+
+- (void)toggleNotebookPopover:(id)sender {
+    if( !self.noteListPopoverController ) {
+        self.noteListViewController.contentSizeForViewInPopover = (CGSize) {
+            320.f,
+            [[UIScreen mainScreen] bounds].size.height
+        };
+        self.noteListPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.noteListViewController];
+    }
+    
+    if( self.noteListPopoverController.popoverVisible ) {
+        [self.noteListPopoverController dismissPopoverAnimated:YES];
+    }
+    else {
+        [self.editTextController resignFirstResponder];
+        [self.noteListPopoverController presentPopoverFromBarButtonItem:self.notebookBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+//        self.noteListPopoverController.popoverContentSize =
+    }
 }
 
 @end

@@ -572,4 +572,9 @@ static int i = 0;
     [self.webView stringByEvaluatingJavaScriptFromString:@"focusAndSelectTitle()"];
 }
 
+- (void)resignFirstResponder {
+    self.webView.userInteractionEnabled = NO;
+    self.webView.userInteractionEnabled = YES;
+}
+
 @end

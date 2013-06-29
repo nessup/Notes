@@ -8,7 +8,7 @@
 
 #import "NoteListViewController.h"
 
-#import "MainSplitViewController.h"
+#import "EditNoteSplitViewController.h"
 #import "NoteManager.h"
 #import "TranscriptViewController.h"
 #import "EditNoteViewController.h"
@@ -32,21 +32,38 @@
     BOOL _searching;
 }
 
+- (id)init {
+    return [self initWithNibName:@"NoteListViewController" bundle:[NSBundle mainBundle]];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if( self ) {
         self.title = NSLocalizedString(@"Master", @"Master");
-        self.clearsSelectionOnViewWillAppear = NO;
+//        self.clearsSelectionOnViewWillAppear = NO;
         self.contentSizeForViewInPopover = CGSizeMake(498.f, 600.0);
     }
 
     return self;
 }
 
-//- (void)loadView {
-//    self.view = [TestView new];
-//}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    // Do any additional setup after loading the view, typically from a nib.
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
+    self.addButton = addButton;
+    self.navigationItem.rightBarButtonItem = self.addButton;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self.tableView reloadData];
+    [super viewDidDisappear:animated];
+}
 
 - (void)updateView {
     if( !self.editing ) {
@@ -58,22 +75,6 @@
             self.title = @"1 note";
         }
     }
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
-    self.addButton = addButton;
-    self.navigationItem.rightBarButtonItem = self.addButton;
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Properties
@@ -186,16 +187,6 @@
 
 #pragma mark - Actions
 
-- (void)loadView {
-    self.view = self.tableView = [[TableView alloc] initWithFrame:(CGRect) {
-        CGPointZero,
-        Width,
-        Height
-    } style:UITableViewStylePlain];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-}
-
 - (void)createNewNote:(id)sender {
     [[NoteManager sharedInstance] createNewNoteInNotebook:self.notebook];
 }
@@ -203,23 +194,26 @@
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    NSUInteger count = [[self.fetchedResultsController sections] count];
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     NSUInteger count = [sectionInfo numberOfObjects];
-    if( count == 0 ) {
-        self.tableView.overlayView = self.noNotesOverlayView;
-    }
-    else {
-        self.tableView.overlayView = nil;
-    }
+//    if( count == 0 ) {
+//        self.tableView.overlayView = self.noNotesOverlayView;
+//        NSLog(@"y");
+//    }
+//    else {
+//        self.tableView.overlayView = nil;
+//                NSLog(@"n %d", count);
+//    }
     return count;
 }
 
 // Customize the appearance of table view cells.
-- (NotesCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"NotesCell";
 
     NotesCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -251,7 +245,7 @@
 
     cell.detailTextLabel.numberOfLines = 1;
     cell.detailTextLabel.text = note.content;
-    Note *currentNote = [[MainSplitViewController sharedInstance] currentNote];
+    Note *currentNote = [[EditNoteSplitViewController sharedInstance] currentNote];
     cell.textLabel.font = (note == currentNote ? [FontManager boldHelveticaNeueWithSize:16.f] : [FontManager helveticaNeueWithSize:16.f]);
 }
 
@@ -284,8 +278,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Note *note = (Note *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
-
-    [[MainSplitViewController sharedInstance] setCurrentNote:note];
+    [[EditNoteSplitViewController sharedInstance] setCurrentNote:note];
+    [self presentViewController:[EditNoteSplitViewController sharedInstance] animated:YES completion:nil];
 }
 
 #pragma mark - Fetched results controller

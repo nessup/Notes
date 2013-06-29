@@ -10,13 +10,14 @@
 
 @class EditNoteViewController, TranscriptViewController, NotebookListViewController, Note;
 
-@interface MainSplitViewController : MGSplitViewController
+@interface EditNoteSplitViewController : MGSplitViewController
 
 @property (nonatomic, strong, readonly) EditNoteViewController *editNoteViewController;
 @property (nonatomic, strong, readonly) TranscriptViewController *transcriptViewController;
-@property (nonatomic, strong, readonly) NotebookListViewController *notebookListViewController;
-
 @property (nonatomic, strong) Note *currentNote;
 
-+ (MainSplitViewController *)sharedInstance;
++ (id)sharedInstance;
+
+- (void)close;
+
 @end

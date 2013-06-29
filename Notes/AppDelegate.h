@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MainSplitViewController;
+@class EditNoteSplitViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -18,6 +18,6 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (strong, nonatomic) MainSplitViewController *splitViewController;
+@property (strong, nonatomic) EditNoteSplitViewController *splitViewController;
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "MainSplitViewController.h"
+#import "EditNoteSplitViewController.h"
 
 #import "NotebookListViewController.h"
 #import "EditNoteViewController.h"
@@ -15,22 +15,20 @@
 #import "MGSplitViewController.h"
 #import "TranscriptViewController.h"
 
-@interface MainSplitViewController ()
+@interface EditNoteSplitViewController ()
 @property (nonatomic, strong) EditNoteViewController *editNoteViewController;
 @property (nonatomic, strong) TranscriptViewController *transcriptViewController;
-@property (nonatomic, strong) NotebookListViewController *notebookListViewController;
 @end
 
-@implementation MainSplitViewController
+@implementation EditNoteSplitViewController
 
-+ (MainSplitViewController *)sharedInstance {
-    static MainSplitViewController *sharedInstance = nil;
++ (id)sharedInstance {
+    static EditNoteSplitViewController *controller = nil;
     static dispatch_once_t onceToken;
-
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
+        controller = [EditNoteSplitViewController new];
     });
-    return sharedInstance;
+    return controller;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -43,21 +41,18 @@
         self.transcriptViewController = [TranscriptViewController new];
         UINavigationController *transcriptNavigationController = [[UINavigationController alloc] initWithRootViewController:self.transcriptViewController];
 
-        MGSplitViewController *subSplit = [MGSplitViewController new];
-        subSplit.masterBeforeDetail = NO;
-        subSplit.viewControllers = @[
+//        MGSplitViewController *self = [MGSplitViewController new];
+        self.masterBeforeDetail = NO;
+        self.viewControllers = @[
                 transcriptNavigationController,
                 editNoteNavigationController
             ];
-        subSplit.allowsDraggingDivider = YES;
-        subSplit.dividerStyle = MGSplitViewDividerStylePaneSplitter;
-        subSplit.delegate = self.editNoteViewController;
-
-        self.notebookListViewController = [NotebookListViewController new];
-        UINavigationController *noteNavigationController = [[UINavigationController alloc] initWithRootViewController:self.notebookListViewController];
-
+        self.allowsDraggingDivider = YES;
+        self.dividerStyle = MGSplitViewDividerStylePaneSplitter;
         self.delegate = self.editNoteViewController;
-        self.viewControllers = @[noteNavigationController, subSplit];
+
+//        self.delegate = self.editNoteViewController;
+//        self.viewControllers = @[self];
     }
 
     return self;
@@ -68,6 +63,10 @@
 
     self.editNoteViewController.note = _currentNote;
     self.transcriptViewController.note = _currentNote;
+}
+
+- (void)close {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

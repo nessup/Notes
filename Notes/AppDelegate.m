@@ -11,7 +11,7 @@
 #import "SpeechToTextManager.h"
 #import "NoteManager.h"
 #import "Utility.h"
-#import "MainSplitViewController.h"
+#import "EditNoteSplitViewController.h"
 #import "NotebookBrowseViewController.h"
 
 @implementation AppDelegate
@@ -24,7 +24,6 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[NoteManager sharedInstance] setContext:self.managedObjectContext];
-//    self.window.rootViewController = [MainSplitViewController sharedInstance];
     self.window.rootViewController = [NotebookBrowseViewController new];
     [self.window makeKeyAndVisible];
     return YES;

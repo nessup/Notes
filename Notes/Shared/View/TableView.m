@@ -10,9 +10,13 @@
 
 @implementation TableView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    return [super initWithCoder:aDecoder];
+}
+
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame style:style];
     if (self) {
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.separatorColor = nil;
@@ -21,6 +25,7 @@
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     self.overlayView.frame = [self overlayViewRectForBounds:self.bounds];
 }
 

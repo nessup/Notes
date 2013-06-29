@@ -143,7 +143,6 @@
     cell.iconView.firstLetterLabel.text = @(indexPath.item).stringValue;
     cell.title = @"Add";
     NSLog(@"%f", cell.frame.size.width);
-    cell.backgroundColor = [UIColor redColor];
 }
 
 - (void)configureNotebookCell:(NotebookCell *)cell forNotebookAtIndexPath:(NSIndexPath *)indexPath {

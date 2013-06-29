@@ -38,5 +38,6 @@ enum {
 - (void)doAfterDOMLoads:(void(^) ())completion;
 - (NSString *)plainTextContent;
 - (void)focusAndSelectTitle;
+- (void)resignFirstResponder;
 
 @end

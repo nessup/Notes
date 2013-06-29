@@ -24,6 +24,8 @@
 		3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440DA177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m */; };
 		3B0440DF177DE97E00EA28C3 /* TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440DE177DE97E00EA28C3 /* TableView.m */; };
 		3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440E1177DE9F000EA28C3 /* OverlayView.m */; };
+		3B04410E177F1B7500EA28C3 /* EditNoteSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04410D177F1B7500EA28C3 /* EditNoteSplitViewController.m */; };
+		3B044110177F28EB00EA28C3 /* NoteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B04410F177F28EB00EA28C3 /* NoteListViewController.xib */; };
 		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
@@ -80,7 +82,6 @@
 		3BECC6C917717B0E00BA1A01 /* NotebookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6C517717B0E00BA1A01 /* NotebookListViewController.m */; };
 		3BECC6CA17717B0E00BA1A01 /* NoteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */; };
 		3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6CD17717B9C00BA1A01 /* NotesCell.m */; };
-		3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */; };
 		3BF3F63E174C892400AAD591 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63D174C892400AAD591 /* UIKit.framework */; };
 		3BF3F640174C892400AAD591 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F63F174C892400AAD591 /* Foundation.framework */; };
 		3BF3F642174C892400AAD591 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F641174C892400AAD591 /* CoreGraphics.framework */; };
@@ -94,7 +95,6 @@
 		3BF3F659174C892400AAD591 /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */; };
 		3BF3F672174D226C00AAD591 /* EditNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */; };
 		3BF3F675174D22AE00AAD591 /* NoteTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F674174D22AE00AAD591 /* NoteTemplate.html */; };
-		3BF3F677174D230700AAD591 /* NoteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F676174D230700AAD591 /* NoteListViewController.xib */; };
 		3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */; };
 		3BF3F680174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */; };
 		3BF3F682174D37C400AAD591 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF3F681174D37C400AAD591 /* QuartzCore.framework */; };
@@ -134,6 +134,9 @@
 		3B0440DE177DE97E00EA28C3 /* TableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView.m; sourceTree = "<group>"; };
 		3B0440E0177DE9F000EA28C3 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
 		3B0440E1177DE9F000EA28C3 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		3B04410C177F1B7500EA28C3 /* EditNoteSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteSplitViewController.h; sourceTree = "<group>"; };
+		3B04410D177F1B7500EA28C3 /* EditNoteSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteSplitViewController.m; sourceTree = "<group>"; };
+		3B04410F177F28EB00EA28C3 /* NoteListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteListViewController.xib; sourceTree = "<group>"; };
 		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
 		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
@@ -231,8 +234,6 @@
 		3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteListViewController.m; sourceTree = "<group>"; };
 		3BECC6CC17717B9C00BA1A01 /* NotesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesCell.h; sourceTree = "<group>"; };
 		3BECC6CD17717B9C00BA1A01 /* NotesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesCell.m; sourceTree = "<group>"; };
-		3BECC6CF17718C3700BA1A01 /* MainSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSplitViewController.h; sourceTree = "<group>"; };
-		3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainSplitViewController.m; sourceTree = "<group>"; };
 		3BF3F63A174C892400AAD591 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF3F63D174C892400AAD591 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BF3F63F174C892400AAD591 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -251,7 +252,6 @@
 		3BF3F66D174D226C00AAD591 /* EditNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteViewController.h; sourceTree = "<group>"; };
 		3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteViewController.m; sourceTree = "<group>"; };
 		3BF3F674174D22AE00AAD591 /* NoteTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NoteTemplate.html; sourceTree = "<group>"; };
-		3BF3F676174D230700AAD591 /* NoteListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteListViewController.xib; sourceTree = "<group>"; };
 		3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = NoteTemplate.css; sourceTree = "<group>"; };
 		3BF3F67E174D2BE200AAD591 /* UIViewController+KeyboardNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardNotifications.h"; sourceTree = "<group>"; };
 		3BF3F67F174D2BE200AAD591 /* UIViewController+KeyboardNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardNotifications.m"; sourceTree = "<group>"; };
@@ -467,6 +467,7 @@
 		3B51F0401779537A00FBFC25 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3B04410F177F28EB00EA28C3 /* NoteListViewController.xib */,
 				3B51F0411779538700FBFC25 /* notes-logo.png */,
 				3B51F0421779538700FBFC25 /* notes-logo@2x.png */,
 			);
@@ -565,8 +566,6 @@
 				3BECC6C517717B0E00BA1A01 /* NotebookListViewController.m */,
 				3BECC6C617717B0E00BA1A01 /* NoteListViewController.h */,
 				3BECC6C717717B0E00BA1A01 /* NoteListViewController.m */,
-				3BECC6CF17718C3700BA1A01 /* MainSplitViewController.h */,
-				3BECC6D017718C3800BA1A01 /* MainSplitViewController.m */,
 				3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */,
 				3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */,
 				3BF65AD3177B7EFA0035DC29 /* EditNotebookViewController.h */,
@@ -671,6 +670,8 @@
 				3BF3F66E174D226C00AAD591 /* EditNoteViewController.m */,
 				3BCB7E3F174EC5FA006B393D /* EditRichTextViewController.h */,
 				3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */,
+				3B04410C177F1B7500EA28C3 /* EditNoteSplitViewController.h */,
+				3B04410D177F1B7500EA28C3 /* EditNoteSplitViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -682,7 +683,6 @@
 				3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */,
 				3BCB7E46174ED799006B393D /* Common.js */,
 				3BCB7E4A174EDB0F006B393D /* Common.css */,
-				3BF3F676174D230700AAD591 /* NoteListViewController.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -837,7 +837,6 @@
 				3BF3F654174C892400AAD591 /* Default@2x.png in Resources */,
 				3BF3F656174C892400AAD591 /* Default-568h@2x.png in Resources */,
 				3BF3F675174D22AE00AAD591 /* NoteTemplate.html in Resources */,
-				3BF3F677174D230700AAD591 /* NoteListViewController.xib in Resources */,
 				3BF3F67B174D28BB00AAD591 /* NoteTemplate.css in Resources */,
 				3BCB7E4B174EDB0F006B393D /* Common.css in Resources */,
 				3BFD4B631750023D00E3A46F /* WebViewJavascriptBridge.js.txt in Resources */,
@@ -862,6 +861,7 @@
 				3BECC67D176D972600BA1A01 /* rangy-textrange.js in Resources */,
 				3B51F0431779538700FBFC25 /* notes-logo.png in Resources */,
 				3B51F0441779538700FBFC25 /* notes-logo@2x.png in Resources */,
+				3B044110177F28EB00EA28C3 /* NoteListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,7 +902,6 @@
 				3BECC6C917717B0E00BA1A01 /* NotebookListViewController.m in Sources */,
 				3BECC6CA17717B0E00BA1A01 /* NoteListViewController.m in Sources */,
 				3BECC6CE17717B9C00BA1A01 /* NotesCell.m in Sources */,
-				3BECC6D117718C3800BA1A01 /* MainSplitViewController.m in Sources */,
 				3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */,
 				3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */,
 				3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */,
@@ -928,6 +927,7 @@
 				3B0440DB177DBB0F00EA28C3 /* UIAlertView+MKBlockAdditions.m in Sources */,
 				3B0440DF177DE97E00EA28C3 /* TableView.m in Sources */,
 				3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */,
+				3B04410E177F1B7500EA28C3 /* EditNoteSplitViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

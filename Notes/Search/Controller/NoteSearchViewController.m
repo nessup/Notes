@@ -10,7 +10,7 @@
 
 #import "EditNoteViewController.h"
 #import "EditRichTextViewController.h"
-#import "MainSplitViewController.h"
+#import "EditNoteSplitViewController.h"
 
 #define CollapsedHeight 64.f
 #define ExpandedHeight  832.f
@@ -46,7 +46,7 @@
 }
 
 - (void)updateSearchWithText:(NSString *)searchText {
-    EditRichTextViewController *editTextController = [[[MainSplitViewController sharedInstance] editNoteViewController] editTextController];
+    EditRichTextViewController *editTextController = [[[EditNoteSplitViewController sharedInstance] editNoteViewController] editTextController];
 
     editTextController.searchTerm = searchText;
 
