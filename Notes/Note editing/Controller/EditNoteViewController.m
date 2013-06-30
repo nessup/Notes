@@ -216,15 +216,16 @@
 }
 
 - (void)close:(id)sender {
+    [self.editTextController commitChangesToNote];
     [[EditNoteSplitViewController sharedInstance] close];
 }
 
 - (void)toggleNotebookPopover:(id)sender {
     if( !self.noteListPopoverController ) {
-        self.noteListViewController.contentSizeForViewInPopover = (CGSize) {
-            320.f,
-            [[UIScreen mainScreen] bounds].size.height
-        };
+//        self.noteListViewController.contentSizeForViewInPopover = (CGSize) {
+//            320.f,
+//            [[UIScreen mainScreen] bounds].size.height
+//        };
         self.noteListPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.noteListViewController];
     }
     

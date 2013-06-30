@@ -26,6 +26,8 @@
 		3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440E1177DE9F000EA28C3 /* OverlayView.m */; };
 		3B04410E177F1B7500EA28C3 /* EditNoteSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04410D177F1B7500EA28C3 /* EditNoteSplitViewController.m */; };
 		3B044110177F28EB00EA28C3 /* NoteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B04410F177F28EB00EA28C3 /* NoteListViewController.xib */; };
+		3B044124177F6AA200EA28C3 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B044123177F6AA200EA28C3 /* TTTAttributedLabel.m */; };
+		3B04412E1780791700EA28C3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B04412D1780791600EA28C3 /* CoreText.framework */; };
 		3B0B331A1778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */; };
 		3B1FF1A717540C48004B2CFE /* jquery.ui.touch-punch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */; };
 		3B1FF1A817540C48004B2CFE /* jquery.ui.touch-punch.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B1FF1A517540C48004B2CFE /* jquery.ui.touch-punch.min.js */; };
@@ -137,6 +139,9 @@
 		3B04410C177F1B7500EA28C3 /* EditNoteSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteSplitViewController.h; sourceTree = "<group>"; };
 		3B04410D177F1B7500EA28C3 /* EditNoteSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteSplitViewController.m; sourceTree = "<group>"; };
 		3B04410F177F28EB00EA28C3 /* NoteListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteListViewController.xib; sourceTree = "<group>"; };
+		3B044122177F6AA200EA28C3 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		3B044123177F6AA200EA28C3 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		3B04412D1780791600EA28C3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		3B0B33181778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedResultsController+UICollectionView.h"; sourceTree = "<group>"; };
 		3B0B33191778A34200B59AA0 /* NSFetchedResultsController+UICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedResultsController+UICollectionView.m"; sourceTree = "<group>"; };
 		3B1FF1A417540C48004B2CFE /* jquery.ui.touch-punch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.ui.touch-punch.js"; sourceTree = "<group>"; };
@@ -278,6 +283,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B04412E1780791700EA28C3 /* CoreText.framework in Frameworks */,
 				3BA57810175DA9E20052757D /* AudioToolbox.framework in Frameworks */,
 				3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */,
 				3B2CC8E117590229001483EA /* Security.framework in Frameworks */,
@@ -389,6 +395,16 @@
 				3B0440E1177DE9F000EA28C3 /* OverlayView.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		3B044121177F6AA200EA28C3 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				3B044122177F6AA200EA28C3 /* TTTAttributedLabel.h */,
+				3B044123177F6AA200EA28C3 /* TTTAttributedLabel.m */,
+			);
+			name = TTTAttributedLabel;
+			path = TTTAttributedLabel/TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		3B1FF19E1754086D004B2CFE /* jquery */ = {
@@ -621,6 +637,7 @@
 		3BF3F63C174C892400AAD591 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B04412D1780791600EA28C3 /* CoreText.framework */,
 				3BA5780F175DA9E20052757D /* AudioToolbox.framework */,
 				3B2CC8E21759022F001483EA /* ImageIO.framework */,
 				3B2CC8E017590229001483EA /* Security.framework */,
@@ -726,6 +743,7 @@
 		3BFD4B50174FF93600E3A46F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				3B044121177F6AA200EA28C3 /* TTTAttributedLabel */,
 				3B46156C1778961F006D8EBB /* PSTCollectionView */,
 				3B28495C176BF5560030CF03 /* Rangy */,
 				3BA577B8175937110052757D /* MGSplitViewController */,
@@ -928,6 +946,7 @@
 				3B0440DF177DE97E00EA28C3 /* TableView.m in Sources */,
 				3B0440E2177DE9F000EA28C3 /* OverlayView.m in Sources */,
 				3B04410E177F1B7500EA28C3 /* EditNoteSplitViewController.m in Sources */,
+				3B044124177F6AA200EA28C3 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

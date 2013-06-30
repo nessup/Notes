@@ -22,16 +22,28 @@ NSString *const NoteCategoryAssignment = @"Assignments";
 @dynamic topRightLines;
 @dynamic transcription;
 @dynamic transcriptionAudio;
+@dynamic plainTextContent;
 
 - (NSString *)titlePlaceholder {
     static NSDateFormatter *formatter = nil;
-
     if( !formatter ) {
         formatter = [NSDateFormatter new];
         formatter.dateStyle = NSDateFormatterMediumStyle;
     }
-
     return [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:self.dateCreated]];
+}
+
+- (NSString *)plainTextContentPlaceholder {
+    return @"No content";
+}
+
+- (NSString *)shortDateCreated {
+    static NSDateFormatter *formatter = nil;
+    if( !formatter ) {
+        formatter = [NSDateFormatter new];
+        formatter.dateStyle = NSDateFormatterShortStyle;
+    }
+    return [formatter stringFromDate:self.dateCreated];
 }
 
 @end

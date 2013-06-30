@@ -451,11 +451,13 @@ NSString *const WebViewEventValue = @"value";
 - (void)commitChangesToNote {
     NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"getTitle()"];
     NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
+    NSString *plainTextContent = [self.webView stringByEvaluatingJavaScriptFromString:@"getPlainTextContent()"];
     NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"getTopRightLines();"];
     NSString *category = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedCategory();"];
 
     self.note.title = title;
     self.note.content = content;
+    self.note.plainTextContent = plainTextContent;
     self.note.topRightLines = topRightLines;
     self.note.category = category;
 

@@ -17,6 +17,7 @@
 #import "TestView.h"
 #import "OverlayView.h"
 #import "TableView.h"
+#import "TTTAttributedLabel.h"
 
 #define Width       498.f
 #define Height      600.f
@@ -41,7 +42,7 @@
 
     if( self ) {
         self.title = NSLocalizedString(@"Master", @"Master");
-//        self.clearsSelectionOnViewWillAppear = NO;
+        self.clearsSelectionOnViewWillAppear = YES;
         self.contentSizeForViewInPopover = CGSizeMake(498.f, 600.0);
     }
 
@@ -51,6 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftItemsSupplementBackButton = YES;
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -58,6 +61,8 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
     self.addButton = addButton;
     self.navigationItem.rightBarButtonItem = self.addButton;
+    
+    self.navigationController.contentSizeForViewInPopover = self.contentSizeForViewInPopover;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -101,6 +106,7 @@
     [UIView animateWithDuration:0.25f animations:^{
         self.tableView.overlayView.alpha = !showsTableHeaverViewOnly;
     }];
+    self.tableView.scrollEnabled = !showsTableHeaverViewOnly;
 }
 
 - (void)setNotebook:(Notebook *)notebook {
@@ -212,6 +218,11 @@
     return count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NotesCell *cell = (NotesCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return [cell cellHeightForWidth:self.tableView.frame.size.width];
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"NotesCell";
@@ -220,6 +231,7 @@
 
     if( cell == nil ) {
         cell = [[NotesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.detailTextLabel.numberOfLines = 2.f;
     }
 
     [self configureCell:cell atIndexPath:indexPath];
@@ -233,20 +245,16 @@
         cell.textLabel.text = note.title;
     }
     else {
-        static NSDateFormatter *formatter = nil;
-
-        if( !formatter ) {
-            formatter = [NSDateFormatter new];
-            formatter.dateStyle = NSDateFormatterMediumStyle;
-        }
-
-        cell.textLabel.text = [NSString stringWithFormat:@"Untitled Note on %@", [formatter stringFromDate:note.dateCreated]];
+        cell.textLabel.text = [note titlePlaceholder];
     }
-
-    cell.detailTextLabel.numberOfLines = 1;
-    cell.detailTextLabel.text = note.content;
-    Note *currentNote = [[EditNoteSplitViewController sharedInstance] currentNote];
-    cell.textLabel.font = (note == currentNote ? [FontManager boldHelveticaNeueWithSize:16.f] : [FontManager helveticaNeueWithSize:16.f]);
+    if( note.plainTextContent.length ) {
+        cell.detailTextLabel.text = note.plainTextContent;
+    }
+    else {
+        cell.detailTextLabel.text = [note plainTextContentPlaceholder];
+    }
+    cell.topRightTextLabel.text = [note shortDateCreated];
+//    Note *currentNote = [[EditNoteSplitViewController sharedInstance] currentNote];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TTTAttributedLabel;
+
 @interface NotesCell : UITableViewCell
+@property (nonatomic, strong) TTTAttributedLabel *topRightTextLabel;
 - (CALayer *)colorLayer;
+- (CGFloat)cellHeightForWidth:(CGFloat)width;
 @end

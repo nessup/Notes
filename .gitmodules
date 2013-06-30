@@ -37,3 +37,6 @@
 [submodule "Notes/External/PSTCollectionView"]
 	path = Notes/External/PSTCollectionView
 	url = https://github.com/steipete/PSTCollectionView.git
+[submodule "Notes/External/TTTAttributedLabel"]
+	path = Notes/External/TTTAttributedLabel
+	url = https://github.com/mattt/TTTAttributedLabel.git

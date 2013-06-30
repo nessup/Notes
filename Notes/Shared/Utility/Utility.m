@@ -13,8 +13,6 @@ ApplicationDocumentsDirectory() {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-#pragma mark - Utility
-
 UIColor *
 ChangeBrightnessOfColorByAmount(UIColor *color, CGFloat amount) {
     CGFloat hue, saturation, brightness, alpha;
@@ -34,4 +32,31 @@ ChangeBrightnessOfColorByAmount(UIColor *color, CGFloat amount) {
     }
 
     return nil;
+}
+
+void
+draw1PxBottomBorder(CGContextRef context, CGRect rect) {
+    
+    CGPoint startPoint = CGPointMake(0.0 ,rect.size.height - 1.f);
+    CGPoint endPoint = CGPointMake(rect.size.width, rect.size.height - 1.f);
+    
+    draw1PxBorder(context, startPoint, endPoint, @"cccccc");
+}
+
+void
+draw1PxBorder(CGContextRef context, CGPoint startPoint, CGPoint endPoint, NSString *color) {
+    
+    if ( context == nil )
+        return;
+    
+    CGFloat offset = 1.f/2.f;
+    
+    CGContextSaveGState(context);
+    CGContextSetLineCap(context, kCGLineCapSquare);
+    CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:color].CGColor);
+    CGContextSetLineWidth(context, 1.f);
+    CGContextMoveToPoint(context, startPoint.x, startPoint.y + offset);
+    CGContextAddLineToPoint(context, endPoint.x, endPoint.y + offset);
+    CGContextStrokePath(context);
+    CGContextRestoreGState(context);
 }

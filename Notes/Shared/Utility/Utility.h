@@ -8,3 +8,5 @@
 
 NSURL *ApplicationDocumentsDirectory();
 UIColor *ChangeBrightnessOfColorByAmount(UIColor *color, CGFloat amount);
+void draw1PxBottomBorder(CGContextRef context, CGRect rect);
+void draw1PxBorder(CGContextRef context, CGPoint startPoint, CGPoint endPoint, NSString *color);

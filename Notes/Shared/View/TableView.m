@@ -46,6 +46,11 @@
     self.scrollEnabled = !_overlayView;
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+//    NSLog(@"sf w=%f", frame.size.width);
+}
+
 //- (void)setTableHeaderView:(UIView *)tableHeaderView {
 //    [super setTableHeaderView:tableHeaderView];
 //    [self setNeedsLayout];
