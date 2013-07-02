@@ -11,15 +11,14 @@
 @implementation TableView
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    return [super initWithCoder:aDecoder];
+    @throw [NSException exceptionWithName:@"init with coder on tableview" reason:nil userInfo:nil];
 }
 
 - (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {
     self = [super initWithFrame:frame style:style];
     if (self) {
-        self.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.separatorColor = nil;
+        self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
     return self;
 }
@@ -27,6 +26,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.overlayView.frame = [self overlayViewRectForBounds:self.bounds];
+    self.overlayView.backgroundColor = [UIColor greenColor];
 }
 
 - (CGRect)overlayViewRectForBounds:(CGRect)bounds {
@@ -42,18 +42,20 @@
     [_overlayView removeFromSuperview];
     _overlayView = overlayView;
     [self addSubview:_overlayView];
+    _overlayView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     _overlayView.layer.zPosition = 1000.f;
     self.scrollEnabled = !_overlayView;
+    [self setNeedsLayout];
 }
 
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
+//- (void)setFrame:(CGRect)frame {
+//    [super setFrame:frame];
 //    NSLog(@"sf w=%f", frame.size.width);
-}
-
-//- (void)setTableHeaderView:(UIView *)tableHeaderView {
-//    [super setTableHeaderView:tableHeaderView];
-//    [self setNeedsLayout];
 //}
+
+- (void)setTableHeaderView:(UIView *)tableHeaderView {
+    [super setTableHeaderView:tableHeaderView];
+    [self setNeedsLayout];
+}
 
 @end

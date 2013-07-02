@@ -6,11 +6,21 @@
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "Utility.h"
+
 
 NSURL *
 ApplicationDocumentsDirectory() {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+CGFloat
+CenterCoordinateHorizontallyInView(UIView *parentView, CGFloat length) {
+    return roundf(parentView.frame.size.width/2.f - length/2.f);
+}
+
+CGFloat
+CenterCoordinateVerticallyInView(UIView *parentView, CGFloat length) {
+    return roundf(parentView.frame.size.height/2.f - length/2.f);
 }
 
 UIColor *

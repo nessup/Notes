@@ -1,4 +1,4 @@
-//
+
 //  NotesCell.m
 //  Notes
 //
@@ -9,7 +9,7 @@
 #import "NotesCell.h"
 
 #import "TTTAttributedLabel.h"
-#import "Utility.h"
+
 
 #define ColorLayerWidth         5.f
 #define SideMargin              10.f
@@ -50,13 +50,21 @@
 
     self.textLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultTextLabelColor];
     self.textLabel.text = self.textLabel.text;
-    self.detailTextLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultDetailTextLabelColor];
+//    self.detailTextLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultDetailTextLabelColor];
     self.detailTextLabel.text = self.detailTextLabel.text;
+
+}
+
+- (void)setLeftView:(UIView *)leftView {
+    [_leftView removeFromSuperview];
+    _leftView = leftView;
+    [self addSubview:leftView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.colorLayer.frame = [self colorLayerRectForBounds:self.bounds];
+    self.leftView.frame = [self leftViewRectForBounds:self.bounds];
     self.contentView.frame = [self contentRectForBounds:self.bounds];
     self.textLabel.frame = [self textRectForContentBounds:self.contentView.bounds];
     self.topRightTextLabel.frame = [self topRightTextRectForContentBounds:self.contentView.bounds];
@@ -71,12 +79,34 @@
     };
 }
 
+- (CGRect)leftViewRectForBounds:(CGRect)bounds {
+    if( self.leftView.frame.size.height ) {
+        return (CGRect) {
+            ColorLayerWidth + SideMargin + self.editing * LeftDeletionMargin,
+            VerticalMargin,
+            self.leftView.frame.size
+        };
+    }
+    else {
+        return CGRectZero;
+    }
+}
+
 - (CGRect)contentRectForBounds:(CGRect)bounds {
+    CGRect leftViewRect = [self leftViewRectForBounds:bounds];
+    CGFloat width = bounds.size.width - 2.f * SideMargin - self.showingDeleteConfirmation * RightDeletionMargin - DefaultAccessoryWidth;
+    CGSize constraintSize = (CGSize) {
+        width,
+        0.f
+    };
+    CGSize textSize = [self.textLabel sizeThatFits:constraintSize];
+    CGSize detailTextSize = [self.detailTextLabel sizeThatFits:constraintSize];
+    CGFloat height = textSize.height + detailTextSize.height;
     return (CGRect) {
-        ColorLayerWidth + SideMargin + self.editing * LeftDeletionMargin,
-        VerticalMargin,
-        bounds.size.width - 2.f * SideMargin - self.showingDeleteConfirmation * RightDeletionMargin - DefaultAccessoryWidth,
-        bounds.size.height - 2.f * VerticalMargin
+        CGRectGetMaxX(leftViewRect) + SideMargin,
+        CenterCoordinateVerticallyInView(self, height),
+        width,
+        textSize.height
     };
 }
 
@@ -125,10 +155,12 @@
         width,
         0.f
     };
-    height += VerticalMargin;
     height += [self textRectForContentBounds:partialContentBounds].size.height;
     height += [self detailTextRectForContentBounds:partialContentBounds].size.height;
-    height += VerticalMargin;
+    NSLog(@"b4=%f", height);
+    height = MAX(height, self.leftView.frame.size.height);
+    NSLog(@"af=%f", height);
+    height += 2.f*VerticalMargin;
     return height;
 }
 
@@ -136,7 +168,7 @@
 
 - (TTTAttributedLabel *)createLabel {
     TTTAttributedLabel *label = [TTTAttributedLabel new];
-    label.numberOfLines = 0;
+//    label.numberOfLines = 0;
     return label;
 }
 
@@ -169,7 +201,7 @@
     [[super detailTextLabel] removeFromSuperview];
     __detailTextLabel = [self createLabel];
     __detailTextLabel.font = [FontManager helveticaNeueWithSize:12.f];
-    __detailTextLabel.textColor = [[self class] defaultDetailTextLabelColor];
+//    __detailTextLabel.textColor = [[self class] defaultDetailTextLabelColor];
     
     return __detailTextLabel;
 }
@@ -192,5 +224,51 @@
 //    draw1PxBottomBorder(UIGraphicsGetCurrentContext(), rect);
 //}
 
+#pragma mark - Highlighting
+
+- (void)setHighlightText:(NSString *)highlightText {
+    _highlightText = [highlightText copy];
+    [self updateHighlighting];
+}
+
+- (void)updateHighlighting {
+//    NSString *detailText = self.detailTextLabel.text;
+//    NSString *highlightText = self.highlightText;
+    NSMutableAttributedString * (^formatForHighlighting)(NSMutableAttributedString *mutableAttributedString, NSString *text, NSString *highlightText, UIFont *highlightFont) = ^NSMutableAttributedString * (NSMutableAttributedString *mutableAttributedString, NSString *text, NSString *highlightText, UIFont *highlightFont) {
+        if( highlightText.length ) {
+            NSRange range = [text rangeOfString:highlightText options:NSCaseInsensitiveSearch];
+
+            CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)highlightFont.fontName, highlightFont.pointSize, NULL);
+            if( range.location != NSNotFound ) {
+                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:range];
+                [mutableAttributedString addAttribute:(NSString *) kCTForegroundColorAttributeName value:(id)[[UIColor colorWithHexString:@"ffc963"] CGColor] range:range];
+                CFRelease(font);
+            }
+        }
+        return mutableAttributedString;
+    };
+    
+    dispatch_async(dispatch_get_current_queue(), ^{
+
+
+        NSString *text = self.detailTextLabel.text;
+        NSString *highlightText = self.highlightText;
+        UIFont *highlightFont = [FontManager boldHelveticaNeueWithSize:12.f];
+    [self.detailTextLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+
+        return formatForHighlighting(mutableAttributedString, text, highlightText, highlightFont);
+    }];
+        
+        text = self.textLabel.text;
+        highlightFont = [FontManager boldHelveticaNeueWithSize:16.f];
+        [self.textLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+            
+            return formatForHighlighting(mutableAttributedString, text, highlightText, highlightFont);
+        }];
+        [self setNeedsLayout];
+            });
+//    [self.detailTextLabel setNeedsDisplay];
+
+}
 
 @end

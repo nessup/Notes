@@ -16,16 +16,21 @@
 #import "NoteListViewController.h"
 #import "EditNotebookViewController.h"
 #import "UIAlertView+MKBlockAdditions.h"
+#import "GlobalSearchViewController.h"
+#import "SearchBar.h"
 
 #define NumberOfColumns 2
 #define VerticalMargin  10.f
-#define TableViewWidth  250.f
+#define TableViewWidth  500.f
 #define HeaderHeight    300.f
+#define SearchBarHeight 44.f
 
 @interface NotebookBrowseViewController () <NSFetchedResultsControllerDelegate, PSTCollectionViewDataSource, PSTCollectionViewDelegate, PSTCollectionViewDelegateFlowLayout, UIPopoverControllerDelegate, NoteListViewControllerDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) PSUICollectionView *collectionView;
 @property (nonatomic, strong) UIImageView *titleView;
+@property (nonatomic, strong) GlobalSearchViewController *globalSearchViewController;
+@property (nonatomic, strong) SearchBar *searchBar;
 
 // Notebook creation and editing
 @property (nonatomic, strong) UIPopoverController *editingPopover;
@@ -50,9 +55,28 @@
 
     [self.view addSubview:self.titleView];
     [self.view addSubview:self.collectionView];
+    [self.view addSubview:self.searchBar];
+    
+    [self addChildViewController:self.globalSearchViewController];
+    self.globalSearchViewController.view.frame = self.collectionView.frame;
+    [self.view addSubview:self.globalSearchViewController.view];
+    [self.globalSearchViewController didMoveToParentViewController:self];
+    self.globalSearchViewController.searchBar = self.searchBar;
+    
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    recognizer.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:recognizer];
 }
 
 - (void)updateViews {
+}
+
+- (void)viewTapped:(UITapGestureRecognizer *)recognizer {
+    CGPoint location = [recognizer locationInView:self.view];
+    BOOL shouldDismissKeyboard = !(self.globalSearchViewController.editing && CGRectContainsPoint(self.globalSearchViewController.view.frame, location)) && !CGRectContainsPoint(self.searchBar.frame, location);
+    if( shouldDismissKeyboard ) {
+        [self.searchBar resignFirstResponder];
+    }
 }
 
 #pragma mark - Title view
@@ -84,9 +108,9 @@
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.frame = (CGRect) {
-        0.f,
+        CenterCoordinateHorizontallyInView(self.view, TableViewWidth),
         HeaderHeight,
-        self.view.frame.size.width,
+        TableViewWidth,
         self.view.frame.size.height - HeaderHeight
     };
     _collectionView.backgroundColor = [UIColor whiteColor];
@@ -111,10 +135,6 @@
 
 - (CGFloat)collectionView:(PSUICollectionView *)collectionView layout:(PSUICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 10.f;
-}
-
-- (UIEdgeInsets)collectionView:(PSTCollectionView *)collectionView layout:(PSTCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0.f, self.titleView.frame.origin.x, 0.f, self.view.frame.size.width - CGRectGetMaxX(self.titleView.frame));
 }
 
 - (NSInteger)collectionView:(PSUICollectionViewCell *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -147,16 +167,12 @@
 
 - (void)configureNotebookCell:(NotebookCell *)cell forNotebookAtIndexPath:(NSIndexPath *)indexPath {
     Notebook *notebook = self.fetchedResultsController.fetchedObjects[indexPath.item];
-    
-    cell.iconView.firstLetterLabel.text = notebook.name.length ? [notebook.name substringWithRange:NSMakeRange(0, 1)] : @"";
-    cell.iconView.color = notebook.color;
-    cell.title = notebook.name;
-    cell.iconView.firstLetterLabel.text = @(indexPath.item).stringValue;
+    [notebook configureNotebookCell:cell];
 }
 
 - (void)collectionView:(PSTCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     void (^presentPopover)(NSString *, BOOL) = ^ (NSString *title, BOOL creatingNotebook) {
-        NoteListViewController *controller = [NoteListViewController new];
+        NoteListViewController *controller = [[NoteListViewController alloc] initWithNibName:nil bundle:nil];
         controller.editNotebookViewController.title = title;
         controller.editNotebookViewController.creatingNotebook = creatingNotebook;
         controller.notebook = self.editingNotebook;
@@ -170,6 +186,7 @@
         [self presentNotebookPopover:popoverController atIndexPath:indexPath top:YES];
     };
     
+    [self.searchBar resignFirstResponder];
     if( indexPath.item == self.fetchedResultsController.fetchedObjects.count ) {
         self.editingNotebook = [[NoteManager sharedInstance] createNewNotebookNamed:@""];
         double delayInSeconds = 0.5;
@@ -204,6 +221,7 @@
         CGFloat alpha = editing ? 0.f : 1.f;
         self.titleView.alpha = alpha;
         self.collectionView.alpha = alpha;
+        self.searchBar.alpha = alpha;
     };
 
     if( animated ) {
@@ -343,6 +361,32 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self configureNotebookCell:self.editingNotebookCell forItemAtIndexPath:self.editingIndexPath];
     [controller endChangesToCollectionView:(UICollectionView *)self.collectionView];
+}
+
+#pragma mark - Global search view controller
+
+- (GlobalSearchViewController *)globalSearchViewController {
+    if( _globalSearchViewController )
+        return _globalSearchViewController;
+    
+    _globalSearchViewController = [GlobalSearchViewController new];
+    
+    return _globalSearchViewController;
+}
+
+- (SearchBar *)searchBar {
+    if( _searchBar )
+        return _searchBar;
+    
+    _searchBar = [SearchBar new];
+    _searchBar.frame = (CGRect) {
+        CenterCoordinateHorizontallyInView(self.view, TableViewWidth),
+        HeaderHeight - SearchBarHeight - 20.f,
+        TableViewWidth,
+        SearchBarHeight
+    };
+    
+    return _searchBar;
 }
 
 @end

@@ -22,19 +22,15 @@
 #define Width       498.f
 #define Height      600.f
 
-@interface NoteListViewController () <UISearchBarDelegate, UISearchDisplayDelegate, EditNotebookViewControllerDelegate, UIPopoverControllerDelegate>
+@interface NoteListViewController () <UISearchDisplayDelegate, EditNotebookViewControllerDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) UIBarButtonItem *addButton;
 @property (nonatomic, strong) OverlayView *noNotesOverlayView;
-@property (nonatomic, strong) TableView *tableView;
+@property (nonatomic, strong) UISearchBar *searchBar;
 @end
 
 @implementation NoteListViewController {
     BOOL _searching;
-}
-
-- (id)init {
-    return [self initWithNibName:@"NoteListViewController" bundle:[NSBundle mainBundle]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -42,7 +38,6 @@
 
     if( self ) {
         self.title = NSLocalizedString(@"Master", @"Master");
-        self.clearsSelectionOnViewWillAppear = YES;
         self.contentSizeForViewInPopover = CGSizeMake(498.f, 600.0);
     }
 
@@ -52,9 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftItemsSupplementBackButton = YES;
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
@@ -83,6 +76,42 @@
 }
 
 #pragma mark - Properties
+
+- (TableView *)tableView {
+    if( _tableView )
+        return _tableView;
+    
+    _tableView = [[TableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:self.tableView];
+    
+    return _tableView;
+}
+
+- (UISearchBar *)searchBar {
+    if( _searchBar )
+        return _searchBar;
+    
+    _searchBar = [UISearchBar new];
+    [_searchBar sizeToFit];
+    
+    return _searchBar;
+}
+
+- (UISearchDisplayController *)searchDisplayController {
+    UISearchDisplayController *searchDisplayController = [super searchDisplayController];
+    if( searchDisplayController )
+        return searchDisplayController;
+    
+    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    searchDisplayController.delegate = self;
+    searchDisplayController.searchResultsDelegate = self;
+    searchDisplayController.searchResultsDataSource = self;
+    
+    return searchDisplayController;
+}
 
 - (void)setShowsTableHeaverViewOnly:(BOOL)showsTableHeaverViewOnly {
     _showsTableHeaverViewOnly = showsTableHeaverViewOnly;
@@ -154,7 +183,7 @@
     }
     else {
         [self.editNotebookViewController willMoveToParentViewController:nil];
-        self.tableView.tableHeaderView = nil;
+        self.tableView.tableHeaderView = self.searchBar;
         [self.editNotebookViewController removeFromParentViewController];
         
         leftButton = self.editButtonItem;
@@ -207,14 +236,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     NSUInteger count = [sectionInfo numberOfObjects];
-//    if( count == 0 ) {
-//        self.tableView.overlayView = self.noNotesOverlayView;
-//        NSLog(@"y");
-//    }
-//    else {
-//        self.tableView.overlayView = nil;
-//                NSLog(@"n %d", count);
-//    }
+    if( count == 0 ) {
+        self.tableView.overlayView = self.noNotesOverlayView;
+    }
+    else {
+        self.tableView.overlayView = nil;
+    }
     return count;
 }
 
@@ -240,20 +267,7 @@
 
 - (void)configureCell:(NotesCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    if( note.title.length ) {
-        cell.textLabel.text = note.title;
-    }
-    else {
-        cell.textLabel.text = [note titlePlaceholder];
-    }
-    if( note.plainTextContent.length ) {
-        cell.detailTextLabel.text = note.plainTextContent;
-    }
-    else {
-        cell.detailTextLabel.text = [note plainTextContentPlaceholder];
-    }
-    cell.topRightTextLabel.text = [note shortDateCreated];
+    [note configureNotesCell:cell];
 //    Note *currentNote = [[EditNoteSplitViewController sharedInstance] currentNote];
 }
 
@@ -277,11 +291,6 @@
             abort();
         }
     }
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // The table view should not be re-orderable.
-    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

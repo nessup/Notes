@@ -1,14 +1,14 @@
 //
-//  SearchField.m
+//  SearchBar.m
 //  Notes
 //
 //  Created by Dany on 6/15/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import "SearchField.h"
+#import "SearchBar.h"
 
-@implementation SearchField
+@implementation SearchBar
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];

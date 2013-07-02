@@ -8,8 +8,6 @@
 
 #import "NotebookIconView.h"
 
-#import "Utility.h"
-
 #define Width  88.f
 #define Height 114.f
 
@@ -20,8 +18,11 @@
 @implementation NotebookIconView
 
 - (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-
+    self = [super initWithFrame:(CGRect) {
+        frame.origin,
+        Width,
+        Height
+    }];
     if( self ) {
         self.layer.shadowColor = [UIColor colorWithWhite:0.f alpha:0.5f].CGColor;
         self.layer.shadowOffset = (CGSize) {0.f, 5.f };

@@ -8,6 +8,7 @@
 
 #import "Note.h"
 #import "Notebook.h"
+#import "NotesCell.h"
 
 NSString *const NoteCategoryClassNotes = @"Class Notes";
 NSString *const NoteCategoryAssignment = @"Assignments";
@@ -44,6 +45,21 @@ NSString *const NoteCategoryAssignment = @"Assignments";
         formatter.dateStyle = NSDateFormatterShortStyle;
     }
     return [formatter stringFromDate:self.dateCreated];
+}
+
+- (void)configureNotesCell:(NotesCell *)cell {
+    if( self.title.length ) {
+        cell.textLabel.text = self.title;
+    }
+    else {
+        cell.textLabel.text = [self titlePlaceholder];
+    }
+    if( self.plainTextContent.length ) {
+        cell.detailTextLabel.text = self.plainTextContent;
+    }
+    else {
+        cell.detailTextLabel.text = [self plainTextContentPlaceholder];
+    }
 }
 
 @end

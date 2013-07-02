@@ -23,5 +23,6 @@
 #import "UIViewController+MGSplitViewController.h"
 #import "UIView+Layout.h"
 #import "UIAlertView+MKBlockAdditions.h"
+#import "Utility.h"
 
 #endif

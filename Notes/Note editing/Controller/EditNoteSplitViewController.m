@@ -11,7 +11,7 @@
 #import "NotebookListViewController.h"
 #import "EditNoteViewController.h"
 #import "NoteManager.h"
-#import "Utility.h"
+
 #import "MGSplitViewController.h"
 #import "TranscriptViewController.h"
 

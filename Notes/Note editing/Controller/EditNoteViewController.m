@@ -226,7 +226,8 @@
 //            320.f,
 //            [[UIScreen mainScreen] bounds].size.height
 //        };
-        self.noteListPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.noteListViewController];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.noteListViewController];
+        self.noteListPopoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
     }
     
     if( self.noteListPopoverController.popoverVisible ) {

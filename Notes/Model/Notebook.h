@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class NotebookCell, NotebookIconView;
 
 @interface Notebook : NSManagedObject
-
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSArray *notes;
 @property (nonatomic, retain) NSString *defaultUserName;
 @property (nonatomic, retain) UIColor *color;
 @property (nonatomic, retain) NSDate *dateCreated;
-
+- (void)configureNotebookCell:(NotebookCell *)cell;
+- (void)configureNotebookIconView:(NotebookIconView *)notebookIconView;
 @end

@@ -8,7 +8,7 @@
 
 #import "ColorPickerView.h"
 
-#import "Utility.h"
+
 
 #define ColorDiameter             44.f
 #define DefaultInterColorDistance 10.f

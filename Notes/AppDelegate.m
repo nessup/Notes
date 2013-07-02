@@ -10,7 +10,7 @@
 
 #import "SpeechToTextManager.h"
 #import "NoteManager.h"
-#import "Utility.h"
+
 #import "EditNoteSplitViewController.h"
 #import "NotebookBrowseViewController.h"
 
@@ -103,7 +103,6 @@
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
-    
     NSURL *storeURL = [ApplicationDocumentsDirectory() URLByAppendingPathComponent:@"Notes.sqlite"];
     
     NSError *error = nil;

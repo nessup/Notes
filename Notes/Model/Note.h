@@ -12,7 +12,7 @@
 extern NSString *const NoteCategoryClassNotes;
 extern NSString *const NoteCategoryAssignment;
 
-@class Notebook;
+@class Notebook, NotesCell;
 
 @interface Note : NSManagedObject
 
@@ -29,5 +29,6 @@ extern NSString *const NoteCategoryAssignment;
 - (NSString *)titlePlaceholder;
 - (NSString *)plainTextContentPlaceholder;
 - (NSString *)shortDateCreated;
+- (void)configureNotesCell:(NotesCell *)cell;
 
 @end

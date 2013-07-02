@@ -12,6 +12,8 @@
 
 @interface NotesCell : UITableViewCell
 @property (nonatomic, strong) TTTAttributedLabel *topRightTextLabel;
+@property (nonatomic, strong) UIView *leftView;
+@property (nonatomic, copy) NSString *highlightText;
 - (CALayer *)colorLayer;
 - (CGFloat)cellHeightForWidth:(CGFloat)width;
 @end

@@ -1,5 +1,5 @@
 //
-//  SearchField.h
+//  SearchBar.h
 //  Notes
 //
 //  Created by Dany on 6/15/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchField : UISearchBar
+@interface SearchBar : UISearchBar
 
 @end

@@ -14,10 +14,10 @@
 - (void)noteListViewControllerDidFinish:(NoteListViewController *)noteListViewController;
 @end
 
-@class EditNoteViewController, EditNotebookViewController, Notebook;
+@class EditNoteViewController, EditNotebookViewController, Notebook, TableView;
 
-@interface NoteListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-
+@interface NoteListViewController : UIViewController <NSFetchedResultsControllerDelegate>
+@property (nonatomic, strong) TableView *tableView;
 @property (nonatomic, strong) Notebook *notebook;
 @property (nonatomic, weak) UIPopoverController *parentPopoverController;
 @property (nonatomic) BOOL showsTableHeaverViewOnly;
