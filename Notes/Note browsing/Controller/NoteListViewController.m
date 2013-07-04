@@ -224,6 +224,7 @@
 
 - (void)createNewNote:(id)sender {
     [[NoteManager sharedInstance] createNewNoteInNotebook:self.notebook];
+    [[NoteManager sharedInstance] saveToDisk];
 }
 
 #pragma mark - Table View

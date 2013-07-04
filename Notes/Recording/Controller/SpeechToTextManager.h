@@ -11,7 +11,7 @@
 extern NSString *const SpeechToTextManagerStateChanged;
 
 typedef enum {
-    SpeechToTextManagerStateIdle = 1 << 0,
+        SpeechToTextManagerStateIdle = 1 << 0,
         SpeechToTextManagerStateRecording = 1 << 1,
         SpeechToTextManagerStateTranscribing = 1 << 2,
         SpeechToTextManagerStatePlaying = 1 << 3,
@@ -19,10 +19,12 @@ typedef enum {
         SpeechToTextManagerStateError = 1 << 5
 } SpeechToTextManagerState;
 
+@class Note;
+
 @interface SpeechToTextManager : NSObject
 
 @property (nonatomic, readonly) SpeechToTextManagerState state;
-@property (nonatomic, readonly, strong) NSURL *soundFileURL;
+@property (nonatomic, strong) Note *note;
 
 + (SpeechToTextManager *)sharedInstance;
 

@@ -313,6 +313,7 @@
         }];
         return NO;
     }
+    [[NoteManager sharedInstance] saveToDisk];
     return YES;
 }
 

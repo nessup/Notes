@@ -30,10 +30,10 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-
+    
     if( self ) {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+        
         _colorLayer = [CALayer new];
         [self.layer addSublayer:_colorLayer];
         
@@ -41,18 +41,18 @@
         [self.contentView addSubview:self.detailTextLabel];
         [self.contentView addSubview:self.topRightTextLabel];
     }
-
+    
     return self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     self.textLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultTextLabelColor];
     self.textLabel.text = self.textLabel.text;
-//    self.detailTextLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultDetailTextLabelColor];
+    //    self.detailTextLabel.textColor = selected ? [UIColor whiteColor] : [[self class] defaultDetailTextLabelColor];
     self.detailTextLabel.text = self.detailTextLabel.text;
-
+    
 }
 
 - (void)setLeftView:(UIView *)leftView {
@@ -168,7 +168,7 @@
 
 - (TTTAttributedLabel *)createLabel {
     TTTAttributedLabel *label = [TTTAttributedLabel new];
-//    label.numberOfLines = 0;
+    //    label.numberOfLines = 0;
     return label;
 }
 
@@ -180,12 +180,12 @@
 {
     if( __textLabel )
         return __textLabel;
-
+    
     [[super textLabel] removeFromSuperview];
     __textLabel = [self createLabel];
     __textLabel.font = [FontManager helveticaNeueWithSize:16.f];
     __textLabel.textColor = [[self class] defaultTextLabelColor];
-
+    
     return __textLabel;
 }
 
@@ -201,7 +201,7 @@
     [[super detailTextLabel] removeFromSuperview];
     __detailTextLabel = [self createLabel];
     __detailTextLabel.font = [FontManager helveticaNeueWithSize:12.f];
-//    __detailTextLabel.textColor = [[self class] defaultDetailTextLabelColor];
+    //    __detailTextLabel.textColor = [[self class] defaultDetailTextLabelColor];
     
     return __detailTextLabel;
 }
@@ -232,12 +232,12 @@
 }
 
 - (void)updateHighlighting {
-//    NSString *detailText = self.detailTextLabel.text;
-//    NSString *highlightText = self.highlightText;
+    //    NSString *detailText = self.detailTextLabel.text;
+    //    NSString *highlightText = self.highlightText;
     NSMutableAttributedString * (^formatForHighlighting)(NSMutableAttributedString *mutableAttributedString, NSString *text, NSString *highlightText, UIFont *highlightFont) = ^NSMutableAttributedString * (NSMutableAttributedString *mutableAttributedString, NSString *text, NSString *highlightText, UIFont *highlightFont) {
         if( highlightText.length ) {
             NSRange range = [text rangeOfString:highlightText options:NSCaseInsensitiveSearch];
-
+            
             CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)highlightFont.fontName, highlightFont.pointSize, NULL);
             if( range.location != NSNotFound ) {
                 [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:range];
@@ -249,15 +249,13 @@
     };
     
     dispatch_async(dispatch_get_current_queue(), ^{
-
-
         NSString *text = self.detailTextLabel.text;
         NSString *highlightText = self.highlightText;
         UIFont *highlightFont = [FontManager boldHelveticaNeueWithSize:12.f];
-    [self.detailTextLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-
-        return formatForHighlighting(mutableAttributedString, text, highlightText, highlightFont);
-    }];
+        [self.detailTextLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+            
+            return formatForHighlighting(mutableAttributedString, text, highlightText, highlightFont);
+        }];
         
         text = self.textLabel.text;
         highlightFont = [FontManager boldHelveticaNeueWithSize:16.f];
@@ -266,9 +264,7 @@
             return formatForHighlighting(mutableAttributedString, text, highlightText, highlightFont);
         }];
         [self setNeedsLayout];
-            });
-//    [self.detailTextLabel setNeedsDisplay];
-
+    });
 }
 
 @end

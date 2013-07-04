@@ -8,3 +8,4 @@
 
 #import "Note.h"
 #import "Notebook.h"
+#import "TranscriptionSegment.h"

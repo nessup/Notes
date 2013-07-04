@@ -61,6 +61,9 @@
 		3B4615931778961F006D8EBB /* PSTGridLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615841778961F006D8EBB /* PSTGridLayoutItem.m */; };
 		3B4615941778961F006D8EBB /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */; };
 		3B4615951778961F006D8EBB /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */; };
+		3B498FB1178533FC001A2368 /* TranscriptionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B498FB0178533FC001A2368 /* TranscriptionSegment.m */; };
+		3B498FB817853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B498FB717853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m */; };
+		3B498FBB178560F9001A2368 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B498FBA178560F9001A2368 /* CoreMedia.framework */; };
 		3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */; };
 		3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC4531775817E006581C3 /* NotebookTableView.m */; };
 		3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B79AE4F1772DA1200164252 /* NoteTitleView.m */; };
@@ -205,6 +208,11 @@
 		3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutRow.m; sourceTree = "<group>"; };
 		3B4615871778961F006D8EBB /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
 		3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
+		3B498FAF178533FC001A2368 /* TranscriptionSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionSegment.h; sourceTree = "<group>"; };
+		3B498FB0178533FC001A2368 /* TranscriptionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionSegment.m; sourceTree = "<group>"; };
+		3B498FB617853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioRecorder+SpeechToTextManager.h"; sourceTree = "<group>"; };
+		3B498FB717853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioRecorder+SpeechToTextManager.m"; sourceTree = "<group>"; };
+		3B498FBA178560F9001A2368 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookBrowseViewController.h; sourceTree = "<group>"; };
 		3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookBrowseViewController.m; sourceTree = "<group>"; };
 		3B5DC4521775817E006581C3 /* NotebookTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookTableView.h; sourceTree = "<group>"; };
@@ -287,6 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B498FBB178560F9001A2368 /* CoreMedia.framework in Frameworks */,
 				3B04412E1780791700EA28C3 /* CoreText.framework in Frameworks */,
 				3BA57810175DA9E20052757D /* AudioToolbox.framework in Frameworks */,
 				3B2CC8E31759022F001483EA /* ImageIO.framework in Frameworks */,
@@ -371,6 +380,7 @@
 		3B00C00517560EED007B64C0 /* Recording */ = {
 			isa = PBXGroup;
 			children = (
+				3B498FB517853D8B001A2368 /* Categories */,
 				3BA57811175DDDF50052757D /* Resources */,
 				3B00C00617560F43007B64C0 /* Controller */,
 			);
@@ -493,6 +503,15 @@
 			path = PSTCollectionView/PSTCollectionView;
 			sourceTree = "<group>";
 		};
+		3B498FB517853D8B001A2368 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3B498FB617853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.h */,
+				3B498FB717853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		3BA577AC175926060052757D /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +546,8 @@
 			isa = PBXGroup;
 			children = (
 				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
+				3B498FAF178533FC001A2368 /* TranscriptionSegment.h */,
+				3B498FB0178533FC001A2368 /* TranscriptionSegment.m */,
 				3BCB7E5F174F34A5006B393D /* Model.h */,
 				3BCB7E5C174F31E8006B393D /* Note.h */,
 				3BCB7E5D174F31E8006B393D /* Note.m */,
@@ -641,6 +662,7 @@
 		3BF3F63C174C892400AAD591 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B498FBA178560F9001A2368 /* CoreMedia.framework */,
 				3B04412D1780791600EA28C3 /* CoreText.framework */,
 				3BA5780F175DA9E20052757D /* AudioToolbox.framework */,
 				3B2CC8E21759022F001483EA /* ImageIO.framework */,
@@ -954,6 +976,8 @@
 				3B044124177F6AA200EA28C3 /* TTTAttributedLabel.m in Sources */,
 				3B0441311780AB2000EA28C3 /* GlobalSearchViewController.m in Sources */,
 				3B0441341780F9B700EA28C3 /* NormalizedStringTransformer.m in Sources */,
+				3B498FB1178533FC001A2368 /* TranscriptionSegment.m in Sources */,
+				3B498FB817853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

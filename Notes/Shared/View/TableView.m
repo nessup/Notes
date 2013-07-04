@@ -26,7 +26,6 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.overlayView.frame = [self overlayViewRectForBounds:self.bounds];
-    self.overlayView.backgroundColor = [UIColor greenColor];
 }
 
 - (CGRect)overlayViewRectForBounds:(CGRect)bounds {

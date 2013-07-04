@@ -115,7 +115,7 @@
 //    [_webViewController doAfterDOMLoads:^{
 //        [_webViewController.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent('%@')", @"omgomg"]];
 //    }];
-    _transcriptLabel.text = self.note.transcription;
+//    _transcriptLabel.text = self.note.transcription;
 
     [self speechToTextStateChanged:self];
 }
@@ -123,8 +123,9 @@
 - (void)setNote:(Note *)note {
     _note = note;
 
-    _hasRecorded = !!note.transcriptionAudio;
+    _hasRecorded = !!note.transcriptionSegments.count;
 
+    [[SpeechToTextManager sharedInstance] setNote:note];
     [self configureView];
 }
 
@@ -258,15 +259,15 @@
         [[SpeechToTextManager sharedInstance] stop];
     }
     else {
-        [self.note.transcriptionAudio writeToFile:[[[SpeechToTextManager sharedInstance] soundFileURL] path] atomically:NO];
+//        [self.note.transcriptionAudio writeToFile:[[[SpeechToTextManager sharedInstance] soundFileURL] path] atomically:NO];
         [[SpeechToTextManager sharedInstance] startPlaying];
     }
 }
 
 - (void)addTranscriptionToCurrentNote:(NSString *)transcription audio:(NSData *)audio {
 #warning TODO(DJ): Make this method add instead of overwrite transcriptions.
-    self.note.transcription = transcription;
-    self.note.transcriptionAudio = audio;
+//    self.note.transcription = transcription;
+//    self.note.transcriptionAudio = audio;
 
 //    [self configureView];
     [[[NoteManager sharedInstance] context] refreshObject:self.note mergeChanges:YES];

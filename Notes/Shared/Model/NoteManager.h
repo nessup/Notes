@@ -24,4 +24,7 @@
 - (Note *)createNewNoteInNotebook:(Notebook *)notebook;
 - (NSFetchedResultsController *)fetchAllNotesInNotebook:(Notebook *)notebook;
 
+- (TranscriptionSegment *)createNewTranscriptionSegmentForNote:(Note *)note;
+- (NSFetchedResultsController *)fetchAllTranscriptionSegmentsForNote:(Note *)note;
+
 @end

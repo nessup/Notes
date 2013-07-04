@@ -8,10 +8,11 @@
 
 #import "SpeechToTextManager.h"
 
-
 #include <FLAC/all.h>
 #import "JSONKit.h"
 #import "wav.h"
+#import "NoteManager.h"
+#import "AVAudioRecorder+SpeechToTextManager.h"
 
 #define BUFFSIZE (1 << 16)
 
@@ -28,24 +29,33 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
 @interface SpeechToTextManager () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
-@property (nonatomic, readwrite, strong) NSURL *soundFileURL;
+@property (nonatomic) NSInteger lastFileIndex;
+@property (nonatomic, strong) NSMutableArray *transcriptSegments;
+@property (nonatomic, strong) NSMutableArray *recorders;
+@property (nonatomic) CFAbsoluteTime lastTimeThresholdCrossed;
+@property (nonatomic, strong) NSTimer *meteringTimer;
+@property (nonatomic) NSTimeInterval currentTranscriptLength;
+
+@property (nonatomic, strong) NSMutableArray *players;
+@property (nonatomic) NSUInteger currentPlaybackIndex;
 
 @end
 
-@implementation SpeechToTextManager {
-    AVAudioRecorder *_recorder;
-    AVAudioPlayer *_player;
-    NSOperationQueue *_operationQueue;
+#define MaxInterval                 3.f
+#define MinInterval                 2.f
+#define GateThreshold               -30.f
+#define GateRelease                 2
+#define MeteringInterval            0.1f
+#define QueueSize                   3
 
-    NSString *_currentTranscriptionText;
-    void (^_currentTranscriptionCompletionBlock)(NSString *, NSData *);
+@implementation SpeechToTextManager {
+    NSOperationQueue *_operationQueue;
     NSString *_currentAACPath;
 }
 
 + (SpeechToTextManager *)sharedInstance {
     static SpeechToTextManager *sharedInstance = nil;
     static dispatch_once_t onceToken;
-
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
     });
@@ -57,54 +67,34 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
     if( self ) {
         _operationQueue = [NSOperationQueue new];
-
-
-
-        NSDictionary *recordSettings = @{
-            AVFormatIDKey: @(kAudioFormatLinearPCM),
-            AVLinearPCMBitDepthKey: @16,
-            AVLinearPCMIsBigEndianKey: @NO,
-            AVSampleRateKey: @44100,
-            AVNumberOfChannelsKey: @2,
-            AVLinearPCMIsNonInterleaved: @YES,
-            AVLinearPCMIsFloatKey: @YES
-        };
-
-        NSError *error = nil;
-
-        _recorder = [[AVAudioRecorder alloc]
-                     initWithURL:self.soundFileURL
-                        settings:recordSettings
-                           error:&error];
-
-        if( error ) {
-            NSLog(@"error: %@", [error localizedDescription]);
+        
+        self.lastFileIndex = -1;
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        NSError *err;
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&err];
+        if (err) {
+            NSLog(@"%@ %d %@", [err domain], [err code], [[err userInfo] description]);
         }
-        else {
-            [_recorder prepareToRecord];
+        err = nil;
+        [audioSession setActive:YES error:&err];
+        if (err) {
+            NSLog(@"%@ %d %@", [err domain], [err code], [[err userInfo] description]);
         }
+        
+        self.transcriptSegments = [NSMutableArray array];
+        self.recorders = [NSMutableArray array];
+        self.players = [NSMutableArray array];
     }
 
     return self;
 }
 
-- (NSURL *)soundFileURL {
-    if( _soundFileURL ) {
-        return _soundFileURL;
-    }
+#pragma mark - Note
 
-    NSArray *dirPaths;
-    NSString *docsDir;
-
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-            NSDocumentDirectory, NSUserDomainMask, YES);
-    docsDir = [dirPaths objectAtIndex:0];
-    NSString *soundFilePath = [docsDir
-                               stringByAppendingPathComponent:@"sound.wav"];
-
-    _soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-
-    return _soundFileURL;
+- (void)setNote:(Note *)note {
+    _note = note;
+    note.transcriptionSegments = nil;
+    [[NoteManager sharedInstance] saveToDisk];
 }
 
 #pragma mark - State management
@@ -121,49 +111,250 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     });
 }
 
-#pragma mark - Recording and playback
+#pragma mark - Recording
 
 - (void)startRecording {
-    if( !_player.playing ) {
-        if( [_recorder record] ) {
-            self.state &= ~SpeechToTextManagerStateError;
-            self.state |= SpeechToTextManagerStateRecording;
+//    if( !_player.playing ) {
+        self.state &= ~SpeechToTextManagerStateError;
+        self.state |= SpeechToTextManagerStateRecording;
+        [self cycleRecorders];
+//    }
+}
+
+- (void)cycleRecorders {
+    if( !self.meteringTimer ) {
+        self.meteringTimer = [NSTimer scheduledTimerWithTimeInterval:MeteringInterval target:self selector:@selector(meter:) userInfo:nil repeats:YES];
+    }
+    
+    [self addRecordersIfNeeded];
+    
+    // Start one recorder
+    AVAudioRecorder *recorder = self.recorders[0];
+    TranscriptionSegment *segment = [[NoteManager sharedInstance] createNewTranscriptionSegmentForNote:self.note];
+    segment.soundFilePath = [recorder.url path];
+    segment.absoluteStartTime = @(self.currentTranscriptLength);
+    //    NSLog(@"made segment for index %d", recorder.fileIndex);
+    [self.transcriptSegments addObject:segment];
+    if( ![recorder recordForDuration:MaxInterval] ) {
+        NSLog(@"couldn't record");
+    }
+    self.lastTimeThresholdCrossed = CFAbsoluteTimeGetCurrent();
+}
+
+- (void)addRecordersIfNeeded {
+    NSUInteger index = 0;
+    for( int i = self.recorders.count; i < QueueSize; i++ ) {
+        index = self.lastFileIndex + 1;
+        if( [[self.note objectID] isTemporaryID] ) {
+            NSLog(@"warning temp id!!");
         }
+        NSArray *components = [[[self.note objectID] URIRepresentation] pathComponents];
+        NSString *prefix = components[2];
+        NSURL *soundFileURL = [self soundFileURLWithPrefix:prefix index:index];
+        NSLog(@"enqueueing recorder with prefix %@ and index %d", prefix, index);
+        
+        NSDictionary *recordSettings = @{
+                                         AVFormatIDKey: @(kAudioFormatLinearPCM),
+                                         AVLinearPCMBitDepthKey: @16,
+                                         AVLinearPCMIsBigEndianKey: @NO,
+                                         AVSampleRateKey: @44100,
+                                         AVNumberOfChannelsKey: @2,
+                                         AVLinearPCMIsFloatKey: @YES
+                                         };
+        
+        NSError *error = nil;
+        
+        AVAudioRecorder *recorder = [[AVAudioRecorder alloc]
+                                     initWithURL:soundFileURL
+                                     settings:recordSettings
+                                     error:&error];
+        recorder.delegate = self;
+        recorder.meteringEnabled = YES;
+        recorder.prefix = prefix;
+        recorder.fileIndex = index;
+        
+        if( error ) {
+            NSLog(@"error: %@", [error localizedDescription]);
+        }
+        else {
+            if( ![recorder prepareToRecord] ) {
+                NSLog(@"couldn't prepare");
+            }
+            
+        }
+        [self.recorders addObject:recorder];
+        self.lastFileIndex++;
     }
 }
 
+- (NSURL *)soundFileURLWithPrefix:(NSString *)prefix index:(NSUInteger)index {
+    NSArray *dirPaths;
+    NSString *docsDir;
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                   NSDocumentDirectory, NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+    NSString *soundFilePath = [docsDir
+                               stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%d.wav", prefix, index]];
+    return [NSURL fileURLWithPath:soundFilePath];
+}
+
+- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder {
+    self.state |= SpeechToTextManagerStateInterrupted;
+}
+
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withOptions:(NSUInteger)flags {
+    self.state &= ~SpeechToTextManagerStateInterrupted;
+}
+
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error {
+    self.state &= ~SpeechToTextManagerStateRecording;
+}
+
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)successfully {
+    [self.recorders removeObject:recorder];
+    if( !successfully ) {
+        //        NSLog(@"cancelling recorder at index %d, success = %d", recorder.fileIndex, successfully);
+        
+        self.lastFileIndex--;
+    }
+    else {
+        NSLog(@"recorder at index %d finished %d curlen=%f", recorder.fileIndex, successfully, self.currentTranscriptLength);
+        
+        // Note: this delegate method can get called after -prepareForRecord is called but before -record. That means we may not have a TranscriptSegment object in the list (there wouldn't be any audio data anyway)
+        if( recorder.fileIndex < self.transcriptSegments.count ) {
+            TranscriptionSegment *segment = self.transcriptSegments[recorder.fileIndex];
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:recorder.url options:nil];
+            self.currentTranscriptLength += CMTimeGetSeconds(asset.duration);
+            segment.absoluteEndTime = @(self.currentTranscriptLength);
+        }
+        
+        if( self.state & SpeechToTextManagerStateRecording ) {
+            [self cycleRecorders];
+        }
+    }
+    
+    // ship off to google speech recog here
+}
+
+- (void)stopRecording {
+    self.state &= ~SpeechToTextManagerStateRecording;
+    for( AVAudioRecorder *recorder in self.recorders ) {
+        [recorder stop];
+    }
+    [self invalidate];
+    [[NoteManager sharedInstance] saveToDisk];
+}
+
+#pragma mark - Metering
+
+- (void)meter:(NSTimer *)timer {
+    if( self.state & SpeechToTextManagerStateRecording && !self.recorders.count ) {
+        [self invalidate];
+    }
+    
+    AVAudioRecorder *recorder = self.recorders[0];
+    [recorder updateMeters];
+    float meter = [recorder averagePowerForChannel:0];
+    //    NSLog(@"%f", meter);
+    CGFloat timeSinceThresholdCrossed = CFAbsoluteTimeGetCurrent() - self.lastTimeThresholdCrossed;
+    if( meter >= GateThreshold && recorder.currentTime < MaxInterval ) {
+        //        NSLog(@"threshold crossed, resetting release!");
+        self.lastTimeThresholdCrossed = CFAbsoluteTimeGetCurrent();
+    }
+    else if( timeSinceThresholdCrossed >= GateRelease && timeSinceThresholdCrossed >= MinInterval ) {
+        //        NSLog(@"stopping recorder!");
+        [recorder stop];
+    }
+}
+
+- (void)invalidate {
+    [_meteringTimer invalidate];
+    _meteringTimer = nil;
+}
+
+#pragma mark - Playback
+
 - (void)startPlaying {
-    if( !_recorder.recording ) {
-        NSError *error;
+    self.state |= SpeechToTextManagerStatePlaying;
+    [self cyclePlayers];
+}
 
-        _player = [[AVAudioPlayer alloc]
-                   initWithContentsOfURL:_recorder.url
-                                   error:&error];
-
-        _player.delegate = self;
-
-        if( error ) {
-            NSLog(@"Error: %@",
-                  [error localizedDescription]);
+- (void)addPlayersIfNeeded {
+    for( int i = self.players.count; i < QueueSize; i++ ) {
+        if( self.currentPlaybackIndex >= self.note.transcriptionSegments.count ) {
+            break;
         }
-        else {
-            if( [_player play] ) {
-                self.state |= SpeechToTextManagerStatePlaying;
-            }
+        NSURL *url = [NSURL fileURLWithPath:[self.transcriptSegments[self.currentPlaybackIndex] soundFilePath]];
+        AVAudioPlayer *player = [self preparedPlayerForURL:url];
+        if( ![player prepareToPlay] ) {
+            NSLog(@"couldn't prepare to play");
         }
+        [self.players addObject:player];
+        self.currentPlaybackIndex++;
+    }
+}
+
+- (AVAudioPlayer *)preparedPlayerForURL:(NSURL *)url {
+    NSError *error = nil;
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    player.delegate = self;
+    if( error ) {
+        NSLog(@"err = %@", error);
+    }
+    if( ![player prepareToPlay] ) {
+        NSLog(@"couldn't prepare");
+    }
+    return player;
+}
+
+- (void)cyclePlayers {
+    [self addPlayersIfNeeded];
+    if( self.players.count ) {
+        AVAudioPlayer *player = self.players[0];
+        [player play];
+    }
+    else {
+        self.state &= ~SpeechToTextManagerStatePlaying;
+    }
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    //    NSLog(@"player %p finished %d", player, flag);
+    [self.players removeObject:player];
+    if( self.state & SpeechToTextManagerStatePlaying ) {
+        [self cyclePlayers];
+    }
+}
+
+- (void)stopPlaying {
+    self.state &= ~SpeechToTextManagerStatePlaying;
+    for( AVAudioPlayer *player in self.players ) {
+        [player stop];
     }
 }
 
 - (void)stop {
-    if( _recorder.recording ) {
-        [_recorder stop];
-        self.state &= ~SpeechToTextManagerStateRecording;
+    if( self.state & SpeechToTextManagerStateRecording ) {
+        [self stopRecording];
     }
-    else if( _player.playing ) {
-        [_player stop];
-        self.state &= ~SpeechToTextManagerStatePlaying;
+    else if( self.state & SpeechToTextManagerStatePlaying ) {
+        [self stopPlaying];
     }
 }
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
+    self.state |= SpeechToTextManagerStateInterrupted;
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
+    self.state &= ~SpeechToTextManagerStateInterrupted;
+}
+
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+    self.state &= ~SpeechToTextManagerStatePlaying;
+}
+
 
 #pragma mark - Recognition
 
@@ -174,50 +365,50 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 }
 
 - (void)getTextMain:(void (^)(NSString *, NSData *))completion {
-    self.state |= SpeechToTextManagerStateTranscribing;
-
-    NSString *wavPath = [_recorder.url path];
-    NSString *flacPath = [[ApplicationDocumentsDirectory() path] stringByAppendingPathComponent:@"out.flac"];
-
-    [self convertWAV:wavPath toFLAC:flacPath];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=en-US"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"audio/x-flac; rate=44100" forHTTPHeaderField:@"Content-Type"];
-    NSData *flacData = [NSData dataWithContentsOfFile:flacPath];
-    [request setHTTPBody:flacData];
-    NSURLResponse *response = nil;
-    request.timeoutInterval = 5.f;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *respStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-    NSDictionary *respDict = [respStr objectFromJSONString];
-    NSArray *hypotheses = respDict[@"hypotheses"];
-    NSString *text = nil;
-    void (^executeCompletion)(NSString *, NSData *) = ^(NSString *transcription, NSData *audio) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            completion(transcription, audio);
-        });
-    };
-
-    if( hypotheses.count ) {
-        text = [hypotheses[0] valueForKey:@"utterance"];
-
-        if( completion ) {
-            executeCompletion(text, [NSData dataWithContentsOfFile:wavPath]);
-        }
-    }
-    else {
-        self.state |= SpeechToTextManagerStateError;
-
-        if( completion ) {
-            executeCompletion(nil, nil);
-        }
-    }
-
-    if( _operationQueue.operations.count == 1 ) {
-        self.state &= ~SpeechToTextManagerStateTranscribing;
-    }
+//    self.state |= SpeechToTextManagerStateTranscribing;
+//
+//    NSString *wavPath = [_recorder.url path];
+//    NSString *flacPath = [[ApplicationDocumentsDirectory() path] stringByAppendingPathComponent:@"out.flac"];
+//
+//    [self convertWAV:wavPath toFLAC:flacPath];
+//
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=en-US"]];
+//    [request setHTTPMethod:@"POST"];
+//    [request setValue:@"audio/x-flac; rate=44100" forHTTPHeaderField:@"Content-Type"];
+//    NSData *flacData = [NSData dataWithContentsOfFile:flacPath];
+//    [request setHTTPBody:flacData];
+//    NSURLResponse *response = nil;
+//    request.timeoutInterval = 5.f;
+//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+//    NSString *respStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//
+//    NSDictionary *respDict = [respStr objectFromJSONString];
+//    NSArray *hypotheses = respDict[@"hypotheses"];
+//    NSString *text = nil;
+//    void (^executeCompletion)(NSString *, NSData *) = ^(NSString *transcription, NSData *audio) {
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            completion(transcription, audio);
+//        });
+//    };
+//
+//    if( hypotheses.count ) {
+//        text = [hypotheses[0] valueForKey:@"utterance"];
+//
+//        if( completion ) {
+//            executeCompletion(text, [NSData dataWithContentsOfFile:wavPath]);
+//        }
+//    }
+//    else {
+//        self.state |= SpeechToTextManagerStateError;
+//
+//        if( completion ) {
+//            executeCompletion(nil, nil);
+//        }
+//    }
+//
+//    if( _operationQueue.operations.count == 1 ) {
+//        self.state &= ~SpeechToTextManagerStateTranscribing;
+//    }
 }
 
 - (BOOL)convertWAV:(NSString *)wavPath toFLAC:(NSString *)flacPath {
@@ -378,42 +569,6 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     free(hdr);
 
     return YES;
-}
-
-#pragma mark - AVAudioRecorder delegate
-
-- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder {
-    self.state |= SpeechToTextManagerStateInterrupted;
-}
-
-- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withOptions:(NSUInteger)flags {
-    self.state &= ~SpeechToTextManagerStateInterrupted;
-}
-
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error {
-    self.state &= ~SpeechToTextManagerStateRecording;
-}
-
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag {
-    self.state &= ~SpeechToTextManagerStateRecording;
-}
-
-#pragma mark - AVAudioPlayer delegate
-
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
-    self.state |= SpeechToTextManagerStateInterrupted;
-}
-
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
-    self.state &= ~SpeechToTextManagerStateInterrupted;
-}
-
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    self.state &= ~SpeechToTextManagerStatePlaying;
-}
-
-- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
-    self.state &= ~SpeechToTextManagerStatePlaying;
 }
 
 #pragma mark - Utility

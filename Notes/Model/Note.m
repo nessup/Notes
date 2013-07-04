@@ -21,9 +21,8 @@ NSString *const NoteCategoryAssignment = @"Assignments";
 @dynamic notebook;
 @dynamic category;
 @dynamic topRightLines;
-@dynamic transcription;
-@dynamic transcriptionAudio;
 @dynamic plainTextContent;
+@dynamic transcriptionSegments;
 
 - (NSString *)titlePlaceholder {
     static NSDateFormatter *formatter = nil;
