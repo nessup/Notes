@@ -23,6 +23,7 @@
     <entity name="TranscriptionSegment" representedClassName="TranscriptionSegment" syncable="YES">
         <attribute name="absoluteEndTime" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="absoluteStartTime" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="soundFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="note" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="transcriptionSegments" inverseEntity="Note" syncable="YES"/>
@@ -30,6 +31,6 @@
     <elements>
         <element name="Note" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Notebook" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="TranscriptionSegment" positionX="160" positionY="192" width="128" height="118"/>
+        <element name="TranscriptionSegment" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

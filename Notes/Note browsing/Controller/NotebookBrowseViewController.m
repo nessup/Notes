@@ -162,7 +162,6 @@
     cell.iconView.firstLetterLabel.font = [FontManager boldAmericanTypewriter:48.f];
     cell.iconView.firstLetterLabel.text = @(indexPath.item).stringValue;
     cell.title = @"Add";
-    NSLog(@"%f", cell.frame.size.width);
 }
 
 - (void)configureNotebookCell:(NotebookCell *)cell forNotebookAtIndexPath:(NSIndexPath *)indexPath {

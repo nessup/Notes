@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WebViewController.h"
 
 enum {
     TextStyleBold,
@@ -27,17 +27,13 @@ enum {
 
 @class Note;
 
-@interface EditRichTextViewController : UIViewController
+@interface EditRichTextViewController : WebViewController
 
-@property (nonatomic, strong, readonly) UIWebView *webView;
 @property (nonatomic, strong) Note *note;
 @property (nonatomic, copy) NSString *searchTerm;
 
-- (void)loadLocalPageNamed:(NSString *)pageName;
 - (void)commitChangesToNote;
-- (void)doAfterDOMLoads:(void(^) ())completion;
 - (NSString *)plainTextContent;
 - (void)focusAndSelectTitle;
-- (void)resignFirstResponder;
 
 @end

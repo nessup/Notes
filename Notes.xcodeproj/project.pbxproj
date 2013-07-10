@@ -11,13 +11,8 @@
 		3B00BFE317555F05007B64C0 /* jquery-1.9.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFDE17555F05007B64C0 /* jquery-1.9.1.js */; };
 		3B00BFE417555F05007B64C0 /* jquery-ui-1.10.3.custom.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFDF17555F05007B64C0 /* jquery-ui-1.10.3.custom.js */; };
 		3B00BFE91755919D007B64C0 /* RTEGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00BFE81755919D007B64C0 /* RTEGestureRecognizer.m */; };
-		3B00BFF217559E25007B64C0 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEB17559E25007B64C0 /* .gitignore */; };
 		3B00BFF317559E25007B64C0 /* canvasquery.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEC17559E25007B64C0 /* canvasquery.js */; };
 		3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFED17559E25007B64C0 /* canvasquery.min.js */; };
-		3B00BFF517559E25007B64C0 /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEE17559E25007B64C0 /* changelog.txt */; };
-		3B00BFF617559E25007B64C0 /* example.html in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFEF17559E25007B64C0 /* example.html */; };
-		3B00BFF717559E25007B64C0 /* package.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF017559E25007B64C0 /* package.json */; };
-		3B00BFF817559E25007B64C0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFF117559E25007B64C0 /* README.md */; };
 		3B00BFFB1755E349007B64C0 /* sketch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B00BFFA1755E349007B64C0 /* sketch.js */; };
 		3B00C00917560F54007B64C0 /* SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B00C00817560F54007B64C0 /* SpeechToTextManager.m */; };
 		3B0440D8177D5F3800EA28C3 /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0440D7177D5F3800EA28C3 /* TestView.m */; };
@@ -61,9 +56,12 @@
 		3B4615931778961F006D8EBB /* PSTGridLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615841778961F006D8EBB /* PSTGridLayoutItem.m */; };
 		3B4615941778961F006D8EBB /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */; };
 		3B4615951778961F006D8EBB /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */; };
-		3B498FB1178533FC001A2368 /* TranscriptionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B498FB0178533FC001A2368 /* TranscriptionSegment.m */; };
 		3B498FB817853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B498FB717853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m */; };
 		3B498FBB178560F9001A2368 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B498FBA178560F9001A2368 /* CoreMedia.framework */; };
+		3B498FBD1785714E001A2368 /* Transcript.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B498FBC1785714E001A2368 /* Transcript.js */; };
+		3B56852D178BD3C3000FBFC5 /* TranscriptionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B56852C178BD3C3000FBFC5 /* TranscriptionSegment.m */; };
+		3B56853A178CF9BC000FBFC5 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B568539178CF9BC000FBFC5 /* WebViewController.m */; };
+		3B56853E178D5484000FBFC5 /* BridgedWebApp.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */; };
 		3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */; };
 		3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC4531775817E006581C3 /* NotebookTableView.m */; };
 		3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B79AE4F1772DA1200164252 /* NoteTitleView.m */; };
@@ -75,7 +73,7 @@
 		3BCB7E41174EC5FB006B393D /* EditRichTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */; };
 		3BCB7E44174ECBDC006B393D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */; };
 		3BCB7E4B174EDB0F006B393D /* Common.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E4A174EDB0F006B393D /* Common.css */; };
-		3BCB7E56174F28A7006B393D /* Common.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* Common.js */; };
+		3BCB7E56174F28A7006B393D /* NoteTemplate.js in Resources */ = {isa = PBXBuildFile; fileRef = 3BCB7E46174ED799006B393D /* NoteTemplate.js */; };
 		3BCB7E5B174F31E8006B393D /* Notebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5A174F31E8006B393D /* Notebook.m */; };
 		3BCB7E5E174F31E8006B393D /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCB7E5D174F31E8006B393D /* Note.m */; };
 		3BECC675176D7CE600BA1A01 /* NoteSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BECC673176D7CE600BA1A01 /* NoteSearchViewController.m */; };
@@ -208,11 +206,15 @@
 		3B4615861778961F006D8EBB /* PSTGridLayoutRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutRow.m; sourceTree = "<group>"; };
 		3B4615871778961F006D8EBB /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
 		3B4615881778961F006D8EBB /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
-		3B498FAF178533FC001A2368 /* TranscriptionSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionSegment.h; sourceTree = "<group>"; };
-		3B498FB0178533FC001A2368 /* TranscriptionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionSegment.m; sourceTree = "<group>"; };
 		3B498FB617853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioRecorder+SpeechToTextManager.h"; sourceTree = "<group>"; };
 		3B498FB717853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioRecorder+SpeechToTextManager.m"; sourceTree = "<group>"; };
 		3B498FBA178560F9001A2368 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		3B498FBC1785714E001A2368 /* Transcript.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Transcript.js; sourceTree = "<group>"; };
+		3B56852B178BD3C3000FBFC5 /* TranscriptionSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionSegment.h; sourceTree = "<group>"; };
+		3B56852C178BD3C3000FBFC5 /* TranscriptionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionSegment.m; sourceTree = "<group>"; };
+		3B568538178CF9BC000FBFC5 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		3B568539178CF9BC000FBFC5 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BridgedWebApp.js; sourceTree = "<group>"; };
 		3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookBrowseViewController.h; sourceTree = "<group>"; };
 		3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookBrowseViewController.m; sourceTree = "<group>"; };
 		3B5DC4521775817E006581C3 /* NotebookTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookTableView.h; sourceTree = "<group>"; };
@@ -231,7 +233,7 @@
 		3BCB7E40174EC5FB006B393D /* EditRichTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditRichTextViewController.m; sourceTree = "<group>"; };
 		3BCB7E42174ECBDC006B393D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		3BCB7E43174ECBDC006B393D /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
-		3BCB7E46174ED799006B393D /* Common.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Common.js; sourceTree = "<group>"; };
+		3BCB7E46174ED799006B393D /* NoteTemplate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = NoteTemplate.js; sourceTree = "<group>"; };
 		3BCB7E4A174EDB0F006B393D /* Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Common.css; sourceTree = "<group>"; };
 		3BCB7E59174F31E8006B393D /* Notebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notebook.h; sourceTree = "<group>"; };
 		3BCB7E5A174F31E8006B393D /* Notebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notebook.m; sourceTree = "<group>"; };
@@ -512,6 +514,16 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		3B568537178CF9A2000FBFC5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3B568538178CF9BC000FBFC5 /* WebViewController.h */,
+				3B568539178CF9BC000FBFC5 /* WebViewController.m */,
+				3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		3BA577AC175926060052757D /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				3BA57812175DDE050052757D /* TranscriptTemplate.html */,
+				3B498FBC1785714E001A2368 /* Transcript.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -545,9 +558,9 @@
 		3BCB7E58174F31D3006B393D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3B56852B178BD3C3000FBFC5 /* TranscriptionSegment.h */,
+				3B56852C178BD3C3000FBFC5 /* TranscriptionSegment.m */,
 				3BF3F657174C892400AAD591 /* Notes.xcdatamodeld */,
-				3B498FAF178533FC001A2368 /* TranscriptionSegment.h */,
-				3B498FB0178533FC001A2368 /* TranscriptionSegment.m */,
 				3BCB7E5F174F34A5006B393D /* Model.h */,
 				3BCB7E5C174F31E8006B393D /* Note.h */,
 				3BCB7E5D174F31E8006B393D /* Note.m */,
@@ -724,7 +737,7 @@
 			children = (
 				3BF3F674174D22AE00AAD591 /* NoteTemplate.html */,
 				3BF3F67A174D28BB00AAD591 /* NoteTemplate.css */,
-				3BCB7E46174ED799006B393D /* Common.js */,
+				3BCB7E46174ED799006B393D /* NoteTemplate.js */,
 				3BCB7E4A174EDB0F006B393D /* Common.css */,
 			);
 			path = Resources;
@@ -733,6 +746,7 @@
 		3BF3F67C174D2BE200AAD591 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3B568537178CF9A2000FBFC5 /* Controller */,
 				3B0440DC177DE96D00EA28C3 /* View */,
 				3B2CC8E71759140E001483EA /* Utility */,
 				3BFD4B8C1751BE3A00E3A46F /* Model */,
@@ -877,7 +891,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BCB7E56174F28A7006B393D /* Common.js in Resources */,
+				3B56853E178D5484000FBFC5 /* BridgedWebApp.js in Resources */,
+				3BCB7E56174F28A7006B393D /* NoteTemplate.js in Resources */,
+				3B498FBD1785714E001A2368 /* Transcript.js in Resources */,
 				3BF3F64A174C892400AAD591 /* InfoPlist.strings in Resources */,
 				3BF3F652174C892400AAD591 /* Default.png in Resources */,
 				3BF3F654174C892400AAD591 /* Default@2x.png in Resources */,
@@ -891,11 +907,6 @@
 				3B00BFE117555F05007B64C0 /* jquery-ui-1.10.3.custom.css in Resources */,
 				3B00BFE317555F05007B64C0 /* jquery-1.9.1.js in Resources */,
 				3B00BFE417555F05007B64C0 /* jquery-ui-1.10.3.custom.js in Resources */,
-				3B00BFF217559E25007B64C0 /* .gitignore in Resources */,
-				3B00BFF517559E25007B64C0 /* changelog.txt in Resources */,
-				3B00BFF617559E25007B64C0 /* example.html in Resources */,
-				3B00BFF717559E25007B64C0 /* package.json in Resources */,
-				3B00BFF817559E25007B64C0 /* README.md in Resources */,
 				3B00BFF317559E25007B64C0 /* canvasquery.js in Resources */,
 				3B00BFF417559E25007B64C0 /* canvasquery.min.js in Resources */,
 				3B00BFFB1755E349007B64C0 /* sketch.js in Resources */,
@@ -976,8 +987,9 @@
 				3B044124177F6AA200EA28C3 /* TTTAttributedLabel.m in Sources */,
 				3B0441311780AB2000EA28C3 /* GlobalSearchViewController.m in Sources */,
 				3B0441341780F9B700EA28C3 /* NormalizedStringTransformer.m in Sources */,
-				3B498FB1178533FC001A2368 /* TranscriptionSegment.m in Sources */,
 				3B498FB817853DAD001A2368 /* AVAudioRecorder+SpeechToTextManager.m in Sources */,
+				3B56852D178BD3C3000FBFC5 /* TranscriptionSegment.m in Sources */,
+				3B56853A178CF9BC000FBFC5 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

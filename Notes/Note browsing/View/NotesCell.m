@@ -157,9 +157,7 @@
     };
     height += [self textRectForContentBounds:partialContentBounds].size.height;
     height += [self detailTextRectForContentBounds:partialContentBounds].size.height;
-    NSLog(@"b4=%f", height);
     height = MAX(height, self.leftView.frame.size.height);
-    NSLog(@"af=%f", height);
     height += 2.f*VerticalMargin;
     return height;
 }

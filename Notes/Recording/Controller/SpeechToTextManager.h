@@ -30,6 +30,7 @@ typedef enum {
 
 - (void)startRecording;
 - (void)startPlaying;
+- (void)startPlayingSegmentAtIndex:(NSUInteger)index;
 - (void)stop;
 
 - (void)getText:(void(^) (NSString *, NSData *))completion;

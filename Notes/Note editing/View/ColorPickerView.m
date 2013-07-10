@@ -135,7 +135,6 @@ static NSArray *DefaultColors = nil;
     for( UIColor *color in DefaultColors ) {
         if( [color isEqual:selectedColor] ) {
             self.selectedColorIndex = i;
-            NSLog(@"sel %d", self.selectedColorIndex);
             _selectedColor = selectedColor;
             found = YES;
             break;

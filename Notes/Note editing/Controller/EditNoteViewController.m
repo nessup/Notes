@@ -49,13 +49,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self addChildViewController:self.editTextController];
+    self.editTextController.view.frame = self.view.bounds;
+    [self.view addSubview:self.editTextController.view];
+    [self.editTextController didMoveToParentViewController:self];
 
     self.searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleSearchPopover:)];
     self.createNoteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewNote:)];
     self.libraryBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStyleBordered target:self action:@selector(close:)];
     self.notebookBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Notebook" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNotebookPopover:)];
-
-    [self.editTextController loadLocalPageNamed:@"NoteTemplate"];
 
     self.titleView = [NoteTitleView new];
     [self.titleView addTarget:self action:@selector(titleViewTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -82,9 +85,7 @@
 
     _editTextController = [EditRichTextViewController new];
     _editTextController.wantsFullScreenLayout = YES;
-    [self addChildViewController:_editTextController];
-    [self.view addSubview:_editTextController.view];
-    [_editTextController didMoveToParentViewController:self];
+    _editTextController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     return _editTextController;
 }

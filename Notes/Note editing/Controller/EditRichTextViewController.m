@@ -13,11 +13,8 @@
 #import "NoteManager.h"
 #import "RTEGestureRecognizer.h"
 
-NSString *const WebViewEventName = @"eventName";
 NSString *const WebViewEventCategoryChanged = @"categoryChanged";
 NSString *const WebViewEventTitleChanged = @"titleChanged";
-
-NSString *const WebViewEventValue = @"value";
 
 @interface EditRichTextViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) UIWebView *webView;
@@ -41,68 +38,25 @@ NSString *const WebViewEventValue = @"value";
     UIPopoverController *_imagePickerPopover;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-
-    if( self ) {
-        _afterDOMLoadsBlocks = [NSMutableArray array];
-    }
-
-    return self;
+- (id)init {
+    return [self initWithLocalPageNamed:@"NoteTemplate"];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self registerForKeyboardNotifications];
-
+    
     [self checkSelection:self];
-
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
-                                                    handler:^(id data, WVJBResponseCallback responseCallback) {
-                                                      if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
-                                                      _DOMLoaded = YES;
-
-                                                      for( void (^block)() in _afterDOMLoadsBlocks ) {
-                                                      block();
-                                                      }
-
-                                                      [_afterDOMLoadsBlocks removeAllObjects];
-
-//            _selectionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES usingBlock:^(NSTimer *timer) {
-//                static int count = 0;
-//
-//                [self checkSelection:nil];
-//
-//                if( count % 50 == 0 ) {
-//                    [self commitChangesToNote];
-//                }
-//
-//                count++;
-//            }];
-                                                      }
-                                                      else if( [data isKindOfClass:[NSDictionary class]] ) {
-                                                      NSDictionary *dictionary = (NSDictionary *)data;
-
-                                                      if( [dictionary[WebViewEventName]
-                                                      isEqualToString:WebViewEventCategoryChanged] ) {
-                                                      [self categoryChanged:dictionary];
-                                                      }
-                                                      else if( [dictionary[WebViewEventName]
-                                                      isEqualToString:WebViewEventTitleChanged] ) {
-                                                      [self titleChanged:dictionary];
-                                                      }
-                                                      }
-                                                    }];
-
+    
     RTEGestureRecognizer *tapInterceptor = [[RTEGestureRecognizer alloc] init];
     tapInterceptor.touchesBeganCallback = ^(NSSet *touches, UIEvent *event) {
         UITouch *touch = [[event allTouches] anyObject];
         CGPoint touchPoint = [touch locationInView:self.view];
-
+        
         NSString *javascript = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).toString()", touchPoint.x, touchPoint.y];
         NSString *elementAtPoint = [self.webView stringByEvaluatingJavaScriptFromString:javascript];
-
+        
         if( [elementAtPoint rangeOfString:@"canvas"].location != NSNotFound ) {
 //            initialPointOfImage = touchPoint;
             self.webView.scrollView.scrollEnabled = NO;
@@ -114,28 +68,29 @@ NSString *const WebViewEventValue = @"value";
     tapInterceptor.touchesEndedCallback = ^(NSSet *touches, UIEvent *event) {
         UITouch *touch = [[event allTouches] anyObject];
         CGPoint touchPoint = [touch locationInView:self.view];
-
+        
         // And move that image!
-//        NSString *javascript = [NSString stringWithFormat:@"moveImageAtTo(%f, %f, %f, %f)", initialPointOfImage.x, initialPointOfImage.y, touchPoint.x, touchPoint.y];
-//        [self.webView stringByEvaluatingJavaScriptFromString:javascript];
-
+        //        NSString *javascript = [NSString stringWithFormat:@"moveImageAtTo(%f, %f, %f, %f)", initialPointOfImage.x, initialPointOfImage.y, touchPoint.x, touchPoint.y];
+        //        [self.webView stringByEvaluatingJavaScriptFromString:javascript];
+        
         // All done, lets re-enable scrolling
         self.webView.scrollView.scrollEnabled = YES;
     };
     [self.webView.scrollView addGestureRecognizer:tapInterceptor];
 }
 
-- (void)loadLocalPageNamed:(NSString *)pageName {
-    _DOMLoaded = NO;
-    [_afterDOMLoadsBlocks removeAllObjects];
-
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName ofType:@"html"]];
-    [self.webView
-     loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
-                                                                             ofType:@"html"]]
-                MIMEType:@"text/html"
-        textEncodingName:@"utf-8"
-                 baseURL:[[NSBundle mainBundle] bundleURL]];
+- (BOOL)handleWebViewEvent:(NSDictionary *)event {
+    if( [event[WebViewEventName] isEqualToString:WebViewEventCategoryChanged] ) {
+        [self categoryChanged:event];
+    }
+    else if( [event[WebViewEventName] isEqualToString:WebViewEventTitleChanged] ) {
+        [self titleChanged:event];
+    }
+    else {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Web view callbacks
@@ -150,27 +105,15 @@ NSString *const WebViewEventValue = @"value";
 
 #pragma mark - Properties
 
-- (UIWebView *)webView {
-    if( _webView ) {
-        return _webView;
-    }
-
-    _webView = [UIWebView new];
-    _webView.keyboardDisplayRequiresUserAction = NO;
-    [self.view addSubview:_webView];
-
-    return _webView;
-}
-
 - (UIToolbar *)editingToolbar {
     if( _editingToolbar ) {
         return _editingToolbar;
     }
-
+    
     _editingToolbar = [UIToolbar new];
     _editingToolbar.barStyle = UIBarStyleBlackTranslucent;
     [self.view layoutSubviews];
-
+    
     return _editingToolbar;
 }
 
@@ -178,14 +121,14 @@ NSString *const WebViewEventValue = @"value";
     if( _keyboardWindow ) {
         return _keyboardWindow;
     }
-
+    
     for( UIWindow *testWindow in [[UIApplication sharedApplication] windows] ) {
         if( ![[testWindow class] isEqual:[UIWindow class]] ) {
             _keyboardWindow = testWindow;
             break;
         }
     }
-
+    
     return _keyboardWindow;
 }
 
@@ -193,36 +136,36 @@ NSString *const WebViewEventValue = @"value";
     if( _note == note ) {
         return;
     }
-
+    
     _note = note;
-
+    
     [self doAfterDOMLoads:^{
-            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
-            dictionary[@"title"] = note.title ? note.title : @"";
-
-            dictionary[@"placeholderString"] = [note titlePlaceholder];
-
-            dictionary[@"content"] = note.content ? note.content : @"";
-
-            dictionary[@"categories"] = @[NoteCategoryClassNotes, NoteCategoryAssignment];
-
-            dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
-
-            dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
-
-            dictionary[@"editingMode"] = @(EditingModeWriting);
-
-            [self.bridge
-             send:dictionary];
-          }];
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        
+        dictionary[@"title"] = note.title ? note.title : @"";
+        
+        dictionary[@"placeholderString"] = [note titlePlaceholder];
+        
+        dictionary[@"content"] = note.content ? note.content : @"";
+        
+        dictionary[@"categories"] = @[NoteCategoryClassNotes, NoteCategoryAssignment];
+        
+        dictionary[@"selectedCategory"] = note.category ? note.category : NoteCategoryClassNotes;
+        
+        dictionary[@"topRightLines"] = note.topRightLines ? note.topRightLines : @"";
+        
+        dictionary[@"editingMode"] = @(EditingModeWriting);
+        
+        [self.bridge
+         send:dictionary];
+    }];
 }
 
 #pragma mark - Layout
 
 - (void)viewDidLayoutSubviews {
-    self.webView.frame = self.view.bounds;
-
+    [super viewDidLayoutSubviews];
+    
     self.editingToolbar.frame = (CGRect) {
         0.f,
         -44.f,
@@ -235,37 +178,37 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
     KeyboardNotificationUserInfo keyboardInfo = [notification keyboardUserInfo];
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self removeDefaultKeyboardAccessory];
     });
-
+    
     self.editingToolbar.frame = (CGRect) {
         0.f,
         CGRectGetMaxY(self.view.frame),
         self.editingToolbar.frame.size
     };
-
+    
     [self.keyboardWindow addSubview:self.editingToolbar];
-
+    
     [UIView animateWithDuration:keyboardInfo.animationDuration
                           delay:0.f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                       self.editingToolbar.frame = CGRectMake(0.0f, CGRectGetMinY([notification keyboardUserInfo].frameEnd), self.view.frame.size.width, 44.f);
+                         self.editingToolbar.frame = CGRectMake(0.0f, CGRectGetMinY([notification keyboardUserInfo].frameEnd), self.view.frame.size.width, 44.f);
                      }
-
+     
                      completion:nil];
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification {
     [UIView animateWithDuration:0.25
                      animations:^{
-                       self.editingToolbar.frame = (CGRect) {
-                       0.0f,
-                       self.view.frame.size.height,
-                       self.editingToolbar.frame.size
-                       };
+                         self.editingToolbar.frame = (CGRect) {
+                             0.0f,
+                             self.view.frame.size.height,
+                             self.editingToolbar.frame.size
+                         };
                      }];
 }
 
@@ -291,44 +234,44 @@ NSString *const WebViewEventValue = @"value";
     BOOL boldEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Bold')"] boolValue];
     BOOL italicEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Italic')"] boolValue];
     BOOL underlineEnabled = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandState('Underline')"] boolValue];
-
+    
     NSMutableArray *items = [NSMutableArray new];
-
+    
     NSArray *segItemsArray = [NSArray arrayWithObjects:
                               (boldEnabled) ? @"[B]"   :@"B",
                               italicEnabled ? @"[I]"   :@"I",
                               underlineEnabled ? @"[U]":@"U", nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segItemsArray];
-
+    
     [segmentedControl addTarget:self action:@selector(textStyleSelected:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(0, 0, 150.f, 30);
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     segmentedControl.momentary = YES;
     UIBarButtonItem *segmentedControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)segmentedControl];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-
+    
     [items addObject:flexibleSpace];
     [items addObject:segmentedControlButtonItem];
-
+    
     if( currentBoldStatus != boldEnabled || currentItalicStatus != italicEnabled || currentUnderlineStatus != underlineEnabled || sender == self ) {
         self.navigationItem.rightBarButtonItems = items;
         currentBoldStatus = boldEnabled;
         currentItalicStatus = italicEnabled;
         currentUnderlineStatus = underlineEnabled;
     }
-
+    
     // Font Color Picker
     UIBarButtonItem *fontColorPicker = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontColorPicker:)];
-
+    
     NSString *foreColor = [self.webView stringByEvaluatingJavaScriptFromString:@"document.queryCommandValue('foreColor')"];
     UIColor *color = [self colorFromRGBValue:foreColor];
-
+    
     if( color ) {
         [fontColorPicker setTintColor:color];
     }
-
+    
     [items addObject:fontColorPicker];
-
+    
     //    // Font Picker
     //    UIBarButtonItem *fontPicker = [[UIBarButtonItem alloc] initWithTitle:@"Font" style:UIBarButtonItemStyleBordered target:self action:@selector(displayFontPicker:)];
     //
@@ -338,19 +281,19 @@ NSString *const WebViewEventValue = @"value";
     //        [fontPicker setTitleTextAttributes:[NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont] forState:UIControlStateNormal];
     //
     //    [items addObject:fontPicker];
-
+    
     UISegmentedControl *alignmentControl = [[UISegmentedControl alloc] initWithItems:@[@"L", @"C", @"R"]];
     [alignmentControl addTarget:self action:@selector(textAlignmentSelected:) forControlEvents:UIControlEventValueChanged];
     alignmentControl.frame = CGRectMake(0, 0, 150.f, 30);
     alignmentControl.segmentedControlStyle = UISegmentedControlStyleBar;
     alignmentControl.momentary = YES;
     UIBarButtonItem *alignmentButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)alignmentControl];
-
+    
     [items addObject:alignmentButtonItem];
-
+    
     UIBarButtonItem *insertPhoto = [[UIBarButtonItem alloc] initWithTitle:@"Photo+" style:UIBarButtonItemStyleBordered target:self action:@selector(insertPhoto:)];
     [items addObject:insertPhoto];
-
+    
     segItemsArray = @[@"Write", @"Draw"];
     segmentedControl = [[UISegmentedControl alloc] initWithItems:segItemsArray];
     [segmentedControl addTarget:self action:@selector(modeSelected:) forControlEvents:UIControlEventValueChanged];
@@ -359,7 +302,7 @@ NSString *const WebViewEventValue = @"value";
     segmentedControl.momentary = YES;
     segmentedControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:(UIView *)segmentedControl];
     [items addObject:segmentedControlButtonItem];
-
+    
     //    UIBarButtonItem *undo = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undo)];
     //    UIBarButtonItem *redo = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redo)];
     //
@@ -374,7 +317,7 @@ NSString *const WebViewEventValue = @"value";
     //
     //    [items addObject:undo];
     //    [items addObject:redo];
-
+    
     if( ![currentForeColor isEqualToString:foreColor] /*|| ![currentFontName isEqualToString:fontName] || currentUndoStatus != undoAvailable || currentRedoStatus != redoAvailable*/ || sender == self ) {
         self.editingToolbar.items = items;
         currentForeColor = foreColor;
@@ -392,39 +335,39 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)textStyleSelected:(UISegmentedControl *)control {
     switch( control.selectedSegmentIndex ) {
-      case TextStyleBold :
-          [self bold];
-          break;
-
-      case TextStyleItalic :
-          [self italic];
-          break;
-
-      case TextStyleUnderline :
-          [self underline];
-          break;
-
-      default:
-          break;
+        case TextStyleBold :
+            [self bold];
+            break;
+            
+        case TextStyleItalic :
+            [self italic];
+            break;
+            
+        case TextStyleUnderline :
+            [self underline];
+            break;
+            
+        default:
+            break;
     }
 }
 
 - (void)textAlignmentSelected:(UISegmentedControl *)control {
     switch( control.selectedSegmentIndex ) {
-      case TextAlignmentLeft:
-          [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
-          break;
-
-      case TextAlignmentCenter:
-          [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
-          break;
-
-      case TextAlignmentRight:
-          [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
-          break;
-
-      default:
-          break;
+        case TextAlignmentLeft:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
+            break;
+            
+        case TextAlignmentCenter:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
+            break;
+            
+        case TextAlignmentRight:
+            [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -454,21 +397,21 @@ NSString *const WebViewEventValue = @"value";
     NSString *plainTextContent = [self.webView stringByEvaluatingJavaScriptFromString:@"getPlainTextContent()"];
     NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"getTopRightLines();"];
     NSString *category = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedCategory();"];
-
+    
     self.note.title = title;
     self.note.content = content;
     self.note.plainTextContent = plainTextContent;
     self.note.topRightLines = topRightLines;
     self.note.category = category;
-
+    
     [[NoteManager sharedInstance] saveToDisk];
-
+    
     [[[NoteManager sharedInstance] context] refreshObject:self.note mergeChanges:YES];
 }
 
 - (void)displayFontColorPicker:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select a font color" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Blue", @"Yellow", @"Green", @"Red", @"Orange", nil];
-
+    
     [actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
@@ -481,9 +424,9 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *selectedButtonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-
+    
     selectedButtonTitle = [selectedButtonTitle lowercaseString];
-
+    
     if( [actionSheet.title isEqualToString:@"Select a font"] ) {
         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.execCommand('fontName', false, '%@')", selectedButtonTitle]];
     }
@@ -494,10 +437,10 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)insertPhoto:(id)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-
+    
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
-
+    
     UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
     [popover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     _imagePickerPopover = popover;
@@ -510,21 +453,21 @@ static int i = 0;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"photo%i.png", i]];
-
+    
     // Extract image from the picker and save it
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     UIImage *image = nil;
-
+    
     if( [mediaType isEqualToString:@"public.image"] ) {
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *data = UIImagePNGRepresentation(image);
         [data writeToFile:imagePath atomically:YES];
     }
-
-    NSLog(@"lol = %@", [NSString stringWithFormat:@"insertImageWithBase64('%@')", imagePath]);
-
+    
+//    NSLog(@"lol = %@", [NSString stringWithFormat:@"insertImageWithBase64('%@')", imagePath]);
+    
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"insertImageWithBase64('%@',%f,%f)", imagePath, image.size.width, image.size.height]];
-
+    
     [_imagePickerPopover dismissPopoverAnimated:YES];
     i++;
 }
@@ -535,29 +478,18 @@ static int i = 0;
     if( [rgb rangeOfString:@"rgb"].location == NSNotFound ) {
         return nil;
     }
-
+    
     NSMutableString *mutableCopy = [rgb mutableCopy];
     [mutableCopy replaceCharactersInRange:NSMakeRange(0, 4) withString:@""];
     [mutableCopy replaceCharactersInRange:NSMakeRange(mutableCopy.length - 1, 1) withString:@""];
-
+    
     NSArray *components = [mutableCopy componentsSeparatedByString:@","];
     int red = [[components objectAtIndex:0] intValue];
     int green = [[components objectAtIndex:1] intValue];
     int blue = [[components objectAtIndex:2] intValue];
-
+    
     UIColor *retVal = [UIColor colorWithRed:red / 255.0 green:green / 255.0 blue:blue / 255.0 alpha:1.0];
     return retVal;
-}
-
-- (void)doAfterDOMLoads:(void (^)())completion {
-    if( _DOMLoaded ) {
-        if( completion ) {
-            completion();
-        }
-    }
-    else {
-        [_afterDOMLoadsBlocks addObject:[completion copy]];
-    }
 }
 
 - (NSString *)plainTextContent {
@@ -566,7 +498,7 @@ static int i = 0;
 
 - (void)setSearchTerm:(NSString *)searchTerm {
     _searchTerm = searchTerm;
-
+    
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"doSearch('%@')", searchTerm]];
 }
 

@@ -2,7 +2,7 @@
 //  TranscriptionSegment.h
 //  Notes
 //
-//  Created by Dany on 7/3/13.
+//  Created by Dany on 7/8/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
@@ -13,10 +13,11 @@
 
 @interface TranscriptionSegment : NSManagedObject
 
-@property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSNumber * absoluteStartTime;
 @property (nonatomic, retain) NSNumber * absoluteEndTime;
-@property (nonatomic, retain) Note *note;
+@property (nonatomic, retain) NSNumber * absoluteStartTime;
+@property (nonatomic, retain) NSNumber * index;
 @property (nonatomic, retain) NSString * soundFilePath;
+@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) Note *note;
 
 @end

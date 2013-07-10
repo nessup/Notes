@@ -112,7 +112,6 @@
 //    else {
 //        self.tableView.overlayView = nil;
 //    }
-    NSLog(@"hey %d", count);
     return count;
 }
 

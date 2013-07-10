@@ -9,7 +9,7 @@
 #import "TranscriptViewController.h"
 
 #import "SpeechToTextManager.h"
-#import "EditRichTextViewController.h"
+#import "WebViewController.h"
 #import "Model.h"
 #import "NoteManager.h"
 
@@ -18,8 +18,8 @@
 #define SideMargin      3.f
 #define ButtonHeight    44.f
 
-@interface TranscriptViewController ()
-
+@interface TranscriptViewController () <WebViewControllerDelegate>
+@property (nonatomic, strong) WebViewController *webViewController;
 @end
 
 @implementation TranscriptViewController {
@@ -28,18 +28,18 @@
     UIActivityIndicatorView *_activityIndicator;
     UILabel *_activityLabel;
     BOOL _hasRecorded;
-//    EditRichTextViewController *_webViewController;
-    UILabel *_transcriptLabel;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if( self ) {
-//        _webViewController = [EditRichTextViewController new];
-//        [self addChildViewController:_webViewController];
-//        [self.view addSubview:_webViewController.view];
-//        [_webViewController didMoveToParentViewController:self];
+        _webViewController = [[WebViewController alloc] initWithLocalPageNamed:@"TranscriptTemplate"];
+        _webViewController.delegate = self;
+        _webViewController.view.clipsToBounds = YES;
+        [self addChildViewController:_webViewController];
+        [self.view addSubview:_webViewController.view];
+        [_webViewController didMoveToParentViewController:self];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureView) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     }
@@ -51,6 +51,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)webViewController:(WebViewController *)webEditViewController didReceiveUnknownEvent:(NSDictionary *)event {
+    if( [event[WebViewEventName] isEqualToString:@"segmentTapped"] ) {
+        
+    }
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
@@ -60,16 +66,6 @@
     self.title = @"Transcript";
 
     self.view.backgroundColor = [UIColor whiteColor];
-
-//    [_webViewController view];
-//
-//    [_webViewController loadLocalPageNamed:@"TranscriptTemplate"];
-
-    _transcriptLabel = [UILabel new];
-//    _transcriptLabel.font = [FontManager helveticaNeueWithSize:16.f];
-    _transcriptLabel.text = @"lol";
-    _transcriptLabel.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:_transcriptLabel];
 
     UIButton *(^createButton)(NSString *, SEL) = ^UIButton *(NSString *title, SEL selector) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -96,7 +92,7 @@
     _activityLabel.text = @"Transcribing...";
     _activityLabel.alpha = 0.5f;
     _activityLabel.textColor = [UIColor whiteColor];
-    _activityLabel.backgroundColor = [UIColor blackColor];
+    _activityLabel.backgroundColor = [UIColor greenColor];
     [self.view addSubview:_activityLabel];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(speechToTextStateChanged:) name:SpeechToTextManagerStateChanged object:nil];
@@ -112,10 +108,24 @@
 #pragma mark - Note management
 
 - (void)configureView {
-//    [_webViewController doAfterDOMLoads:^{
-//        [_webViewController.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent('%@')", @"omgomg"]];
-//    }];
-//    _transcriptLabel.text = self.note.transcription;
+    NSMutableString *text = [NSMutableString new];
+    int i = 0;
+    NSArray *transcriptionSegments = [self.note.transcriptionSegments allObjects];
+    transcriptionSegments = [transcriptionSegments sortedArrayUsingComparator:^NSComparisonResult(TranscriptionSegment *obj1, TranscriptionSegment *obj2) {
+        return obj1.index.integerValue > obj2.index.integerValue;
+    }];
+    for( TranscriptionSegment *transcriptionSegment in transcriptionSegments ) {
+        if( transcriptionSegment.text ) {
+            [text appendFormat:@"<a href='playTranscriptAtIndex(%d)'>%@</a>", transcriptionSegment.index.integerValue, transcriptionSegment.text];
+        }
+        i++;
+    }
+//    NSLog(@"%@", text);
+    [_webViewController doAfterDOMLoads:^{
+        [_webViewController.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent('%@')", [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    }];
+    
+//    _transcriptLabel.text = text;
 
     [self speechToTextStateChanged:self];
 }
@@ -123,8 +133,20 @@
 - (void)setNote:(Note *)note {
     _note = note;
 
+    TranscriptionSegment *segment = nil;
+    CFTimeInterval time = 0.f;
+    for(int i = 0; i < 5; i++) {
+        segment = [NSEntityDescription insertNewObjectForEntityForName:@"TranscriptionSegment" inManagedObjectContext:[[NoteManager sharedInstance] context]];
+        segment.text = [NSString stringWithFormat:@"%d", i];
+        segment.absoluteStartTime = @(time);
+        segment.absoluteEndTime = @(++time);
+        segment.index = @(i);
+        segment.note = note;
+    }
+    [[[NoteManager sharedInstance] context] processPendingChanges];
+    
     _hasRecorded = !!note.transcriptionSegments.count;
-
+    
     [[SpeechToTextManager sharedInstance] setNote:note];
     [self configureView];
 }
@@ -167,18 +189,18 @@
         StatusBarHeight
     };
 
-    //    _webViewController.view.frame = (CGRect) {
-    //        0.f,
-    //        CGRectGetMaxY(_activityLabel.frame),
-    //        self.view.frame.size.width,
-    //        self.view.frame.size.height - TopBarHeight - StatusBarHeight
-    //    };
-    _transcriptLabel.frame = (CGRect) {
+    _webViewController.view.frame = (CGRect) {
         0.f,
         CGRectGetMaxY(_activityLabel.frame),
         self.view.frame.size.width,
-        100.f
+        self.view.frame.size.height - CGRectGetMaxY(_activityLabel.frame)
     };
+//    _transcriptLabel.frame = (CGRect) {
+//        0.f,
+//        CGRectGetMaxY(_activityLabel.frame),
+//        self.view.frame.size.width,
+//        100.f
+//    };
 }
 
 #pragma mark - Actions
@@ -239,13 +261,6 @@
 
     if( state & SpeechToTextManagerStateRecording ) {
         [[SpeechToTextManager sharedInstance] stop];
-
-        [[SpeechToTextManager sharedInstance] getText:^(NSString *transcription, NSData *transcriptionAudio) {
-                                                if( transcription && transcriptionAudio ) {
-                                                [self                                 addTranscriptionToCurrentNote:transcription
-                                                                              audio:transcriptionAudio];
-                                                }
-                                              }];
     }
     else {
         [[SpeechToTextManager sharedInstance] startRecording];

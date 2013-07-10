@@ -2,7 +2,7 @@
 //  TranscriptionSegment.m
 //  Notes
 //
-//  Created by Dany on 7/3/13.
+//  Created by Dany on 7/8/13.
 //  Copyright (c) 2013 Dany. All rights reserved.
 //
 
@@ -12,10 +12,11 @@
 
 @implementation TranscriptionSegment
 
-@dynamic text;
-@dynamic absoluteStartTime;
 @dynamic absoluteEndTime;
-@dynamic note;
+@dynamic absoluteStartTime;
+@dynamic index;
 @dynamic soundFilePath;
+@dynamic text;
+@dynamic note;
 
 @end
