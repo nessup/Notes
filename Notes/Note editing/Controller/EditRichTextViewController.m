@@ -156,8 +156,7 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
         
         dictionary[@"editingMode"] = @(EditingModeWriting);
         
-        [self.bridge
-         send:dictionary];
+        [self.bridge send:dictionary];
     }];
 }
 
@@ -330,7 +329,7 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 #pragma mark - Actions
 
 - (void)modeSelected:(UISegmentedControl *)sender {
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setEditingMode(%d)", sender.selectedSegmentIndex]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"App.setEditingMode(%d)", sender.selectedSegmentIndex]];
 }
 
 - (void)textStyleSelected:(UISegmentedControl *)control {
@@ -355,15 +354,15 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 - (void)textAlignmentSelected:(UISegmentedControl *)control {
     switch( control.selectedSegmentIndex ) {
         case TextAlignmentLeft:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignLeft()"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"App.alignLeft()"];
             break;
             
         case TextAlignmentCenter:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignCenter()"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"App.alignCenter()"];
             break;
             
         case TextAlignmentRight:
-            [self.webView stringByEvaluatingJavaScriptFromString:@"alignRight()"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"App.alignRight()"];
             break;
             
         default:
@@ -392,11 +391,11 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 //}
 
 - (void)commitChangesToNote {
-    NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"getTitle()"];
-    NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"getContent();"];
-    NSString *plainTextContent = [self.webView stringByEvaluatingJavaScriptFromString:@"getPlainTextContent()"];
-    NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"getTopRightLines();"];
-    NSString *category = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedCategory();"];
+    NSString *title = [self.webView stringByEvaluatingJavaScriptFromString:@"App.getTitle()"];
+    NSString *content = [self.webView stringByEvaluatingJavaScriptFromString:@"App.getContent();"];
+    NSString *plainTextContent = [self.webView stringByEvaluatingJavaScriptFromString:@"App.getPlainTextContent()"];
+    NSString *topRightLines = [self.webView stringByEvaluatingJavaScriptFromString:@"App.getTopRightLines();"];
+    NSString *category = [self.webView stringByEvaluatingJavaScriptFromString:@"App.getSelectedCategory();"];
     
     self.note.title = title;
     self.note.content = content;
@@ -466,7 +465,7 @@ static int i = 0;
     
 //    NSLog(@"lol = %@", [NSString stringWithFormat:@"insertImageWithBase64('%@')", imagePath]);
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"insertImageWithBase64('%@',%f,%f)", imagePath, image.size.width, image.size.height]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"App.insertImageWithBase64('%@',%f,%f)", imagePath, image.size.width, image.size.height]];
     
     [_imagePickerPopover dismissPopoverAnimated:YES];
     i++;
@@ -493,17 +492,17 @@ static int i = 0;
 }
 
 - (NSString *)plainTextContent {
-    return [self.webView stringByEvaluatingJavaScriptFromString:@"getPlainTextContent()"];
+    return [self.webView stringByEvaluatingJavaScriptFromString:@"App.getPlainTextContent()"];
 }
 
 - (void)setSearchTerm:(NSString *)searchTerm {
     _searchTerm = searchTerm;
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"doSearch('%@')", searchTerm]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"App.doSearch('%@')", searchTerm]];
 }
 
 - (void)focusAndSelectTitle {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"focusAndSelectTitle()"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"App.focusAndSelectTitle()"];
 }
 
 - (void)resignFirstResponder {

@@ -61,7 +61,7 @@
 		3B498FBD1785714E001A2368 /* Transcript.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B498FBC1785714E001A2368 /* Transcript.js */; };
 		3B56852D178BD3C3000FBFC5 /* TranscriptionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B56852C178BD3C3000FBFC5 /* TranscriptionSegment.m */; };
 		3B56853A178CF9BC000FBFC5 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B568539178CF9BC000FBFC5 /* WebViewController.m */; };
-		3B56853E178D5484000FBFC5 /* BridgedWebApp.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */; };
+		3B56853E178D5484000FBFC5 /* BridgedAppHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 3B56853C178D45A0000FBFC5 /* BridgedAppHelper.js */; };
 		3B5DC3FD1774B316006581C3 /* NotebookBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */; };
 		3B5DC4541775817E006581C3 /* NotebookTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DC4531775817E006581C3 /* NotebookTableView.m */; };
 		3B79AE501772DA1200164252 /* NoteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B79AE4F1772DA1200164252 /* NoteTitleView.m */; };
@@ -214,7 +214,7 @@
 		3B56852C178BD3C3000FBFC5 /* TranscriptionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionSegment.m; sourceTree = "<group>"; };
 		3B568538178CF9BC000FBFC5 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		3B568539178CF9BC000FBFC5 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BridgedWebApp.js; sourceTree = "<group>"; };
+		3B56853C178D45A0000FBFC5 /* BridgedAppHelper.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BridgedAppHelper.js; sourceTree = "<group>"; };
 		3B5DC3FB1774B316006581C3 /* NotebookBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookBrowseViewController.h; sourceTree = "<group>"; };
 		3B5DC3FC1774B316006581C3 /* NotebookBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotebookBrowseViewController.m; sourceTree = "<group>"; };
 		3B5DC4521775817E006581C3 /* NotebookTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotebookTableView.h; sourceTree = "<group>"; };
@@ -519,7 +519,7 @@
 			children = (
 				3B568538178CF9BC000FBFC5 /* WebViewController.h */,
 				3B568539178CF9BC000FBFC5 /* WebViewController.m */,
-				3B56853C178D45A0000FBFC5 /* BridgedWebApp.js */,
+				3B56853C178D45A0000FBFC5 /* BridgedAppHelper.js */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -891,7 +891,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B56853E178D5484000FBFC5 /* BridgedWebApp.js in Resources */,
+				3B56853E178D5484000FBFC5 /* BridgedAppHelper.js in Resources */,
 				3BCB7E56174F28A7006B393D /* NoteTemplate.js in Resources */,
 				3B498FBD1785714E001A2368 /* Transcript.js in Resources */,
 				3BF3F64A174C892400AAD591 /* InfoPlist.strings in Resources */,

@@ -39,6 +39,14 @@ NSString *const WebViewEventValue = @"value";
         _webView.delegate = self;
         [self.view addSubview:_webView];
         
+        [_webView
+         loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
+                                                                                 ofType:@"html"]]
+         MIMEType:@"text/html"
+         textEncodingName:@"utf-8"
+         baseURL:[[NSBundle mainBundle] bundleURL]];
+        
+        
         self.bridge = [WebViewJavascriptBridge
                        bridgeForWebView:_webView
                        handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -53,18 +61,17 @@ NSString *const WebViewEventValue = @"value";
                                [_afterDOMLoadsBlocks removeAllObjects];
                            }
                            else if( [data isKindOfClass:[NSDictionary class]] ) {
+                               
+                               if( [data[WebViewEventName] isEqualToString:@"logToConsole"] ) {
+                                   NSLog(@"console.log: %@", data[WebViewEventValue]);
+                               }
+                               
                                if( ![self handleWebViewEvent:data] ) {
                                    [self.delegate webViewController:self didReceiveUnknownEvent:data];
                                }
                            }
                        }];
         
-        [_webView
-         loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
-                                                                                 ofType:@"html"]]
-         MIMEType:@"text/html"
-         textEncodingName:@"utf-8"
-         baseURL:[[NSBundle mainBundle] bundleURL]];
     }
     
     return self;
