@@ -13,13 +13,16 @@
 #import "NoteManager.h"
 #import "RTEGestureRecognizer.h"
 
+#define ToolbarHeight       44.f
+
 NSString *const WebViewEventCategoryChanged = @"categoryChanged";
 NSString *const WebViewEventTitleChanged = @"titleChanged";
 
 @interface EditRichTextViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-@property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIToolbar *editingToolbar;
+@property (nonatomic) KeyboardNotificationUserInfo lastKeyboardInfo;
 @property (nonatomic, weak) UIWindow *keyboardWindow;
+@property (nonatomic) BOOL keyboardAppearing;
 
 @property (nonatomic, strong) UISegmentedControl *textStyleControl;
 @property (nonatomic, strong) UIBarButtonItem *textColorButton;
@@ -75,6 +78,9 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
         self.webView.scrollView.scrollEnabled = YES;
     };
     [self.webView.scrollView addGestureRecognizer:tapInterceptor];
+    
+    [self.view addSubview:self.editingToolbar];
+    [self.view bringSubviewToFront:self.editingToolbar];
 }
 
 - (BOOL)handleWebViewEvent:(NSDictionary *)event {
@@ -110,24 +116,8 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
     
     _editingToolbar = [UIToolbar new];
     _editingToolbar.barStyle = UIBarStyleBlackTranslucent;
-    [self.view layoutSubviews];
     
     return _editingToolbar;
-}
-
-- (UIWindow *)keyboardWindow {
-    if( _keyboardWindow ) {
-        return _keyboardWindow;
-    }
-    
-    for( UIWindow *testWindow in [[UIApplication sharedApplication] windows] ) {
-        if( ![[testWindow class] isEqual:[UIWindow class]] ) {
-            _keyboardWindow = testWindow;
-            break;
-        }
-    }
-    
-    return _keyboardWindow;
 }
 
 - (void)setNote:(Note *)note {
@@ -160,58 +150,51 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 
 #pragma mark - Layout
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    CGFloat keyboardOffset = self.keyboardAppearing ? self.lastKeyboardInfo.frameEnd.size.height : 0.f;
+    self.webView.frame = (CGRect) {
+        CGPointZero,
+        self.view.frame.size.width,
+        self.view.frame.size.height - keyboardOffset
+    };
     self.editingToolbar.frame = (CGRect) {
         0.f,
-        -44.f,
+        CGRectGetMaxY(self.webView.frame),
         self.view.frame.size.width,
-        44.f
+        ToolbarHeight
     };
 }
 
 #pragma mark - Keyboard management
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
-    KeyboardNotificationUserInfo keyboardInfo = [notification keyboardUserInfo];
+    self.lastKeyboardInfo = [notification keyboardUserInfo];
+    self.keyboardAppearing = YES;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self removeDefaultKeyboardAccessory];
     });
-    
-    self.editingToolbar.frame = (CGRect) {
-        0.f,
-        CGRectGetMaxY(self.view.frame),
-        self.editingToolbar.frame.size
-    };
-    
-    [self.keyboardWindow addSubview:self.editingToolbar];
-    
-    [UIView animateWithDuration:keyboardInfo.animationDuration
+        
+    [UIView animateWithDuration:self.lastKeyboardInfo.animationDuration
                           delay:0.f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         self.editingToolbar.frame = CGRectMake(0.0f, CGRectGetMinY([notification keyboardUserInfo].frameEnd), self.view.frame.size.width, 44.f);
+                         [self viewWillLayoutSubviews];
                      }
-     
                      completion:nil];
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification {
-    [UIView animateWithDuration:0.25
+    self.lastKeyboardInfo = [notification keyboardUserInfo];
+    self.keyboardAppearing = NO;
+    
+    [UIView animateWithDuration:self.lastKeyboardInfo.animationDuration
                      animations:^{
-                         self.editingToolbar.frame = (CGRect) {
-                             0.0f,
-                             self.view.frame.size.height,
-                             self.editingToolbar.frame.size
-                         };
+                         [self viewWillLayoutSubviews];
                      }];
 }
 
-- (void)keyboardDidDisappear:(NSNotification *)notification {
-    self.keyboardWindow = nil;
-}
 
 - (void)removeDefaultKeyboardAccessory {
     // Locate UIWebFormView.
@@ -225,6 +208,21 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
             }
         }
     }
+}
+
+- (UIWindow *)keyboardWindow {
+    if( _keyboardWindow ) {
+        return _keyboardWindow;
+    }
+    
+    for( UIWindow *testWindow in [[UIApplication sharedApplication] windows] ) {
+        if( ![[testWindow class] isEqual:[UIWindow class]] ) {
+            _keyboardWindow = testWindow;
+            break;
+        }
+    }
+    
+    return _keyboardWindow;
 }
 
 - (void)checkSelection:(id)sender {
@@ -501,11 +499,6 @@ static int i = 0;
 
 - (void)focusAndSelectTitle {
     [self.webView stringByEvaluatingJavaScriptFromString:@"App.focusAndSelectTitle()"];
-}
-
-- (void)resignFirstResponder {
-    self.webView.userInteractionEnabled = NO;
-    self.webView.userInteractionEnabled = YES;
 }
 
 @end

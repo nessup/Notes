@@ -36,7 +36,8 @@ NSString *const WebViewEventValue = @"value";
         _webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _webView.keyboardDisplayRequiresUserAction = NO;
         _webView.delegate = self;
-        [self.view addSubview:_webView];
+        _webView.clipsToBounds = YES;
+//        self.webView.frame = self.view.bounds;
         
         [_webView
          loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
@@ -78,18 +79,13 @@ NSString *const WebViewEventValue = @"value";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view addSubview:self.webView];
 }
 
 #pragma mark - Web view event handling
 
 - (BOOL)handleWebViewEvent:(NSDictionary *)event {
     return NO;
-}
-
-#pragma mark - Layout
-
-- (void)viewDidLayoutSubviews {
-    self.webView.frame = self.view.bounds;
 }
 
 #pragma mark - Utility
@@ -106,10 +102,12 @@ NSString *const WebViewEventValue = @"value";
 }
 
 - (BOOL)resignFirstResponder {
-    self.webView.userInteractionEnabled = NO;
-    self.webView.userInteractionEnabled = YES;
-    
-    return [super resignFirstResponder];
+    BOOL resign = [super resignFirstResponder];
+    if( resign ) {
+        self.webView.userInteractionEnabled = NO;
+        self.webView.userInteractionEnabled = YES;
+    }
+    return resign;
 }
 
 @end

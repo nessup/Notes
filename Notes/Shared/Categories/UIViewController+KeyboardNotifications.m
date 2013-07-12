@@ -10,6 +10,8 @@
 
 @implementation UIViewController (KeyboardNotifications)
 
+
+
 - (void)registerForKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
@@ -25,19 +27,15 @@
 }
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
-    // Does nothing, subclass must override it
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
-    // Does nothing, subclass must override it
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification {
-    // Does nothing, subclass must override it
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification {
-    // Does nothing, subclass must override it
 }
 
 @end
