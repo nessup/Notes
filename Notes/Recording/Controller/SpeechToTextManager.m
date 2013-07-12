@@ -383,15 +383,16 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
         
         if( hypotheses.count ) {
             text = [hypotheses[0] valueForKey:@"utterance"];
-            
+            NSLog(@"got text %@", text);
             transcriptionSegment.text = text;
+            transcriptionSegment.note = self.note;
         }
         else {
 //        self.state |= SpeechToTextManagerStateError;
             
             transcriptionSegment.note = nil;
-            [[[NoteManager sharedInstance] context] processPendingChanges];
         }
+        [[[NoteManager sharedInstance] context] processPendingChanges];
         
         if( _operationQueue.operations.count == 1 ) {
             self.state &= ~SpeechToTextManagerStateTranscribing;

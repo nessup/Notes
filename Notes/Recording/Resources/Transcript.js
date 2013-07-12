@@ -31,10 +31,6 @@ function TranscriptController() {
 			value: index
 		});
 	}
-
-	this.setContent = function(content) {
-		$('#content').html(content);
-	}
 }
 
 var App = new TranscriptController();

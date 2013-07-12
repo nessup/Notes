@@ -37,7 +37,7 @@ NSString *const WebViewEventValue = @"value";
         _webView.keyboardDisplayRequiresUserAction = NO;
         _webView.delegate = self;
         _webView.clipsToBounds = YES;
-//        self.webView.frame = self.view.bounds;
+        self.webView.frame = self.view.bounds;
         
         [_webView
          loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
