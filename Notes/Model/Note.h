@@ -23,18 +23,27 @@ extern NSString *const NoteCategoryAssignment;
 @property (nonatomic, retain) Notebook *notebook;
 @property (nonatomic, retain) NSString *topRightLines;
 @property (nonatomic, retain) NSString *plainTextContent;
-@property (nonatomic, retain) NSSet *transcriptionSegments;
+@property (nonatomic, retain) NSOrderedSet *transcriptionSegments;
+@end
 
+@interface Note (CoreDataGeneratedAccessors)
+
+- (void)insertObject:(TranscriptionSegment *)value inTranscriptionSegmentsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromTranscriptionSegmentsAtIndex:(NSUInteger)idx;
+- (void)insertTranscriptionSegments:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeTranscriptionSegmentsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInTranscriptionSegmentsAtIndex:(NSUInteger)idx withObject:(TranscriptionSegment *)value;
+- (void)replaceTranscriptionSegmentsAtIndexes:(NSIndexSet *)indexes withTranscriptionSegments:(NSArray *)values;
+- (void)addTranscriptionSegmentsObject:(TranscriptionSegment *)value;
+- (void)removeTranscriptionSegmentsObject:(TranscriptionSegment *)value;
+- (void)addTranscriptionSegments:(NSOrderedSet *)values;
+- (void)removeTranscriptionSegments:(NSOrderedSet *)values;
+
+@end
+
+@interface Note (Convenience)
 - (NSString *)titlePlaceholder;
 - (NSString *)plainTextContentPlaceholder;
 - (NSString *)shortDateCreated;
 - (void)configureNotesCell:(NotesCell *)cell;
-
-@end
-
-@interface Note (CoreDataGeneratedAccessors)
-- (void)addTranscriptionSegmentsObject:(TranscriptionSegment *)value;
-- (void)removeTranscriptionSegmentsObject:(TranscriptionSegment *)value;
-- (void)addTranscriptionSegments:(NSSet *)values;
-- (void)removeTranscriptionSegments:(NSSet *)values;
 @end

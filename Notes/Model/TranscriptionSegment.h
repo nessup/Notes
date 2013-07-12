@@ -15,7 +15,6 @@
 
 @property (nonatomic, retain) NSNumber * absoluteEndTime;
 @property (nonatomic, retain) NSNumber * absoluteStartTime;
-@property (nonatomic, retain) NSNumber * index;
 @property (nonatomic, retain) NSString * soundFilePath;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) Note *note;

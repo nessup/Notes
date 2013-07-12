@@ -24,8 +24,6 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 @property (nonatomic, strong) UISegmentedControl *textStyleControl;
 @property (nonatomic, strong) UIBarButtonItem *textColorButton;
 @property (nonatomic, strong) UISegmentedControl *alignmentControl;
-@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
-
 @end
 
 @implementation EditRichTextViewController {

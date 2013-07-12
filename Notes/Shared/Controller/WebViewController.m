@@ -18,7 +18,6 @@ NSString *const WebViewEventValue = @"value";
 
 @interface WebViewController () <UINavigationControllerDelegate, UIWebViewDelegate>
 @property (nonatomic, strong) UIWebView *webView;
-@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 @end
 
 @implementation WebViewController {

@@ -59,7 +59,7 @@ static BOOL alertShowing;
     if( ![NSThread isMainThread] ) {
         return nil;
     }
-    
+
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                     message:message
                                                    delegate:[self class]

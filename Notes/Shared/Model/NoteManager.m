@@ -103,37 +103,12 @@
     return transcriptionSegment;
 }
 
-- (NSFetchedResultsController *)fetchAllTranscriptionSegmentsForNote:(Note *)note {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"TranscriptionSegment" inManagedObjectContext:self.context];
-    
-    [fetchRequest setEntity:entity];
-    
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"absoluteStartTime" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
-    
-    NSError *error = nil;
-    
-    if( ![aFetchedResultsController performFetch:&error] ) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return aFetchedResultsController;
-}
-
 - (NSFetchedResultsController *)fetchAllNotesInNotebook:(Notebook *)notebook {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.context];
-
     [fetchRequest setEntity:entity];
-
     [fetchRequest setFetchBatchSize:20];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(notebook == %@)", notebook]];
 
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];

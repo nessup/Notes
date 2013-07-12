@@ -14,7 +14,6 @@
 
 @dynamic absoluteEndTime;
 @dynamic absoluteStartTime;
-@dynamic index;
 @dynamic soundFilePath;
 @dynamic text;
 @dynamic note;

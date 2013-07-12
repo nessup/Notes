@@ -9,6 +9,7 @@
 #import "Note.h"
 #import "Notebook.h"
 #import "NotesCell.h"
+#import "TranscriptionSegment.h"
 
 NSString *const NoteCategoryClassNotes = @"Class Notes";
 NSString *const NoteCategoryAssignment = @"Assignments";

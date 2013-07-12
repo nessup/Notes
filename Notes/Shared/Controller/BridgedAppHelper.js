@@ -14,9 +14,12 @@ function BridgedAppHelper(callbackBind) {
       var bridge = null;
       var domLoaded = false;
 
+      this.getBridge = function() {
+            return bridge;
+      }
+
       var self = this;
       document.addEventListener('WebViewJavascriptBridgeReady', function onBridgeReady(event) {
-            callbackBind.bridge = event.bridge;
             bridge = event.bridge;
 
             bridge.init(function(message, responseCallback) {

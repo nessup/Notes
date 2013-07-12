@@ -17,9 +17,12 @@ extern NSString *const WebViewEventValue;
 - (void)webViewController:(WebViewController *)webEditViewController didReceiveUnknownEvent:(NSDictionary *)event;
 @end
 
+@class WebViewJavascriptBridge;
+
 @interface WebViewController : UIViewController
 @property (nonatomic, strong, readonly) UIWebView *webView;
 @property (nonatomic, weak) id<WebViewControllerDelegate> delegate;
+@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 
 - (id)initWithLocalPageNamed:(NSString *)pageName;
 

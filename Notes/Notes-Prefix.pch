@@ -24,5 +24,6 @@
 #import "UIView+Layout.h"
 #import "UIAlertView+MKBlockAdditions.h"
 #import "Utility.h"
+#import "NSString+EscapingForJSON.h"
 
 #endif

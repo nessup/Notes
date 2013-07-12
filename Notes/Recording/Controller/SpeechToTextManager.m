@@ -12,7 +12,6 @@
 #import "JSONKit.h"
 #import "wav.h"
 #import "NoteManager.h"
-#import "AVAudioRecorder+SpeechToTextManager.h"
 
 #define BUFFSIZE (1 << 16)
 
@@ -29,15 +28,17 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
 @interface SpeechToTextManager () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+
 @property (nonatomic) NSInteger lastFileIndex;
-@property (nonatomic, strong) NSMutableArray *transcriptSegments;
 @property (nonatomic, strong) NSMutableArray *recorders;
 @property (nonatomic) CFAbsoluteTime lastTimeThresholdCrossed;
 @property (nonatomic, strong) NSTimer *meteringTimer;
 @property (nonatomic) NSTimeInterval currentTranscriptLength;
+@property (nonatomic) NSUInteger currentPlaybackIndex;
+@property (nonatomic) TranscriptionSegment *currentTranscriptionSegment;
 
 @property (nonatomic, strong) NSMutableArray *players;
-@property (nonatomic) NSUInteger currentPlaybackIndex;
 
 @end
 
@@ -49,7 +50,6 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 #define QueueSize                   3
 
 @implementation SpeechToTextManager {
-    NSOperationQueue *_operationQueue;
     NSString *_currentAACPath;
 }
 
@@ -81,7 +81,6 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
             NSLog(@"%@ %d %@", [err domain], [err code], [[err userInfo] description]);
         }
         
-        self.transcriptSegments = [NSMutableArray array];
         self.recorders = [NSMutableArray array];
         self.players = [NSMutableArray array];
     }
@@ -93,8 +92,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 
 - (void)setNote:(Note *)note {
     _note = note;
-    note.transcriptionSegments = nil;
-    [[NoteManager sharedInstance] saveToDisk];
+    [[[NoteManager sharedInstance] context] processPendingChanges];
 }
 
 #pragma mark - State management
@@ -130,12 +128,11 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     
     // Start one recorder
     AVAudioRecorder *recorder = self.recorders[0];
-    TranscriptionSegment *segment = [[NoteManager sharedInstance] createNewTranscriptionSegmentForNote:self.note];
+    TranscriptionSegment *segment = [[NoteManager sharedInstance] createNewTranscriptionSegmentForNote:nil];
     segment.soundFilePath = [recorder.url path];
     segment.absoluteStartTime = @(self.currentTranscriptLength);
-    segment.index = @(recorder.fileIndex);
     //    NSLog(@"made segment for index %d", recorder.fileIndex);
-    [self.transcriptSegments addObject:segment];
+    self.currentTranscriptionSegment = segment;
     if( ![recorder recordForDuration:MaxInterval] ) {
         NSLog(@"couldn't record");
     }
@@ -146,13 +143,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     NSUInteger index = 0;
     for( int i = self.recorders.count; i < QueueSize; i++ ) {
         index = self.lastFileIndex + 1;
-        if( [[self.note objectID] isTemporaryID] ) {
-            NSLog(@"warning temp id!!");
-        }
-        NSArray *components = [[[self.note objectID] URIRepresentation] pathComponents];
-        NSString *prefix = components[2];
-        NSURL *soundFileURL = [self soundFileURLWithPrefix:prefix index:index];
-        NSLog(@"enqueueing recorder with prefix %@ and index %d", prefix, index);
+        NSURL *soundFileURL = [self soundFileURLWithNote:self.note index:index];
         
         NSDictionary *recordSettings = @{
                                          AVFormatIDKey: @(kAudioFormatLinearPCM),
@@ -171,8 +162,6 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
                                      error:&error];
         recorder.delegate = self;
         recorder.meteringEnabled = YES;
-        recorder.prefix = prefix;
-        recorder.fileIndex = index;
         
         if( error ) {
             NSLog(@"error: %@", [error localizedDescription]);
@@ -188,7 +177,13 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     }
 }
 
-- (NSURL *)soundFileURLWithPrefix:(NSString *)prefix index:(NSUInteger)index {
+- (NSURL *)soundFileURLWithNote:(Note *)note index:(NSUInteger)index {
+    if( [[self.note objectID] isTemporaryID] ) {
+        NSLog(@"warning temp id!!");
+    }
+    NSArray *components = [[[self.note objectID] URIRepresentation] pathComponents];
+    NSString *prefix = components[2];
+//            NSLog(@"generating prefix %@ and index %d", prefix, index);
     NSArray *dirPaths;
     NSString *docsDir;
     
@@ -220,18 +215,14 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
         self.lastFileIndex--;
     }
     else {
-        NSLog(@"recorder at index %d finished %d curlen=%f", recorder.fileIndex, successfully, self.currentTranscriptLength);
+        NSLog(@"recorder finished %d curlen=%f", successfully, self.currentTranscriptLength);
         
-        // Note: this delegate method can get called after -prepareForRecord is called but before -record. That means we may not have a TranscriptSegment object in the list (there wouldn't be any audio data anyway)
-        if( recorder.fileIndex < self.transcriptSegments.count ) {
-            TranscriptionSegment *segment = self.transcriptSegments[recorder.fileIndex];
-            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:recorder.url options:nil];
-            self.currentTranscriptLength += CMTimeGetSeconds(asset.duration);
-            segment.absoluteEndTime = @(self.currentTranscriptLength);
-            
-            [self enqueueGetTextForTranscriptionSegment:segment];
-        }
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:recorder.url options:nil];
+        self.currentTranscriptLength += CMTimeGetSeconds(asset.duration);
+        self.currentTranscriptionSegment.absoluteEndTime = @(self.currentTranscriptLength);
         
+        [self enqueueGetTextForTranscriptionSegment:self.currentTranscriptionSegment];
+    
         if( self.state & SpeechToTextManagerStateRecording ) {
             [self cycleRecorders];
         }
@@ -291,7 +282,7 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
         if( self.currentPlaybackIndex >= self.note.transcriptionSegments.count ) {
             break;
         }
-        NSURL *url = [NSURL fileURLWithPath:[self.transcriptSegments[self.currentPlaybackIndex] soundFilePath]];
+        NSURL *url = [NSURL fileURLWithPath:[self.note.transcriptionSegments[self.currentPlaybackIndex] soundFilePath]];
         AVAudioPlayer *player = [self preparedPlayerForURL:url];
         if( ![player prepareToPlay] ) {
             NSLog(@"couldn't prepare to play");
@@ -365,9 +356,47 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
 #pragma mark - Recognition
 
 - (void)enqueueGetTextForTranscriptionSegment:(TranscriptionSegment *)transcriptionSegment {
-    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(getTextForTranscriptionSegment:) object:transcriptionSegment];
 
-    [_operationQueue addOperation:operation];
+    [self.operationQueue addOperationWithBlock:^{
+        NSLog(@"getting text");
+        self.state |= SpeechToTextManagerStateTranscribing;
+        
+        NSString *wavPath = transcriptionSegment.soundFilePath;
+        
+        NSString *flacPath = [self pathForTemporaryFileWithPrefix:@"flac"];
+        
+        [self convertWAV:wavPath toFLAC:flacPath];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=en-US"]];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"audio/x-flac; rate=44100" forHTTPHeaderField:@"Content-Type"];
+        NSData *flacData = [NSData dataWithContentsOfFile:flacPath];
+        [request setHTTPBody:flacData];
+        NSURLResponse *response = nil;
+        request.timeoutInterval = 5.f;
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+        NSString *respStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSDictionary *respDict = [respStr objectFromJSONString];
+        NSArray *hypotheses = respDict[@"hypotheses"];
+        NSString *text = nil;
+        
+        if( hypotheses.count ) {
+            text = [hypotheses[0] valueForKey:@"utterance"];
+            
+            transcriptionSegment.text = text;
+        }
+        else {
+//        self.state |= SpeechToTextManagerStateError;
+            
+            transcriptionSegment.note = nil;
+            [[[NoteManager sharedInstance] context] processPendingChanges];
+        }
+        
+        if( _operationQueue.operations.count == 1 ) {
+            self.state &= ~SpeechToTextManagerStateTranscribing;
+        }
+    }];
 }
 
 - (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix
@@ -389,43 +418,6 @@ static FLAC__int32 pcm[BUFFSIZE * 2];
     CFRelease(uuid);
     
     return result;
-}
-
-- (void)getTextForTranscriptionSegment:(TranscriptionSegment *)transcriptionSegment {
-    self.state |= SpeechToTextManagerStateTranscribing;
-
-    NSString *wavPath = transcriptionSegment.soundFilePath;
-    
-    NSString *flacPath = [self pathForTemporaryFileWithPrefix:@"flac"];
-
-    [self convertWAV:wavPath toFLAC:flacPath];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=en-US"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"audio/x-flac; rate=44100" forHTTPHeaderField:@"Content-Type"];
-    NSData *flacData = [NSData dataWithContentsOfFile:flacPath];
-    [request setHTTPBody:flacData];
-    NSURLResponse *response = nil;
-    request.timeoutInterval = 5.f;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *respStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-    NSDictionary *respDict = [respStr objectFromJSONString];
-    NSArray *hypotheses = respDict[@"hypotheses"];
-    NSString *text = nil;
-
-    if( hypotheses.count ) {
-        text = [hypotheses[0] valueForKey:@"utterance"];
-
-        transcriptionSegment.text = text;
-    }
-    else {
-        self.state |= SpeechToTextManagerStateError;
-    }
-
-    if( _operationQueue.operations.count == 1 ) {
-        self.state &= ~SpeechToTextManagerStateTranscribing;
-    }
 }
 
 - (BOOL)convertWAV:(NSString *)wavPath toFLAC:(NSString *)flacPath {

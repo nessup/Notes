@@ -12,6 +12,7 @@
 #import "WebViewController.h"
 #import "Model.h"
 #import "NoteManager.h"
+#import "WebViewJavascriptBridge_iOS.h"
 
 #define TopBarHeight    50.f
 #define StatusBarHeight 50.f
@@ -52,8 +53,9 @@
 }
 
 - (void)webViewController:(WebViewController *)webEditViewController didReceiveUnknownEvent:(NSDictionary *)event {
-    if( [event[WebViewEventName] isEqualToString:@"segmentTapped"] ) {
-        
+    if( [event[WebViewEventName] isEqualToString:@"playSegmentAtIndex"] ) {
+        SpeechToTextManager *manager = [SpeechToTextManager sharedInstance];
+        [manager startPlayingSegmentAtIndex:[event[WebViewEventValue] intValue]];
     }
 }
 
@@ -110,40 +112,30 @@
 - (void)configureView {
     NSMutableString *text = [NSMutableString new];
     int i = 0;
-    NSArray *transcriptionSegments = [self.note.transcriptionSegments allObjects];
-    transcriptionSegments = [transcriptionSegments sortedArrayUsingComparator:^NSComparisonResult(TranscriptionSegment *obj1, TranscriptionSegment *obj2) {
-        return obj1.index.integerValue > obj2.index.integerValue;
-    }];
-    for( TranscriptionSegment *transcriptionSegment in transcriptionSegments ) {
+    for( TranscriptionSegment *transcriptionSegment in self.note.transcriptionSegments ) {
         if( transcriptionSegment.text ) {
-            [text appendFormat:@"<a href='playTranscriptAtIndex(%d)'>%@</a>", transcriptionSegment.index.integerValue, transcriptionSegment.text];
+            [text appendFormat:@"<a href='javascript:App.playSegmentAtIndex(%d)'>%@</a>", i, transcriptionSegment.text];
+        }
+        else {
+            [text appendFormat:@"<a href='javascript:App.playSegmentAtIndex(%d)'>|untitled segment %d|</a> ", i, i];
         }
         i++;
     }
-//    NSLog(@"%@", text);
+    //    NSLog(@"%@", text);
     [_webViewController doAfterDOMLoads:^{
-        [_webViewController.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setContent('%@')", [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        [self.webViewController.bridge send:@{
+         @"content" : text
+         }];
     }];
-    
-//    _transcriptLabel.text = text;
 
     [self speechToTextStateChanged:self];
 }
 
 - (void)setNote:(Note *)note {
+    if( _note == note )
+        return;
+    
     _note = note;
-
-    TranscriptionSegment *segment = nil;
-    CFTimeInterval time = 0.f;
-    for(int i = 0; i < 5; i++) {
-        segment = [NSEntityDescription insertNewObjectForEntityForName:@"TranscriptionSegment" inManagedObjectContext:[[NoteManager sharedInstance] context]];
-        segment.text = [NSString stringWithFormat:@"%d", i];
-        segment.absoluteStartTime = @(time);
-        segment.absoluteEndTime = @(++time);
-        segment.index = @(i);
-        segment.note = note;
-    }
-    [[[NoteManager sharedInstance] context] processPendingChanges];
     
     _hasRecorded = !!note.transcriptionSegments.count;
     
