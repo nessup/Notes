@@ -39,14 +39,6 @@ NSString *const WebViewEventValue = @"value";
         _webView.clipsToBounds = YES;
         self.webView.frame = self.view.bounds;
         
-        [_webView
-         loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
-                                                                                 ofType:@"html"]]
-         MIMEType:@"text/html"
-         textEncodingName:@"utf-8"
-         baseURL:[[NSBundle mainBundle] bundleURL]];
-        
-        
         self.bridge = [WebViewJavascriptBridge
                        bridgeForWebView:_webView
                        handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -71,6 +63,13 @@ NSString *const WebViewEventValue = @"value";
                                }
                            }
                        }];
+
+        [_webView
+         loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
+                                                                                 ofType:@"html"]]
+         MIMEType:@"text/html"
+         textEncodingName:@"utf-8"
+         baseURL:[[NSBundle mainBundle] bundleURL]];
         
     }
     
