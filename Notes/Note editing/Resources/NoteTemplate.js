@@ -43,8 +43,8 @@ function NoteEditingController () {
             }
         });
 
-        // $('#simple_sketch').sketch();
-        // cq('#simple_sketch');
+        $('#simple_sketch').sketch();
+        cq('#simple_sketch');
 
         this.updateUI();
     }
@@ -78,7 +78,7 @@ function NoteEditingController () {
                 /* trim transparent pixels and save boundaries */
                 cq('#simple_sketch').trim(null, boundaries);
 
-                var imgObject = createResizableDraggableImageElement($('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
+                var imgObject = this.createResizableDraggableImageElement($('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
                 imgObject.css('position', 'absolute');
                 imgObject.css('top',boundaries.top);
                 imgObject.css('left',boundaries.left);

@@ -115,7 +115,7 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
     }
     
     _editingToolbar = [UIToolbar new];
-    _editingToolbar.barStyle = UIBarStyleBlackTranslucent;
+    _editingToolbar.barStyle = UIBarStyleBlackOpaque;
     
     return _editingToolbar;
 }
@@ -152,7 +152,7 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    CGFloat keyboardOffset = self.keyboardAppearing ? self.lastKeyboardInfo.frameEnd.size.height : 0.f;
+    CGFloat keyboardOffset = self.keyboardAppearing ? self.lastKeyboardInfo.frameEnd.size.height : ToolbarHeight;
     self.webView.frame = (CGRect) {
         CGPointZero,
         self.view.frame.size.width,
@@ -190,9 +190,12 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
     self.keyboardAppearing = NO;
     
     [UIView animateWithDuration:self.lastKeyboardInfo.animationDuration
+                          delay:0.f
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          [self viewWillLayoutSubviews];
-                     }];
+                     }
+                     completion:nil];
 }
 
 
