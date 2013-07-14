@@ -103,7 +103,6 @@
 
 - (void)setNote:(Note *)note {
     if( _note != note ) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_note];
         _note = note;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 

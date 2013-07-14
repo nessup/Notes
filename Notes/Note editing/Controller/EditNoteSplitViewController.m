@@ -41,7 +41,6 @@
         self.transcriptViewController = [TranscriptViewController new];
         UINavigationController *transcriptNavigationController = [[UINavigationController alloc] initWithRootViewController:self.transcriptViewController];
 
-//        MGSplitViewController *self = [MGSplitViewController new];
         self.masterBeforeDetail = NO;
         self.viewControllers = @[
                 transcriptNavigationController,

@@ -42,17 +42,7 @@ NSString *const WebViewEventValue = @"value";
         self.bridge = [WebViewJavascriptBridge
                        bridgeForWebView:_webView
                        handler:^(id data, WVJBResponseCallback responseCallback) {
-                           if( [data isKindOfClass:[NSString class]] && [data isEqualToString:@"DOMDidLoad"] ) {
-                               _DOMLoaded = YES;
-                               NSLog(@"dom loaded!");
-                               
-                               for( void (^block)() in _afterDOMLoadsBlocks ) {
-                                   block();
-                               }
-                               
-                               [_afterDOMLoadsBlocks removeAllObjects];
-                           }
-                           else if( [data isKindOfClass:[NSDictionary class]] ) {
+                           if( [data isKindOfClass:[NSDictionary class]] ) {
                                
                                if( [data[WebViewEventName] isEqualToString:@"logToConsole"] ) {
                                    NSLog(@"console.log: %@", data[WebViewEventValue]);
@@ -90,14 +80,14 @@ NSString *const WebViewEventValue = @"value";
 #pragma mark - Utility
 
 - (void)doAfterDOMLoads:(void (^)())completion {
-    if( _DOMLoaded ) {
+//    if( _DOMLoaded ) {
         if( completion ) {
             completion();
         }
-    }
-    else {
-        [_afterDOMLoadsBlocks addObject:[completion copy]];
-    }
+//    }
+//    else {
+//        [_afterDOMLoadsBlocks addObject:[completion copy]];
+//    }
 }
 
 - (BOOL)resignFirstResponder {
