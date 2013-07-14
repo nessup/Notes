@@ -10,7 +10,7 @@ function NoteEditingController () {
     this.DOMDidLoad = function() {
         var self = this;
         $('#categories').change(function() {
-            bridge.send({
+            AppHelper.getBridge().send({
                 eventName:'postCategoryChanged',
                 value:$(this).val()
             });
@@ -30,6 +30,10 @@ function NoteEditingController () {
         });
         $('#title').keyup(function(event) {
             self.updateUI();
+            AppHelper.getBridge().send({
+                eventName: 'titleChanged',
+                value: $(this).text()
+            });
         });
 
         $('#content').keydown(function(event) {
