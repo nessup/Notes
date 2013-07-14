@@ -1,0 +1,1 @@
+../../Shared/Controller/BridgedAppHelper.js
