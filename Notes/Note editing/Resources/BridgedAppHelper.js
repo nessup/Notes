@@ -1,1 +1,1 @@
-../../Shared/Controller/BridgedAppHelper.js
+../../Shared/Resources/BridgedAppHelper.js

@@ -1,22 +1,22 @@
-console.log = function(log) {
-      alert(log);
-}
-console.debug = console.log;
-console.info = console.log;
-console.warn = console.log;
-console.error = console.log;
+// console.log = function(log) {
+//       alert(log);
+// };
+// console.debug = console.log;
+// console.info = console.log;
+// console.warn = console.log;
+// console.error = console.log;
 
-window.onerror = function(error, url, line) {
-      console.log('error: ' + error +  ' url: ' + url + ' line: ' + line);
-};
+// window.onerror = function(error, url, line) {
+//       console.log('error: ' + error +  ' url: ' + url + ' line: ' + line);
+// };
 
-function BridgedAppHelper(callbackBind) {    
+function BridgedAppHelper(callbackBind) {
       var bridge = null;
       var domLoaded = false;
 
       this.getBridge = function() {
             return bridge;
-      }
+      };
 
       var self = this;
       document.addEventListener('WebViewJavascriptBridgeReady', function onBridgeReady(event) {

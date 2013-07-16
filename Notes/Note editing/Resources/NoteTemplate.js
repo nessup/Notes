@@ -3,6 +3,7 @@ function NoteEditingController () {
     var editingMode = 0;
     var previousEditingMode = 0;
     var previousSelection;
+    var myScriptAPIKey = "49b23d6a-3a28-40a3-a93d-7a76b8cb7288";
 
     //
     // Initialization
@@ -39,19 +40,23 @@ function NoteEditingController () {
         $('#content').keydown(function(event) {
             if( event.which == 13 ) {
             }
-            else if( event.which == 8 && getCaretCharacterOffsetWithin($('#content').get(0))  == 0 ) {
+            else if( event.which == 8 && getCaretCharacterOffsetWithin($('#content').get(0))  === 0 ) {
                 var title = $('#title');
                 title.focus();
-                moveCaretToEndOf(title.get(0));
+                self.moveCaretToEndOf(title.get(0));
                 return false;
             }
         });
 
-        $('#simple_sketch').sketch();
+        var canvas = $('#simple_sketch');
+        canvas.sketch();
         cq('#simple_sketch');
+        canvas.strokes = [];
+        canvas.strokesSave = [];
+        $('#simple_sketch').addWriteHandlers(this, canvas.strokes, canvas.strokesSave);
 
         this.updateUI();
-    }
+    };
 
     this.updateUI = function() {
         if( $('#title').text().length ) {
@@ -73,7 +78,7 @@ function NoteEditingController () {
         var canvas = canvasObject[0];
         var ctx = canvas.getContext('2d');
 
-        if( editingMode == 0 ) {
+        if( editingMode === 0 ) {
 
             if( previousEditingMode == 1 ) {
 
@@ -82,14 +87,19 @@ function NoteEditingController () {
                 /* trim transparent pixels and save boundaries */
                 cq('#simple_sketch').trim(null, boundaries);
 
-                var imgObject = this.createResizableDraggableImageElement($('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
-                imgObject.css('position', 'absolute');
-                imgObject.css('top',boundaries.top);
-                imgObject.css('left',boundaries.left);
+                if( boundaries.top === undefined || boundaries.left === undefined || boundaries.width === undefined || boundaries.height === undefined ) {
+                    console.error('Invalid boundaries');
+                }
+                else {
+                    var imgObject = this.createResizableDraggableImageElement($('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
+                    imgObject.css('position', 'absolute');
+                    imgObject.css('top',boundaries.top);
+                    imgObject.css('left',boundaries.left);
 
-                $('.notepad').append(imgObject);
+                    $('.notepad').append(imgObject);
 
-                canvasObject.sketch().clear();
+                    canvasObject.sketch().clear();
+                }
             }
 
             $('#simple_sketch').hide();
@@ -109,8 +119,53 @@ function NoteEditingController () {
 
             $('#simple_sketch').show();
 
-        }    
+        }
     };
+
+    //
+    // Handwriting recognition
+    //
+
+    this.recognize = function(strokes, handler, apiKey, url) {
+        var options = {
+            type: ["LATEX"]
+        };
+
+        if(!url) url = "https://myscript-webservices.visionobjects.com/api/myscript/v2.0/equation/doSimpleRecognition.json";
+
+        var jsonPost =  {
+            "components" : strokes,
+            "resultTypes" : options.type
+        };
+
+        /** Send data to POST. Give your API key as supplied on registration, or the 
+        * server will not recognize you as a valid user. */
+        var data = {
+            "apiKey" : myScriptAPIKey,
+            "equationInput" : JSON.stringify(jsonPost)
+        };
+
+        /** Display the "wait" symbol while processing is underway. */
+        $("#loading").show();
+        /** Post request.   */
+        $.post(url, data, handler, "json").error(function(XMLHttpRequest, textStatus) {
+            $("#loading").text(textStatus +" : "+ XMLHttpRequest.responseText);
+            alert(textStatus +" : "+ XMLHttpRequest.responseText);
+            $("#loading").hide();
+        });
+    };
+
+    /** Show the result in the canvas. */
+    this.displayResult = function(jsonResult) {
+       $("#result").text("");
+       var i;
+       for(i=0; i<jsonResult.result.results.length; i++) {
+          $("#result").append(jsonResult.result.results[i].value);
+      }
+      MathJax.Hub.Queue([ 'Typeset', MathJax.Hub, 'result' ]);
+      $("#loading").hide();
+  };
+
 
     //
     // Bridge management
@@ -128,7 +183,7 @@ function NoteEditingController () {
     this.getElementContainingCaret = function() {
         var node = document.getSelection().anchorNode;
         var startNode = (node.nodeType == 3 ? node.parentNode : node);
-        return startNode;     
+        return startNode;
     };
 
     this.getCaretCharacterOffsetWithin = function(element) {
@@ -236,7 +291,7 @@ function NoteEditingController () {
         }
 
         if( info.placeholderString !== undefined ) {
-            this.setPlaceholderString(info.placeholderString);    
+            this.setPlaceholderString(info.placeholderString);
         }
 
         if( info.content !== undefined ) {
@@ -248,7 +303,7 @@ function NoteEditingController () {
         }
 
         if( info.selectedCategory !== undefined ) {
-            this.selectCategory(info.selectedCategory);    
+            this.selectCategory(info.selectedCategory);
         }
 
         if( info.topRightLines !== undefined ) {
@@ -284,12 +339,10 @@ function NoteEditingController () {
         document.getSelection().getRangeAt(0).insertNode(imgObject[0]);
 
         return imgObject;
-        
     };
 
     this.createResizableDraggableImageElement = function(src, width, height) {
-        var img = document.createElement('div');
-        var imgObject = $(img);
+        var imgObject = $(document.createElement('div'));
 
         imgObject.append(['<div class="ui-resizable-handle ui-resizable-nw" id="nwgrip"></div>',
          '<div class="ui-resizable-handle ui-resizable-ne" id="negrip"></div>',
@@ -311,6 +364,21 @@ function NoteEditingController () {
 
         return imgObject;
     };
+
+    //
+    // Utilities
+    //
+
+    // function mapThat( mappedObject, obj ) {
+    //     Object.keys( obj ).forEach( function( key ) {
+    //         if ( typeof obj[ key ] === 'object' ) {
+    //             mapThat( obj[ key ], mappedObject );
+    //         }
+    //         else {
+    //             mappedObject[ key.toLowerCase() ] = obj[ key ];
+    //         }
+    //     } );
+    // }
 }
 
 var App = new NoteEditingController();
