@@ -100,7 +100,7 @@ var __slice = Array.prototype.slice;
       return this.redraw();
     };
     Sketch.prototype.onEvent = function(e) {
-      if (e.originalEvent && e.originalEvent.targetTouches.length) {
+      if (e.originalEvent && e.originalEvent.targetTouches && e.originalEvent.targetTouches.length) {
         e.pageX = e.originalEvent.targetTouches[0].pageX;
         e.pageY = e.originalEvent.targetTouches[0].pageY;
       }
