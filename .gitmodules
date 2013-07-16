@@ -1,21 +1,21 @@
+# Web app submodules
+[submodule "Notes/WebApp/js/Rangy"]
+	path = Notes/WebApp/js/Rangy
+	url = https://github.com/nessup/Rangy.git
+[submodule "Notes/WebApp/js/jquery-ui-touch-punch"]
+	path = Notes/WebApp/js/query-ui-touch-punch
+	url = https://github.com/nessup/jquery-ui-touch-punch.git
+[submodule "Notes/WebApp/js/CanvasQuery"]
+	path = Notes/WebApp/js/CanvasQuery
+	url = https://github.com/nessup/CanvasQuery.git
+
+# iOS submodules
 [submodule "Notes/External/ColorPopover"]
 	path = Notes/External/ColorPopover
 	url = https://github.com/nessup/ColorPopover.git
-[submodule "Notes/External/Rangy"]
-	path = Notes/External/Rangy
-	url = https://github.com/nessup/Rangy.git
 [submodule "Notes/External/WebViewJavascriptBridge"]
 	path = Notes/External/WebViewJavascriptBridge
 	url = https://github.com/nessup/WebViewJavascriptBridge.git
-[submodule "Notes/External/jquery-ui-touch-punch"]
-	path = Notes/External/jquery-ui-touch-punch
-	url = https://github.com/nessup/jquery-ui-touch-punch.git
-[submodule "Notes/External/sketch.js"]
-	path = Notes/External/sketch.js
-	url = https://github.com/nessup/sketch.js.git
-[submodule "Notes/External/CanvasQuery"]
-	path = Notes/External/CanvasQuery
-	url = https://github.com/nessup/CanvasQuery.git
 [submodule "Notes/External/Audio-Frameworks"]
 	path = Notes/External/Audio-Frameworks
 	url = https://github.com/ap4y/Audio-Frameworks.git

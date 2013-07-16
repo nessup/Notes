@@ -53,13 +53,8 @@ NSString *const WebViewEventValue = @"value";
                                }
                            }
                        }];
-
-        [_webView
-         loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:pageName
-                                                                                 ofType:@"html"]]
-         MIMEType:@"text/html"
-         textEncodingName:@"utf-8"
-         baseURL:[[NSBundle mainBundle] bundleURL]];
+        
+        [_webView loadRequest:[NSURLRequest requestWithURL:[[NSBundle mainBundle] URLForResource:pageName withExtension:@"html"]]];
         
     }
     

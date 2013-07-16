@@ -1,1 +1,0 @@
-../../Shared/Resources/BridgedAppHelper.js

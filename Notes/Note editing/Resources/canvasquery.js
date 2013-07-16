@@ -1,1 +1,0 @@
-../../External/CanvasQuery/canvasquery.js
