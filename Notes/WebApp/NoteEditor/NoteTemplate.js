@@ -354,17 +354,19 @@ function NoteEditingController () {
     };
 
     this.createResizableDraggableImageElement = function(src, width, height) {
-        var imgObject = $(document.createElement('div'));
+        var containerObject = $(document.createElement('div'));
         var self = this;
 
-        imgObject.attr('class', 'drawn-image unselected-image');
+        containerObject.attr('class', 'drawn-image unselected-image');
 
-        imgObject.append(['<div class="ui-resizable-handle ui-resizable-nw"></div>',
+        containerObject.append(['<div class="ui-resizable-handle ui-resizable-nw"></div>',
          '<div class="ui-resizable-handle ui-resizable-ne"></div>',
          '<div class="ui-resizable-handle ui-resizable-sw"></div>',
          '<div class="ui-resizable-handle ui-resizable-se"></div>'].join('\n'));
-        imgObject.attr('style','display: inline-block; background-size: 100% 100% !important; background: no-repeat url("' + src + '"); width:'+width+'px; height:'+height+'px; overflow:hidden;');
-        imgObject.resizable({
+
+        containerObject.attr('style','display: inline-block; width:'+width+'px; height:'+height+'px; overflow:hidden;');
+
+        containerObject.resizable({
             handles: {
                 'ne': '.ui-resizable-ne',
                 'se': '.ui-resizable-se',
@@ -372,7 +374,7 @@ function NoteEditingController () {
                 'nw': '.ui-resizable-nw'
             }
         });
-        imgObject.draggable({
+        containerObject.draggable({
             snap:"#contentContainer",
             scroll: true,
             start: function() {
@@ -388,10 +390,13 @@ function NoteEditingController () {
         var touchEndHandler = function(event) {
             $(this).popover('show');
         };
-        imgObject.bind('touchstart', touchStartHandler).bind('click', touchStartHandler);
-        imgObject.bind('touchend', touchEndHandler).bind('click', touchEndHandler);
+        containerObject.bind('touchstart', touchStartHandler).bind('click', touchStartHandler);
+        containerObject.bind('touchend', touchEndHandler).bind('click', touchEndHandler);
 
-        return imgObject;
+        var imgObject = $('<div />', {class: 'handwriting'}).appendTo(containerObject);
+        imgObject.attr('style','display: inline-block; background-size: 100% 100% !important; background: no-repeat url("' + src + '"); width:'+width+'px; height:'+height+'px; overflow:hidden;');
+
+        return containerObject;
     };
 
     this.selectImageObject = function(imgObject) {
