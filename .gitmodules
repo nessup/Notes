@@ -3,7 +3,7 @@
 	path = Notes/WebApp/js/Rangy
 	url = https://github.com/nessup/Rangy.git
 [submodule "Notes/WebApp/js/jquery-ui-touch-punch"]
-	path = Notes/WebApp/js/query-ui-touch-punch
+	path = Notes/WebApp/js/jquery-ui-touch-punch
 	url = https://github.com/nessup/jquery-ui-touch-punch.git
 [submodule "Notes/WebApp/js/CanvasQuery"]
 	path = Notes/WebApp/js/CanvasQuery
@@ -40,3 +40,6 @@
 [submodule "Notes/External/TTTAttributedLabel"]
 	path = Notes/External/TTTAttributedLabel
 	url = https://github.com/mattt/TTTAttributedLabel.git
+[submodule "Notes/WebApp/js/jQuery.popover"]
+	path = Notes/WebApp/js/jQuery.popover
+	url = https://github.com/klaas4/jQuery.popover.git

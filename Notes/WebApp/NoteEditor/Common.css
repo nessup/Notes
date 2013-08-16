@@ -9,24 +9,35 @@
 .alignCenter {
     text-align: center;
 }
-
 .ui-resizable {
-    border: 1px solid #000000;
     width: 300px;
     height: 40px;
     overflow: hidden;
 }
-#nwgrip, #negrip, #swgrip, #segrip, #ngrip, #egrip, #sgrip, #wgrip {
+.ui-resizable-nw,
+.ui-resizable-ne,
+.ui-resizable-sw,
+.ui-resizable-se {
     width: 10px;
     height: 10px;
     background-color: #ffffff;
     border: 1px solid #000000;
+    display: none;
 }
-#segrip {
+.selected-image {
+    border: 1px solid #000000;
+}
+.selected-image .ui-resizable-nw,
+.selected-image .ui-resizable-ne,
+.selected-image .ui-resizable-sw,
+.selected-image .ui-resizable-se {
+    display: block;
+}
+.ui-resizable-se {
     right: -5px;
     bottom: -5px;
 }
-*.searchResult {
+.searchResult {
     font-weight: bold;
     background-color: yellow;
 }

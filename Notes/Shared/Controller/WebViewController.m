@@ -26,7 +26,7 @@ NSString *const WebViewEventValue = @"value";
     NSInteger loadCount;
 }
 
-- (id)initWithLocalPageNamed:(NSString *)pageName {
+- (id)initWithLocalPageNamed:(NSString *)pageName subdirectory:(NSString *)subdirectory {
     self = [super initWithNibName:nil bundle:nil];
     
     if( self ) {
@@ -54,8 +54,7 @@ NSString *const WebViewEventValue = @"value";
                            }
                        }];
         
-        [_webView loadRequest:[NSURLRequest requestWithURL:[[NSBundle mainBundle] URLForResource:pageName withExtension:@"html"]]];
-        
+        [_webView loadRequest:[NSURLRequest requestWithURL:[[NSBundle mainBundle] URLForResource:pageName withExtension:@"html" subdirectory:subdirectory]]];
     }
     
     return self;

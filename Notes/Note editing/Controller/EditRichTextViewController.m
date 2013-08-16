@@ -40,7 +40,7 @@ NSString *const WebViewEventTitleChanged = @"titleChanged";
 }
 
 - (id)init {
-    return [self initWithLocalPageNamed:@"NoteTemplate"];
+    return [self initWithLocalPageNamed:@"NoteTemplate" subdirectory:@"WebApp/NoteEditor"];
 }
 
 - (void)viewDidLoad {

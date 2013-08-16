@@ -35,7 +35,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if( self ) {
-        _webViewController = [[WebViewController alloc] initWithLocalPageNamed:@"TranscriptTemplate"];
+        _webViewController = [[WebViewController alloc] initWithLocalPageNamed:@"TranscriptTemplate" subdirectory:@"TranscriptViewer"];
         _webViewController.delegate = self;
         _webViewController.view.clipsToBounds = YES;
         [self addChildViewController:_webViewController];

@@ -1,6 +1,6 @@
 function NoteEditingController () {
     var placeholding = false;
-    var editingMode = 0;
+    var editingMode = 1;
     var previousEditingMode = 0;
     var previousSelection;
     var myScriptAPIKey = "49b23d6a-3a28-40a3-a93d-7a76b8cb7288";
@@ -55,6 +55,10 @@ function NoteEditingController () {
         canvas.strokesSave = [];
         $('#simple_sketch').addWriteHandlers(this, canvas.strokes, canvas.strokesSave);
 
+        $(document).on("onHideAllPopovers", function(event) {
+            self.deselectAllImageObjects();
+        });
+
         this.updateUI();
     };
 
@@ -96,6 +100,10 @@ function NoteEditingController () {
                     imgObject.css('top',boundaries.top);
                     imgObject.css('left',boundaries.left);
 
+                    imgObject.popover({
+                        title: '<a href="">Convert to equation</a>'
+                    });
+
                     $('.notepad').append(imgObject);
 
                     canvasObject.sketch().clear();
@@ -126,12 +134,12 @@ function NoteEditingController () {
     // Handwriting recognition
     //
 
-    this.recognize = function(strokes, handler, apiKey, url) {
+    this.recognize = function(strokes) {
         var options = {
             type: ["LATEX"]
         };
 
-        if(!url) url = "https://myscript-webservices.visionobjects.com/api/myscript/v2.0/equation/doSimpleRecognition.json";
+        var url = "https://myscript-webservices.visionobjects.com/api/myscript/v2.0/equation/doSimpleRecognition.json";
 
         var jsonPost =  {
             "components" : strokes,
@@ -148,20 +156,24 @@ function NoteEditingController () {
         /** Display the "wait" symbol while processing is underway. */
         $("#loading").show();
         /** Post request.   */
-        $.post(url, data, handler, "json").error(function(XMLHttpRequest, textStatus) {
+        var self = this;
+        $.post(url, data, function handleResponse(response) {
+            self.displayResult(response);
+        }, "json").error(function(XMLHttpRequest, textStatus) {
             $("#loading").text(textStatus +" : "+ XMLHttpRequest.responseText);
-            alert(textStatus +" : "+ XMLHttpRequest.responseText);
+            this.displayResult(XMLHttpRequest.responseText);
             $("#loading").hide();
         });
     };
 
     /** Show the result in the canvas. */
     this.displayResult = function(jsonResult) {
-       $("#result").text("");
+       $("#result").text("$$");
        var i;
        for(i=0; i<jsonResult.result.results.length; i++) {
           $("#result").append(jsonResult.result.results[i].value);
       }
+      $('#result').append("$$");
       MathJax.Hub.Queue([ 'Typeset', MathJax.Hub, 'result' ]);
       $("#loading").hide();
   };
@@ -343,26 +355,61 @@ function NoteEditingController () {
 
     this.createResizableDraggableImageElement = function(src, width, height) {
         var imgObject = $(document.createElement('div'));
+        var self = this;
 
-        imgObject.append(['<div class="ui-resizable-handle ui-resizable-nw" id="nwgrip"></div>',
-         '<div class="ui-resizable-handle ui-resizable-ne" id="negrip"></div>',
-         '<div class="ui-resizable-handle ui-resizable-sw" id="swgrip"></div>',
-         '<div class="ui-resizable-handle ui-resizable-se" id="segrip"></div>'].join('\n'));
+        imgObject.attr('class', 'drawn-image unselected-image');
+
+        imgObject.append(['<div class="ui-resizable-handle ui-resizable-nw"></div>',
+         '<div class="ui-resizable-handle ui-resizable-ne"></div>',
+         '<div class="ui-resizable-handle ui-resizable-sw"></div>',
+         '<div class="ui-resizable-handle ui-resizable-se"></div>'].join('\n'));
         imgObject.attr('style','display: inline-block; background-size: 100% 100% !important; background: no-repeat url("' + src + '"); width:'+width+'px; height:'+height+'px; overflow:hidden;');
         imgObject.resizable({
             handles: {
-                'ne': '#negrip',
-                'se': '#segrip',
-                'sw': '#swgrip',
-                'nw': '#nwgrip'
+                'ne': '.ui-resizable-ne',
+                'se': '.ui-resizable-se',
+                'sw': '.ui-resizable-sw',
+                'nw': '.ui-resizable-nw'
             }
         });
         imgObject.draggable({
             snap:"#contentContainer",
-            scroll: true
+            scroll: true,
+            start: function() {
+                $(this).popover('fadeOut');
+            }
         });
 
+        var touchStartHandler = function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.selectImageObject($(this));
+        };
+        var touchEndHandler = function(event) {
+            $(this).popover('show');
+        };
+        imgObject.bind('touchstart', touchStartHandler).bind('click', touchStartHandler);
+        imgObject.bind('touchend', touchEndHandler).bind('click', touchEndHandler);
+
         return imgObject;
+    };
+
+    this.selectImageObject = function(imgObject) {
+        var self = this;
+        imgObject.popover('setOption', 'onHideAll', function() {
+            self.deselectAllImageObjects();
+        });
+        imgObject.removeClass('unselected-image');
+        imgObject.addClass('selected-image');
+        
+    };
+
+    this.deselectAllImageObjects = function() {
+        // $('.drawn-image').each(function(i) {
+        // });
+        var $objects = $('.selected-image');
+        $objects.removeClass('selected-image');
+        $objects.addClass('unselected-image');
     };
 
     //

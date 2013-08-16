@@ -24,7 +24,7 @@ extern NSString *const WebViewEventValue;
 @property (nonatomic, weak) id<WebViewControllerDelegate> delegate;
 @property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 
-- (id)initWithLocalPageNamed:(NSString *)pageName;
+- (id)initWithLocalPageNamed:(NSString *)pageName subdirectory:(NSString *)subdirectory;
 
 - (void)doAfterDOMLoads:(void (^)())completion;
 - (BOOL)handleWebViewEvent:(NSDictionary *)event;
