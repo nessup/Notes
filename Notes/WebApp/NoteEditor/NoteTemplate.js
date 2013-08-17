@@ -4,6 +4,8 @@ function NoteEditingController () {
     var previousEditingMode = 0;
     var previousSelection;
     var myScriptAPIKey = "49b23d6a-3a28-40a3-a93d-7a76b8cb7288";
+    var scratchDrawingDiv = null;
+    var lastSelectedImage = null;
 
     //
     // Initialization
@@ -59,6 +61,16 @@ function NoteEditingController () {
             self.deselectAllImageObjects();
         });
 
+        MathJax.Hub.Config({
+             "HTML-CSS": {
+               styles: {
+                 '.MathJax_Display': {
+                    "margin": 0
+                  }
+               }
+             }
+         });
+
         this.updateUI();
     };
 
@@ -95,13 +107,21 @@ function NoteEditingController () {
                     console.error('Invalid boundaries');
                 }
                 else {
-                    var imgObject = this.createResizableDraggableImageElement($('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
+                    var imgObject = this.createResizableDraggableImageElement(scratchDrawingDiv, $('#simple_sketch')[0].toDataURL(), boundaries.width, boundaries.height);
+                    scratchDrawingDiv = null;
                     imgObject.css('position', 'absolute');
                     imgObject.css('top',boundaries.top);
                     imgObject.css('left',boundaries.left);
 
                     imgObject.popover({
-                        title: '<a href="">Convert to equation</a>'
+                        title: '<a class="convert-to-equation">Convert to equation</a>'
+                    });
+
+                    $('.convert-to-equation').click(function() {
+                        lastSelectedImage.find('.handwriting').hide();
+                        var mathjax = lastSelectedImage.find('.mathjax');
+                        mathjax.show();
+                        lastSelectedImage.width(mathjax.find('.MathJax_Display nobr').width());
                     });
 
                     $('.notepad').append(imgObject);
@@ -114,6 +134,10 @@ function NoteEditingController () {
 
         }
         else if( editingMode == 1 ) {
+
+            if (!scratchDrawingDiv) {
+                scratchDrawingDiv = $(document.createElement('div')).appendTo($('body')).hide();
+            }
 
             if( document.getSelection().rangeCount ) {
                 previousSelection = document.getSelection().getRangeAt(0).cloneRange();
@@ -135,6 +159,7 @@ function NoteEditingController () {
     //
 
     this.recognize = function(strokes) {
+        var myDrawingDiv = scratchDrawingDiv;
         var options = {
             type: ["LATEX"]
         };
@@ -145,12 +170,15 @@ function NoteEditingController () {
             "components" : strokes,
             "resultTypes" : options.type
         };
+        var jsonPostString = JSON.stringify(jsonPost);
+
+        myDrawingDiv.dataset('jsonPost', jsonPostString);
 
         /** Send data to POST. Give your API key as supplied on registration, or the 
         * server will not recognize you as a valid user. */
         var data = {
             "apiKey" : myScriptAPIKey,
-            "equationInput" : JSON.stringify(jsonPost)
+            "equationInput" : jsonPostString
         };
 
         /** Display the "wait" symbol while processing is underway. */
@@ -158,25 +186,26 @@ function NoteEditingController () {
         /** Post request.   */
         var self = this;
         $.post(url, data, function handleResponse(response) {
-            self.displayResult(response);
+
+            var mathJaxInput = "$$";
+
+            var i;
+            for(i=0; i<response.result.results.length; i++) {
+                mathJaxInput = mathJaxInput + response.result.results[i].value;
+            }
+            mathJaxInput = mathJaxInput + "$$";
+
+            myDrawingDiv.dataset('mathJaxInput', mathJaxInput);
+
         }, "json").error(function(XMLHttpRequest, textStatus) {
             $("#loading").text(textStatus +" : "+ XMLHttpRequest.responseText);
-            this.displayResult(XMLHttpRequest.responseText);
+            // this.displayResult(XMLHttpRequest.responseText);
+
+
+
             $("#loading").hide();
         });
     };
-
-    /** Show the result in the canvas. */
-    this.displayResult = function(jsonResult) {
-       $("#result").text("$$");
-       var i;
-       for(i=0; i<jsonResult.result.results.length; i++) {
-          $("#result").append(jsonResult.result.results[i].value);
-      }
-      $('#result').append("$$");
-      MathJax.Hub.Queue([ 'Typeset', MathJax.Hub, 'result' ]);
-      $("#loading").hide();
-  };
 
 
     //
@@ -345,16 +374,15 @@ function NoteEditingController () {
         $(getElementContainingCaret()).attr('class','alignCenter');
     };
 
-    this.insertImageWithBase64 = function(src,width,height) {
-        var imgObject = createResizableDraggableImageElement(src,width,height);
+    // this.insertImageWithBase64 = function(src,width,height) {
+    //     var imgObject = createResizableDraggableImageElement(scratchDrawingDiv src,width,height);
 
-        document.getSelection().getRangeAt(0).insertNode(imgObject[0]);
+    //     document.getSelection().getRangeAt(0).insertNode(imgObject[0]);
 
-        return imgObject;
-    };
+    //     return imgObject;
+    // };
 
-    this.createResizableDraggableImageElement = function(src, width, height) {
-        var containerObject = $(document.createElement('div'));
+    this.createResizableDraggableImageElement = function(containerObject, src, width, height) {
         var self = this;
 
         containerObject.attr('class', 'drawn-image unselected-image');
@@ -364,7 +392,7 @@ function NoteEditingController () {
          '<div class="ui-resizable-handle ui-resizable-sw"></div>',
          '<div class="ui-resizable-handle ui-resizable-se"></div>'].join('\n'));
 
-        containerObject.attr('style','display: inline-block; width:'+width+'px; height:'+height+'px; overflow:hidden;');
+        containerObject.attr('style','display: inline-block; overflow: auto;');
 
         containerObject.resizable({
             handles: {
@@ -393,8 +421,13 @@ function NoteEditingController () {
         containerObject.bind('touchstart', touchStartHandler).bind('click', touchStartHandler);
         containerObject.bind('touchend', touchEndHandler).bind('click', touchEndHandler);
 
-        var imgObject = $('<div />', {class: 'handwriting'}).appendTo(containerObject);
-        imgObject.attr('style','display: inline-block; background-size: 100% 100% !important; background: no-repeat url("' + src + '"); width:'+width+'px; height:'+height+'px; overflow:hidden;');
+        var imgObject = $('<img />', {class: 'handwriting', src: src}).appendTo(containerObject);
+        imgObject.attr('style','display: inline-block; overflow:auto;');
+
+        var mathJaxObject = $('<div />', {class: 'mathjax'}).appendTo(containerObject).hide();
+        mathJaxObject.text(containerObject.dataset('mathJaxInput'));
+        mathJaxObject.css('font-size', (height - 20) + 'px');
+        MathJax.Hub.Queue([ 'Typeset', MathJax.Hub, mathJaxObject.get(0)]);
 
         return containerObject;
     };
@@ -406,7 +439,7 @@ function NoteEditingController () {
         });
         imgObject.removeClass('unselected-image');
         imgObject.addClass('selected-image');
-        
+        lastSelectedImage = imgObject;
     };
 
     this.deselectAllImageObjects = function() {
@@ -415,6 +448,7 @@ function NoteEditingController () {
         var $objects = $('.selected-image');
         $objects.removeClass('selected-image');
         $objects.addClass('unselected-image');
+        lastSelectedImage = null;
     };
 
     //
